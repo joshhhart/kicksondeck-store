@@ -1,0 +1,9 @@
+node_modules/
+products_raw.json
+.deploy.b64
+.claude/
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
