@@ -8,7 +8,7 @@
   },
   "checkout": {
     "mode": "ghl",
-    "ghlStoreUrl": "",
+    "ghlStoreUrl": "https://shop.kicksondeck.store",
     "stripeUrl": "",
     "contactEmail": "hartjosh15@gmail.com",
     "_note": "When your GHL store is published with Stripe connected, paste its checkout URL into ghlStoreUrl (e.g. https://shop.kicksondeck.store) and rebuild. Until then, Checkout captures the order as an email inquiry so no sale is lost."
