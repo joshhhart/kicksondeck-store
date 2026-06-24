@@ -126,7 +126,7 @@ function drawerAndSearch() {
     <div class="cart-row"><span>Shipping</span><span class="mono">Calculated at checkout</span></div>
     <div class="cart-row total"><span>Total</span><span class="mono" id="cart-subtotal-2"></span></div>
     <button class="btn btn-volt btn-block btn-lg" id="checkout-btn">Checkout ${I.arrow}</button>
-    <p class="cart-note">Secure checkout via GoHighLevel + Stripe.<br>Questions? <a href="mailto:${CFG.brand.email}">${CFG.brand.email}</a></p>
+    <p class="cart-note">Secure checkout powered by Stripe.<br>Questions? <a href="mailto:${CFG.brand.email}">${CFG.brand.email}</a></p>
   </div>
 </aside>
 <div class="search-panel" id="search-panel" aria-label="Search">

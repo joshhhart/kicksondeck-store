@@ -1,0 +1,14 @@
+name = "kod-checkout"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# The Stripe secret key is NOT stored here. Set it as an encrypted secret:
+#   wrangler secret put STRIPE_SECRET_KEY
+#
+# Deploy:
+#   cd checkout-worker
+#   npx wrangler deploy
+#
+# After deploy, wrangler prints the URL, e.g.
+#   https://kod-checkout.<your-subdomain>.workers.dev
+# Paste that into site.config.json -> checkout.endpoint, then rebuild the site.

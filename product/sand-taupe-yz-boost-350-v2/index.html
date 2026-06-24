@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
 
-<script>window.KOD_CONFIG={"checkout":{"mode":"ghl","ghlStoreUrl":"","stripeUrl":"","contactEmail":"hartjosh15@gmail.com","_note":"When your GHL store is published with Stripe connected, paste its checkout URL into ghlStoreUrl (e.g. https://shop.kicksondeck.store) and rebuild. Until then, Checkout captures the order as an email inquiry so no sale is lost."},"brand":{"name":"Kicks on Deck","domain":"kicksondeck.store","email":"hartjosh15@gmail.com","phone":"+1 786 577 8035","city":"Palm City, FL"}};document.documentElement.classList.remove('no-js');</script>
+<script>window.KOD_CONFIG={"checkout":{"mode":"stripe","endpoint":"","ghlStoreUrl":"https://shop.kicksondeck.store","stripeUrl":"","contactEmail":"hartjosh15@gmail.com","_note":"Stripe checkout runs through the Cloudflare Worker in /checkout-worker. Deploy it (see checkout-worker/README.md), then paste the Worker URL into `endpoint` (e.g. https://kod-checkout.<your-subdomain>.workers.dev) and rebuild. Until `endpoint` is set, Checkout falls back to an email order capture so no sale is lost."},"brand":{"name":"Kicks on Deck","domain":"kicksondeck.store","email":"hartjosh15@gmail.com","phone":"+1 786 577 8035","city":"Palm City, FL"}};document.documentElement.classList.remove('no-js');</script>
 </head><body><header class="header" id="header"><div class="container"><div class="header-inner">
   <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="mark">K</span><span>Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
   <nav class="nav"><a href="/shop/">Shop All</a><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/collection/accessories/">Care</a></nav>
@@ -128,7 +128,7 @@
     <div class="cart-row"><span>Shipping</span><span class="mono">Calculated at checkout</span></div>
     <div class="cart-row total"><span>Total</span><span class="mono" id="cart-subtotal-2"></span></div>
     <button class="btn btn-volt btn-block btn-lg" id="checkout-btn">Checkout <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-    <p class="cart-note">Secure checkout via GoHighLevel + Stripe.<br>Questions? <a href="mailto:hartjosh15@gmail.com">hartjosh15@gmail.com</a></p>
+    <p class="cart-note">Secure checkout powered by Stripe.<br>Questions? <a href="mailto:hartjosh15@gmail.com">hartjosh15@gmail.com</a></p>
   </div>
 </aside>
 <div class="search-panel" id="search-panel" aria-label="Search">

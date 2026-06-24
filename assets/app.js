@@ -80,18 +80,58 @@
   overlay?.addEventListener("click", () => { closeCart(); closeSearch(); });
 
   /* ---------- checkout handoff ---------- */
-  $("#checkout-btn")?.addEventListener("click", () => {
-    if (!cart.length) return;
-    const co = CFG.checkout || {};
-    localStorage.setItem("kod_pending_order", JSON.stringify({ items: cart, subtotal: subtotal(), at: Date.now() }));
-    if (co.mode === "ghl" && co.ghlStoreUrl) { window.location.href = co.ghlStoreUrl; return; }
-    if (co.mode === "stripe" && co.stripeUrl) { window.location.href = co.stripeUrl; return; }
-    // fallback (no processor connected yet): capture the order as an inquiry
+  function emailFallback(co) {
     const lines = cart.map((c) => `• ${c.qty}× ${c.name}${c.size ? " — " + c.size : ""} (${money(c.price)})`).join("\n");
     const body = `I'd like to order:\n\n${lines}\n\nSubtotal: ${money(subtotal())}\n\nName:\nShipping address:\nPhone:`;
     const email = co.contactEmail || "hartjosh15@gmail.com";
     window.location.href = `mailto:${email}?subject=${encodeURIComponent("Order — Kicks on Deck")}&body=${encodeURIComponent(body)}`;
+  }
+
+  $("#checkout-btn")?.addEventListener("click", async () => {
+    if (!cart.length) return;
+    const co = CFG.checkout || {};
+    localStorage.setItem("kod_pending_order", JSON.stringify({ items: cart, subtotal: subtotal(), at: Date.now() }));
+
+    // Stripe via serverless endpoint — builds a real Checkout Session from the bag.
+    if (co.mode === "stripe" && co.endpoint) {
+      const btn = $("#checkout-btn"), orig = btn.innerHTML;
+      btn.disabled = true; btn.textContent = "Redirecting…";
+      try {
+        const res = await fetch(co.endpoint.replace(/\/+$/, "") + "/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: cart.map((c) => ({ variantId: c.variantId || c.id, id: c.id, qty: c.qty, name: c.name, size: c.size || "", image: c.image })),
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.url) { window.location.href = data.url; return; }
+        throw new Error(data.error || ("HTTP " + res.status));
+      } catch (err) {
+        console.error("Checkout error:", err);
+        btn.disabled = false; btn.innerHTML = orig;
+        toast("Checkout unavailable — opening email order");
+        emailFallback(co);
+      }
+      return;
+    }
+
+    // Legacy direct-URL handoffs / no processor wired yet.
+    if (co.mode === "ghl" && co.ghlStoreUrl) { window.location.href = co.ghlStoreUrl; return; }
+    if (co.mode === "stripe" && co.stripeUrl) { window.location.href = co.stripeUrl; return; }
+    emailFallback(co);
   });
+
+  // Returning from a completed Stripe checkout: empty the bag and confirm.
+  (() => {
+    const sp = new URLSearchParams(location.search);
+    if (sp.get("checkout") !== "success") return;
+    cart = []; saveCart();
+    toast("Order confirmed — thank you!");
+    sp.delete("checkout"); sp.delete("session_id");
+    const qs = sp.toString();
+    history.replaceState(null, "", location.pathname + (qs ? "?" + qs : ""));
+  })();
 
   /* ---------- PDP size + add ---------- */
   const pdp = $("#pdp-data");
