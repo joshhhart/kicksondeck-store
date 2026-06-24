@@ -8,7 +8,7 @@
   },
   "checkout": {
     "mode": "stripe",
-    "endpoint": "",
+    "endpoint": "https://kod-checkout.hartjosh15.workers.dev",
     "ghlStoreUrl": "https://shop.kicksondeck.store",
     "stripeUrl": "",
     "contactEmail": "hartjosh15@gmail.com",
