@@ -3,7 +3,6 @@ title: Yeezy Foam Runner Sizing — Do They Run Big or Small?
 date: 2026-06-20
 tag: Sizing
 read: 5 min read
-cover: https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957735
 excerpt: Foam Runners only come in whole sizes and the fit is weird the first time. Here's exactly how to size so you're not stuck guessing.
 description: A clear Yeezy Foam Runner sizing guide — do they run big or small, how to handle half sizes, width and sock fit, with a simple size-down rule.
 products: [onyx-yz-foam-rnnr, ararat-yz-foam-rnnr]

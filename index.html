@@ -22,10 +22,9 @@
 <link rel="stylesheet" href="/assets/styles.css">
 
 <script>window.KOD_CONFIG={"checkout":{"mode":"stripe","endpoint":"https://kod-checkout.hartjosh15.workers.dev","ghlStoreUrl":"https://shop.kicksondeck.store","stripeUrl":"","contactEmail":"hartjosh15@gmail.com","_note":"Stripe checkout runs through the Cloudflare Worker in /checkout-worker. Deploy it (see checkout-worker/README.md), then paste the Worker URL into `endpoint` (e.g. https://kod-checkout.<your-subdomain>.workers.dev) and rebuild. Until `endpoint` is set, Checkout falls back to an email order capture so no sale is lost."},"brand":{"name":"Kicks on Deck","domain":"kicksondeck.store","email":"hartjosh15@gmail.com","phone":"+1 786 577 8035","city":"Palm City, FL"},"analytics":{"ga4Id":"","dataEndpoint":""}};document.documentElement.classList.remove('no-js');</script>
-<script>(function(){try{var k='kod_ab_v1',v=localStorage.getItem(k);if(v!=='a'&&v!=='b'){v=Math.random()<0.5?'a':'b';localStorage.setItem(k,v)}document.documentElement.dataset.variant=v}catch(e){}})();</script>
 </head><body><header class="header" id="header"><div class="container"><div class="header-inner">
-  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="mark">K</span><span>Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
-  <nav class="nav"><a href="/shop/">Shop All</a><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/blog/">Blog</a><a href="/collection/accessories/">Care</a></nav>
+  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="wordmark">Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
+  <nav class="nav pill-nav" id="pill-nav" aria-label="Primary"><span class="pill-ind" aria-hidden="true"></span><a href="/shop/">Shop All</a><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/blog/">Blog</a><a href="/collection/accessories/">Care</a></nav>
   <div class="header-actions">
     <button class="icon-btn" id="search-open" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
     <button class="icon-btn" id="cart-open" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cart-count">0</span></button>
@@ -34,11 +33,11 @@
 </div></div></header>
 <div class="mobile-nav" id="mobile-nav"><a href="/shop/">Shop All</a><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/blog/">Blog</a><a href="/collection/accessories/">Care</a><a href="/shop/">Search</a></div><div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Free U.S. shipping over $150</span><span>1:1 craftsmanship</span><span>Every pair inspected</span><span>Worldwide delivery</span><span>7-day buyer protection</span><span>New drops weekly</span><span>Free U.S. shipping over $150</span><span>1:1 craftsmanship</span><span>Every pair inspected</span><span>Worldwide delivery</span><span>7-day buyer protection</span><span>New drops weekly</span></div></div><main>
 <section class="hero">
-  <div class="hero-bg"><div class="hero-grid-lines"></div></div>
+  <div class="hero-bg"><div class="hero-grid-lines"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
   <img class="hero-img" src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zebra-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037384" alt="Zebra YZ Boost 350 V2">
   <div class="container hero-content">
     <p class="eyebrow reveal in">SNEAKER CULTURE <span class="dot">●</span> NO MARKUP</p>
-    <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt">Deck</span></span></h1>
+    <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
     <div class="hero-sub">
       <p>Grail silhouettes, 1:1 craftsmanship, honest prices. 94 styles in rotation — built to wear, not to flip.</p>
       <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a></div>
@@ -48,10 +47,10 @@
 </section>
 
 <section class="stats">
-  <div class="stat reveal"><div class="num"><span class="volt">94</span></div><div class="lbl">Styles in stock</div></div>
+  <div class="stat reveal"><div class="num"><span class="volt" data-countup="94">0</span></div><div class="lbl">Styles in stock</div></div>
   <div class="stat reveal" data-d="1"><div class="num">1:1</div><div class="lbl">Craftsmanship</div></div>
-  <div class="stat reveal" data-d="2"><div class="num">48<span class="volt">h</span></div><div class="lbl">Dispatch window</div></div>
-  <div class="stat reveal" data-d="3"><div class="num">7d</div><div class="lbl">Buyer protection</div></div>
+  <div class="stat reveal" data-d="2"><div class="num"><span data-countup="48">0</span><span class="volt">h</span></div><div class="lbl">Dispatch window</div></div>
+  <div class="stat reveal" data-d="3"><div class="num"><span data-countup="7">0</span>d</div><div class="lbl">Buyer protection</div></div>
 </section>
 
 <section class="section container">
@@ -81,28 +80,36 @@
 
 <section class="section container" style="padding-top:0">
   <div class="section-head"><div><span class="eyebrow">Most wanted</span><h2>On rotation</h2></div><a class="link-arrow" href="/shop/">View all 94 <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
-  <div class="product-grid"><a class="card reveal" data-d="1" href="/product/zebra-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Zebra YZ Boost 350 V2" data-order="0">
+  <div class="product-grid"><a class="card reveal" data-spotlight data-d="1" href="/product/zebra-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Zebra YZ Boost 350 V2" data-order="0">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zebra-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037384" alt="Zebra YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Zebra YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/beluga-2-0-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Beluga 2.0 YZ Boost 350 V2" data-order="1">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/beluga-2-0-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Beluga 2.0 YZ Boost 350 V2" data-order="1">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Beluga-2_0-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960494" alt="Beluga 2.0 YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Beluga 2.0 YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/black-red-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Black Red YZ Boost 350 V2" data-order="2">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/black-red-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Black Red YZ Boost 350 V2" data-order="2">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Black-Red-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960628" alt="Black Red YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Black Red YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/bone-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Bone YZ Boost 350 V2" data-order="3">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/bone-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Bone YZ Boost 350 V2" data-order="3">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Bone-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960810" alt="Bone YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Bone YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/cream-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cream YZ Boost 350 V2" data-order="4">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/cream-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cream YZ Boost 350 V2" data-order="4">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Cream-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959127" alt="Cream YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Cream YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/static-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Static Reflective YZ Boost 350 V2" data-order="5">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/static-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Static Reflective YZ Boost 350 V2" data-order="5">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Static-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960267" alt="Static Reflective YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Static Reflective YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/onyx-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Onyx YZ Foam RNNR" data-order="6">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/onyx-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Onyx YZ Foam RNNR" data-order="6">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957735" alt="Onyx YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Onyx YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/onyx-yz-slide/" data-collection="slides" data-price="79" data-name="Onyx YZ Slide" data-order="7">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/onyx-yz-slide/" data-collection="slides" data-price="79" data-name="Onyx YZ Slide" data-order="7">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Slide-Shoes.webp?v=1697957713" alt="Onyx YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Onyx YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
   </a></div>
@@ -160,7 +167,7 @@
 </section></main><footer class="footer"><div class="container">
   <div class="footer-top">
     <div>
-      <a class="brand" href="/"><span class="mark">K</span><span>Kicks on Deck</span></a>
+      <a class="brand" href="/"><span class="wordmark">Kicks on Deck</span></a>
       <p class="footer-blurb">Independent footwear for people who chase the silhouette, not the markup. Curated drops, 1:1 craftsmanship, shipped worldwide.</p>
     </div>
     <div class="footer-col"><h5>Shop</h5><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/collection/accessories/">Accessories</a><a href="/shop/">All Styles</a></div>

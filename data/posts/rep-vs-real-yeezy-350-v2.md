@@ -3,7 +3,6 @@ title: Rep vs Real Yeezy 350 V2 — What Actually Differs
 date: 2026-06-22
 tag: Explainers
 read: 6 min read
-cover: https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Beluga-2_0-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960494
 excerpt: An honest breakdown of where reps and retail pairs differ — materials, the boost, the stripe — and what a good 1:1 actually gets right.
 description: An honest, no-hype comparison of rep vs real Yeezy 350 V2 — what differs in materials, sole, stitching and fit, and how to judge a quality 1:1 pair.
 products: [beluga-2-0-yz-boost-350-v2, zebra-yz-boost-350-v2, bone-yz-boost-350-v2]

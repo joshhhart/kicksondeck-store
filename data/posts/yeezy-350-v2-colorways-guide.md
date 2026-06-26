@@ -3,7 +3,6 @@ title: Every Yeezy 350 V2 Colorway, Explained (2026 Visual Guide)
 date: 2026-06-24
 tag: Guides
 read: 7 min read
-cover: https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zebra-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037384
 excerpt: From Zebra to Beluga to the mono and reflective runs — the full map of 350 V2 colorways and which one actually fits your rotation.
 description: A complete, plain-English guide to every major Yeezy Boost 350 V2 colorway — Zebra, Beluga, Bred, Cream, reflective and mono runs — with styling notes for each.
 products: [zebra-yz-boost-350-v2, beluga-2-0-yz-boost-350-v2, cream-yz-boost-350-v2, static-reflective-yz-boost-350-v2]
