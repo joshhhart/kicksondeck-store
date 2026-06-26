@@ -325,7 +325,7 @@
       const cat = await loadCatalog();
       const collTitle = collMap[coll] || "";
       let pool = cat.filter((p) => (p.collection || "") === collTitle);
-      if (wantRefl) { const r = pool.filter((p) => /reflective/i.test(p.name)); if (r.length) pool = r; }
+      if (wantRefl) { const r = pool.filter((p) => /reflective/i.test(p.name) && !/non[\s-]?reflective/i.test(p.name)); if (r.length) pool = r; }
       if (!pool.length) pool = cat;
       const pick = pool[Math.floor(Math.random() * pool.length)];
       track("quiz_complete", { coll, reflective: wantRefl, recommended: pick && pick.slug });
