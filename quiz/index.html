@@ -22,10 +22,9 @@
 <link rel="stylesheet" href="/assets/styles.css">
 
 <script>window.KOD_CONFIG={"checkout":{"mode":"stripe","endpoint":"https://kod-checkout.hartjosh15.workers.dev","ghlStoreUrl":"https://shop.kicksondeck.store","stripeUrl":"","contactEmail":"hartjosh15@gmail.com","_note":"Stripe checkout runs through the Cloudflare Worker in /checkout-worker. Deploy it (see checkout-worker/README.md), then paste the Worker URL into `endpoint` (e.g. https://kod-checkout.<your-subdomain>.workers.dev) and rebuild. Until `endpoint` is set, Checkout falls back to an email order capture so no sale is lost."},"brand":{"name":"Kicks on Deck","domain":"kicksondeck.store","email":"hartjosh15@gmail.com","phone":"+1 786 577 8035","city":"Palm City, FL"},"analytics":{"ga4Id":"","dataEndpoint":""}};document.documentElement.classList.remove('no-js');</script>
-<script>(function(){try{var k='kod_ab_v1',v=localStorage.getItem(k);if(v!=='a'&&v!=='b'){v=Math.random()<0.5?'a':'b';localStorage.setItem(k,v)}document.documentElement.dataset.variant=v}catch(e){}})();</script>
 </head><body><header class="header" id="header"><div class="container"><div class="header-inner">
-  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="mark">K</span><span>Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
-  <nav class="nav"><a href="/shop/">Shop All</a><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/blog/">Blog</a><a href="/collection/accessories/">Care</a></nav>
+  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="wordmark">Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
+  <nav class="nav pill-nav" id="pill-nav" aria-label="Primary"><span class="pill-ind" aria-hidden="true"></span><a href="/shop/">Shop All</a><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/blog/">Blog</a><a href="/collection/accessories/">Care</a></nav>
   <div class="header-actions">
     <button class="icon-btn" id="search-open" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
     <button class="icon-btn" id="cart-open" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cart-count">0</span></button>
@@ -65,7 +64,7 @@
 <script type="application/json" id="quiz-data">{"_note":"Find-your-pair quiz. Each answer carries a 'coll' (collection slug) and optional 'reflective' flag. app.js tallies them to recommend a product from the catalog and posts results to the data worker.","questions":[{"q":"What's the vibe you're chasing?","a":[{"t":"Everyday clean","coll":"350-v2"},{"t":"Comfort all day","coll":"foam-rnnr"},{"t":"Summer / off-duty","coll":"slides"},{"t":"Loud statement piece","coll":"350-v2","reflective":true}]},{"q":"Pick your palette","a":[{"t":"Neutrals & earth tones","coll":"350-v2"},{"t":"Blacked-out mono","coll":"slides"},{"t":"Sand & bone","coll":"foam-rnnr"},{"t":"Reflective / tech","coll":"350-v2","reflective":true}]},{"q":"Where do they get worn?","a":[{"t":"Daily rotation, on feet","coll":"350-v2"},{"t":"Lounging / quick runs","coll":"slides"},{"t":"Gym & active days","coll":"foam-rnnr"},{"t":"When I want to flex","coll":"350-v2","reflective":true}]}]}</script></main><footer class="footer"><div class="container">
   <div class="footer-top">
     <div>
-      <a class="brand" href="/"><span class="mark">K</span><span>Kicks on Deck</span></a>
+      <a class="brand" href="/"><span class="wordmark">Kicks on Deck</span></a>
       <p class="footer-blurb">Independent footwear for people who chase the silhouette, not the markup. Curated drops, 1:1 craftsmanship, shipped worldwide.</p>
     </div>
     <div class="footer-col"><h5>Shop</h5><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/collection/accessories/">Accessories</a><a href="/shop/">All Styles</a></div>

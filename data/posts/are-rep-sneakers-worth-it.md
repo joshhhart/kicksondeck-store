@@ -3,7 +3,6 @@ title: Are Rep Sneakers Worth It? An Honest Buyer's Guide
 date: 2026-06-12
 tag: Explainers
 read: 6 min read
-cover: https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Antlia-Yeezy-Boost-350-V2-Reflective-Running-Shoes.webp?v=1697959545
 excerpt: Reps aren't for everyone. Here's the honest case for and against — quality tiers, the resale math, and how to buy without getting burned.
 description: An honest guide to whether rep sneakers are worth it — quality tiers, the resale-price math, risks, and how to buy a good 1:1 pair without getting burned.
 products: [antlia-yz-boost-350-v2-reflective, zebra-yz-boost-350-v2]

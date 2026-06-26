@@ -3,7 +3,6 @@ title: The Best Yeezy 350 V2 Colorways to Buy in 2026
 date: 2026-06-15
 tag: Lists
 read: 6 min read
-cover: https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Cream-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959127
 excerpt: If you're buying one pair this year, make it count. The colorways that look best, wear hardest, and never date — ranked.
 description: Our pick of the best Yeezy 350 V2 colorways to buy in 2026 — the most versatile, hardest-wearing and timeless pairs, ranked with honest reasoning.
 products: [cream-yz-boost-350-v2, zebra-yz-boost-350-v2, bone-yz-boost-350-v2, static-reflective-yz-boost-350-v2]

@@ -340,8 +340,113 @@
     renderStep();
   }
 
-  /* ---------- A/B color test (variant set pre-paint in <head>) ---------- */
-  track("experiment_view", { variant: document.documentElement.dataset.variant || "a" });
+  /* ============================================================
+     React Bits effects — vanilla ports (pill nav · particles · count-up · spark · spotlight)
+     ============================================================ */
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Pill Nav — a filled pill slides to the hovered/active link
+  (() => {
+    const nav = $("#pill-nav"); if (!nav) return;
+    const ind = nav.querySelector(".pill-ind");
+    const links = $$("a", nav);
+    const active = nav.querySelector("a.active");
+    const move = (el) => {
+      if (!el || !ind) return;
+      links.forEach((l) => l.classList.remove("on-pill"));
+      el.classList.add("on-pill");
+      ind.style.left = el.offsetLeft + "px";
+      ind.style.width = el.offsetWidth + "px";
+      nav.classList.add("ready");
+    };
+    const reset = () => { if (active) move(active); else { nav.classList.remove("ready"); links.forEach((l) => l.classList.remove("on-pill")); } };
+    links.forEach((l) => l.addEventListener("mouseenter", () => move(l)));
+    nav.addEventListener("mouseleave", reset);
+    if (active) requestAnimationFrame(reset);
+    window.addEventListener("resize", reset, { passive: true });
+  })();
+
+  // Particles — drifting volt field behind the hero, lightly cursor-reactive
+  (() => {
+    const cv = $("#hero-particles"); if (!cv || reduceMotion) return;
+    const ctx = cv.getContext("2d"); if (!ctx) return;
+    let w = 0, h = 0, dpr = 1, parts = [], raf = 0; const mouse = { x: -999, y: -999 };
+    const count = () => Math.min(64, Math.round(window.innerWidth / 24));
+    function size() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      const r = cv.getBoundingClientRect(); w = r.width; h = r.height;
+      cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function init() { size(); parts = Array.from({ length: count() }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, r: Math.random() * 1.6 + 0.4 })); }
+    function frame() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of parts) {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+        const near = Math.hypot(p.x - mouse.x, p.y - mouse.y) < 120;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283);
+        ctx.fillStyle = near ? "rgba(216,255,62,0.9)" : "rgba(216,255,62,0.32)"; ctx.fill();
+      }
+      for (let i = 0; i < parts.length; i++) for (let j = i + 1; j < parts.length; j++) {
+        const a = parts[i], b = parts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 92) { ctx.globalAlpha = (1 - d / 92) * 0.12; ctx.strokeStyle = "#d8ff3e"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); ctx.globalAlpha = 1; }
+      }
+      raf = requestAnimationFrame(frame);
+    }
+    init(); frame();
+    window.addEventListener("resize", () => { cancelAnimationFrame(raf); init(); frame(); }, { passive: true });
+    window.addEventListener("mousemove", (e) => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; }, { passive: true });
+    window.addEventListener("mouseout", () => { mouse.x = mouse.y = -999; }, { passive: true });
+  })();
+
+  // Count Up — stats tick up when scrolled into view
+  (() => {
+    const els = $$("[data-countup]"); if (!els.length) return;
+    if (reduceMotion) { els.forEach((el) => (el.textContent = el.dataset.countup)); return; }
+    const run = (el) => {
+      const target = parseFloat(el.dataset.countup) || 0, dur = 1100, t0 = performance.now();
+      const tick = (t) => { const p = Math.min(1, (t - t0) / dur); el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    };
+    const io2 = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { run(e.target); io2.unobserve(e.target); } }), { threshold: 0.6 });
+    els.forEach((el) => io2.observe(el));
+  })();
+
+  // Click Spark — volt burst on click
+  (() => {
+    if (reduceMotion) return;
+    let cv, ctx, raf = 0; const sparks = [];
+    const resize = () => { const dpr = Math.min(2, devicePixelRatio || 1); cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    function ensure() { if (cv) return; cv = document.createElement("canvas"); cv.id = "spark-canvas"; document.body.appendChild(cv); ctx = cv.getContext("2d"); resize(); window.addEventListener("resize", resize, { passive: true }); }
+    function loop() {
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      for (let i = sparks.length - 1; i >= 0; i--) { if (sparks[i].life <= 0) sparks.splice(i, 1); }
+      for (const s of sparks) {
+        s.life--; s.x += s.vx; s.y += s.vy; s.vy += 0.05;
+        ctx.globalAlpha = Math.max(0, s.life / s.max); ctx.strokeStyle = "#d8ff3e"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.vx * 2, s.y - s.vy * 2); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      raf = sparks.length ? requestAnimationFrame(loop) : 0;
+    }
+    window.addEventListener("click", (e) => {
+      ensure();
+      const n = 10;
+      for (let i = 0; i < n; i++) { const a = (Math.PI * 2 * i) / n + Math.random() * 0.4, sp = 2 + Math.random() * 3; sparks.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 26, max: 26 }); }
+      if (!raf) loop();
+    }, { passive: true });
+  })();
+
+  // Spotlight Card — radial glow follows the cursor across product cards
+  if (!reduceMotion) {
+    $$("[data-spotlight]").forEach((cardEl) => {
+      cardEl.addEventListener("pointermove", (e) => {
+        const r = cardEl.getBoundingClientRect();
+        cardEl.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
+        cardEl.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
+      }, { passive: true });
+    });
+  }
 
   renderCart();
 })();

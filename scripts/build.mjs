@@ -100,7 +100,6 @@ function head(opts) {
 <link rel="stylesheet" href="/assets/styles.css">
 ${extraCss}${analyticsTags()}
 <script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand, analytics: { ga4Id: AN.ga4Id || "", dataEndpoint: AN.dataEndpoint || "" } })};document.documentElement.classList.remove('no-js');</script>
-<script>(function(){try{var k='kod_ab_v1',v=localStorage.getItem(k);if(v!=='a'&&v!=='b'){v=Math.random()<0.5?'a':'b';localStorage.setItem(k,v)}document.documentElement.dataset.variant=v}catch(e){}})();</script>
 </head>`;
 }
 
@@ -114,8 +113,8 @@ function analyticsTags() {
 
 function header(active = "") {
   return `<header class="header" id="header"><div class="container"><div class="header-inner">
-  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="mark">K</span><span>Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
-  <nav class="nav">${navLinks.map((l) => `<a href="${l.href}"${active === l.href ? ' class="active"' : ""}>${l.label}</a>`).join("")}</nav>
+  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="wordmark">Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
+  <nav class="nav pill-nav" id="pill-nav" aria-label="Primary"><span class="pill-ind" aria-hidden="true"></span>${navLinks.map((l) => `<a href="${l.href}"${active === l.href ? ' class="active"' : ""}>${l.label}</a>`).join("")}</nav>
   <div class="header-actions">
     <button class="icon-btn" id="search-open" aria-label="Search">${I.search}</button>
     <button class="icon-btn" id="cart-open" aria-label="Open bag">${I.bag}<span class="cart-count" id="cart-count">0</span></button>
@@ -164,7 +163,7 @@ function footer() {
   return `<footer class="footer"><div class="container">
   <div class="footer-top">
     <div>
-      <a class="brand" href="/"><span class="mark">K</span><span>Kicks on Deck</span></a>
+      <a class="brand" href="/"><span class="wordmark">Kicks on Deck</span></a>
       <p class="footer-blurb">Independent footwear for people who chase the silhouette, not the markup. Curated drops, 1:1 craftsmanship, shipped worldwide.</p>
     </div>
     <div class="footer-col"><h5>Shop</h5>${collections.map((c) => `<a href="/collection/${c.slug}/">${c.title}</a>`).join("")}<a href="/shop/">All Styles</a></div>
@@ -191,7 +190,8 @@ function card(p, i = 0) {
   const refl = /reflective/i.test(p.name);
   const acc = p.collection === "accessories";
   const badge = !p.inStock ? `<span class="badge soft">Sold out</span>` : refl ? `<span class="badge volt">Reflective ✦</span>` : acc ? `<span class="badge soft">Care</span>` : "";
-  return `<a class="card reveal" data-d="${(i % 4) + 1}" href="/product/${p.slug}/" data-collection="${p.collection}" data-price="${p.minPrice}" data-name="${esc(p.name)}" data-order="${i}">
+  return `<a class="card reveal" data-spotlight data-d="${(i % 4) + 1}" href="/product/${p.slug}/" data-collection="${p.collection}" data-price="${p.minPrice}" data-name="${esc(p.name)}" data-order="${i}">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media">${badge ? `<div class="badge-wrap">${badge}</div>` : ""}<img src="${p.image}" alt="${esc(p.name)}" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">${esc(p.name)}</span><span class="price">${priceLabel(p)}</span></div><span class="sub">${colTitle(p.collection)}${refl ? " · Reflective" : ""}</span></div>
   </a>`;
@@ -208,11 +208,11 @@ function homePage() {
 
   const body = `
 <section class="hero">
-  <div class="hero-bg"><div class="hero-grid-lines"></div></div>
+  <div class="hero-bg"><div class="hero-grid-lines"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
   <img class="hero-img" src="${hero.image}" alt="${esc(hero.name)}">
   <div class="container hero-content">
     <p class="eyebrow reveal in">SNEAKER CULTURE <span class="dot">●</span> NO MARKUP</p>
-    <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt">Deck</span></span></h1>
+    <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
     <div class="hero-sub">
       <p>Grail silhouettes, 1:1 craftsmanship, honest prices. ${products.length} styles in rotation — built to wear, not to flip.</p>
       <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation ${I.arrow}</a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a></div>
@@ -222,10 +222,10 @@ function homePage() {
 </section>
 
 <section class="stats">
-  <div class="stat reveal"><div class="num"><span class="volt">${products.length}</span></div><div class="lbl">Styles in stock</div></div>
+  <div class="stat reveal"><div class="num"><span class="volt" data-countup="${products.length}">0</span></div><div class="lbl">Styles in stock</div></div>
   <div class="stat reveal" data-d="1"><div class="num">1:1</div><div class="lbl">Craftsmanship</div></div>
-  <div class="stat reveal" data-d="2"><div class="num">48<span class="volt">h</span></div><div class="lbl">Dispatch window</div></div>
-  <div class="stat reveal" data-d="3"><div class="num">7d</div><div class="lbl">Buyer protection</div></div>
+  <div class="stat reveal" data-d="2"><div class="num"><span data-countup="48">0</span><span class="volt">h</span></div><div class="lbl">Dispatch window</div></div>
+  <div class="stat reveal" data-d="3"><div class="num"><span data-countup="7">0</span>d</div><div class="lbl">Buyer protection</div></div>
 </section>
 
 <section class="section container">
@@ -451,7 +451,49 @@ const posts = fs.existsSync(POSTS_DIR)
   : [];
 
 const fmtDate = (d) => { try { return new Date(d + "T00:00:00Z").toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }); } catch { return d || ""; } };
-const postImg = (p) => p.meta.cover || OG_DEFAULT;
+const postImg = (p) => p.cover || OG_DEFAULT;
+
+// Code-generated branded cover art (no shoe photos): deterministic per-slug SVG —
+// near-black canvas, green glow, aerospace geometry + grain. Written to assets/blog/<slug>.svg.
+function blogCover(p) {
+  const slug = p.slug || "post";
+  let s = 2166136261; for (let i = 0; i < slug.length; i++) { s ^= slug.charCodeAt(i); s = Math.imul(s, 16777619) >>> 0; }
+  const rand = () => { s = (Math.imul(s, 1103515245) + 12345) >>> 0; return s / 4294967296; };
+  const W = 1200, H = 750, volt = "#d8ff3e", bg = "#0a0a0b";
+  const gx = Math.round(180 + rand() * 840), gy = Math.round(120 + rand() * 380);
+  const variant = Math.floor(rand() * 3);
+  const tag = String(p.meta.tag || "Journal").toUpperCase();
+  let geo = "";
+  if (variant === 0) {
+    geo = Array.from({ length: 7 }, (_, i) => `<circle cx="${gx}" cy="${gy}" r="${90 + i * 95}" fill="none" stroke="${volt}" stroke-width="1.2" opacity="${(0.22 - i * 0.025).toFixed(3)}"/>`).join("");
+  } else if (variant === 1) {
+    geo = Array.from({ length: 6 }, (_, i) => { const x = (i + 0.5) / 6 * W; return `<line x1="${Math.round(x - 180)}" y1="0" x2="${Math.round(x + 180)}" y2="${H}" stroke="${volt}" stroke-width="${(1 + rand() * 2).toFixed(1)}" opacity="${(0.05 + rand() * 0.1).toFixed(3)}"/>`; }).join("");
+  } else {
+    let d = "";
+    for (let y = 60; y < H; y += 46) for (let x = 60; x < W; x += 46) {
+      const dist = Math.hypot(x - gx, y - gy), op = Math.max(0, 0.5 - dist / 900);
+      if (op > 0.02) d += `<circle cx="${x}" cy="${y}" r="${(1 + op * 2.5).toFixed(1)}" fill="${volt}" opacity="${op.toFixed(3)}"/>`;
+    }
+    geo = d;
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(p.meta.title || "Kicks on Deck")}">
+<defs>
+<radialGradient id="glow" cx="${(gx / W * 100).toFixed(1)}%" cy="${(gy / H * 100).toFixed(1)}%" r="60%"><stop offset="0%" stop-color="${volt}" stop-opacity="0.30"/><stop offset="45%" stop-color="${volt}" stop-opacity="0.05"/><stop offset="100%" stop-color="${volt}" stop-opacity="0"/></radialGradient>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></linearGradient>
+</defs>
+<rect width="${W}" height="${H}" fill="${bg}"/>
+<rect width="${W}" height="${H}" fill="url(#glow)"/>
+${geo}
+<rect width="${W}" height="${H}" fill="url(#vig)"/>
+<rect width="${W}" height="${H}" filter="url(#grain)" opacity="0.6"/>
+<g font-family="ui-monospace, monospace">
+<text x="64" y="88" fill="${volt}" font-size="26" letter-spacing="6" font-weight="700">${esc(tag)}</text>
+<text x="64" y="${H - 108}" fill="#f4f4f1" font-size="66" font-weight="800" letter-spacing="-1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
+<text x="64" y="${H - 62}" fill="#9a9aa0" font-size="22" letter-spacing="4">kicksondeck.store</text>
+</g>
+</svg>`;
+}
 
 function postCard(p) {
   return `<a class="post-card reveal" href="/blog/${p.slug}/">
@@ -494,7 +536,7 @@ function blogPostPage(p) {
     <h1>${esc(p.meta.title || p.slug)}</h1>
     <p class="post-byline">Kicks on Deck · ${fmtDate(p.meta.date)}${p.meta.read ? ` · ${esc(p.meta.read)}` : ""}</p>
   </header>
-  ${p.meta.cover ? `<div class="post-hero reveal"><img src="${p.meta.cover}" alt="${esc(p.meta.title || "")}"></div>` : ""}
+  <div class="post-hero reveal"><img src="${postImg(p)}" alt="${esc(p.meta.title || "")}"></div>
   <div class="post-body reveal">${p.html}</div>
   ${related.length ? `<div class="section" style="padding-top:30px"><div class="section-head"><h2 style="font-size:clamp(1.4rem,3.5vw,2.2rem)">Shop the pairs</h2><a class="link-arrow" href="/shop/">All styles <span>${I.arrow}</span></a></div><div class="product-grid">${related.map((r, i) => card(r, i)).join("")}</div></div>` : ""}
 </article>
@@ -543,6 +585,7 @@ for (const c of collections) {
 for (const p of products) { write(`product/${p.slug}/index.html`, productPage(p)); n++; }
 
 // blog + quiz
+for (const p of posts) { p.cover = `/assets/blog/${p.slug}.svg`; write(`assets/blog/${p.slug}.svg`, blogCover(p)); }
 write("blog/index.html", blogIndexPage()); n++;
 for (const p of posts) { write(`blog/${p.slug}/index.html`, blogPostPage(p)); n++; }
 write("quiz/index.html", quizPage()); n++;

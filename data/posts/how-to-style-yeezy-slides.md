@@ -3,7 +3,6 @@ title: How to Style Yeezy Slides — 6 Fits That Actually Work
 date: 2026-06-18
 tag: Styling
 read: 5 min read
-cover: https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ararat-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957846
 excerpt: Slides aren't just for the house. Six easy ways to wear them — sweat sets, denim, shorts season — without looking like you gave up.
 description: Six easy, real-world ways to style Yeezy Slides — with sweats, denim, tailored shorts and more — plus a quick sizing note so they fit right.
 products: [onyx-yz-slide, bone-yz-slide]

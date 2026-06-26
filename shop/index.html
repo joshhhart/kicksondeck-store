@@ -22,10 +22,9 @@
 <link rel="stylesheet" href="/assets/styles.css">
 
 <script>window.KOD_CONFIG={"checkout":{"mode":"stripe","endpoint":"https://kod-checkout.hartjosh15.workers.dev","ghlStoreUrl":"https://shop.kicksondeck.store","stripeUrl":"","contactEmail":"hartjosh15@gmail.com","_note":"Stripe checkout runs through the Cloudflare Worker in /checkout-worker. Deploy it (see checkout-worker/README.md), then paste the Worker URL into `endpoint` (e.g. https://kod-checkout.<your-subdomain>.workers.dev) and rebuild. Until `endpoint` is set, Checkout falls back to an email order capture so no sale is lost."},"brand":{"name":"Kicks on Deck","domain":"kicksondeck.store","email":"hartjosh15@gmail.com","phone":"+1 786 577 8035","city":"Palm City, FL"},"analytics":{"ga4Id":"","dataEndpoint":""}};document.documentElement.classList.remove('no-js');</script>
-<script>(function(){try{var k='kod_ab_v1',v=localStorage.getItem(k);if(v!=='a'&&v!=='b'){v=Math.random()<0.5?'a':'b';localStorage.setItem(k,v)}document.documentElement.dataset.variant=v}catch(e){}})();</script>
 </head><body><header class="header" id="header"><div class="container"><div class="header-inner">
-  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="mark">K</span><span>Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
-  <nav class="nav"><a href="/shop/" class="active">Shop All</a><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/blog/">Blog</a><a href="/collection/accessories/">Care</a></nav>
+  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="wordmark">Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
+  <nav class="nav pill-nav" id="pill-nav" aria-label="Primary"><span class="pill-ind" aria-hidden="true"></span><a href="/shop/" class="active">Shop All</a><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/blog/">Blog</a><a href="/collection/accessories/">Care</a></nav>
   <div class="header-actions">
     <button class="icon-btn" id="search-open" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
     <button class="icon-btn" id="cart-open" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cart-count">0</span></button>
@@ -48,286 +47,380 @@
     <span class="result-count" id="result-count">94 styles</span>
     <div class="sort-wrap"><label for="sort-select">Sort</label><select id="sort-select"><option value="featured">Featured</option><option value="price-asc">Price ↑</option><option value="price-desc">Price ↓</option><option value="name">A–Z</option></select></div>
   </div>
-  <div class="product-grid" id="product-grid"><a class="card reveal" data-d="1" href="/product/antlia-yz-boost-350-v2-reflective/" data-collection="350-v2" data-price="149" data-name="Antlia YZ Boost 350 V2 (Reflective)" data-order="0">
+  <div class="product-grid" id="product-grid"><a class="card reveal" data-spotlight data-d="1" href="/product/antlia-yz-boost-350-v2-reflective/" data-collection="350-v2" data-price="149" data-name="Antlia YZ Boost 350 V2 (Reflective)" data-order="0">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Antlia-Yeezy-Boost-350-V2-Reflective-Running-Shoes.webp?v=1697959545" alt="Antlia YZ Boost 350 V2 (Reflective)" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Antlia YZ Boost 350 V2 (Reflective)</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/ash-blue-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Ash Blue YZ Boost 350 V2" data-order="1">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/ash-blue-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Ash Blue YZ Boost 350 V2" data-order="1">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ash-Blue-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959498" alt="Ash Blue YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Ash Blue YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/ash-pearl-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Ash Pearl YZ Boost 350 V2" data-order="2">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/ash-pearl-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Ash Pearl YZ Boost 350 V2" data-order="2">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ash-Pearl-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959893" alt="Ash Pearl YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Ash Pearl YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/ash-stone-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Ash Stone YZ Boost 350 V2" data-order="3">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/ash-stone-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Ash Stone YZ Boost 350 V2" data-order="3">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ash-Stone-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959455" alt="Ash Stone YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Ash Stone YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/beluga-2-0-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Beluga 2.0 YZ Boost 350 V2" data-order="4">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/beluga-2-0-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Beluga 2.0 YZ Boost 350 V2" data-order="4">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Beluga-2_0-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960494" alt="Beluga 2.0 YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Beluga 2.0 YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/beluga-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Beluga Reflective YZ Boost 350 V2" data-order="5">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/beluga-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Beluga Reflective YZ Boost 350 V2" data-order="5">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Beluga-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960782" alt="Beluga Reflective YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Beluga Reflective YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/black-red-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Black Red YZ Boost 350 V2" data-order="6">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/black-red-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Black Red YZ Boost 350 V2" data-order="6">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Black-Red-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960628" alt="Black Red YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Black Red YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/blue-tint-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Blue Tint YZ Boost 350 V2" data-order="7">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/blue-tint-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Blue Tint YZ Boost 350 V2" data-order="7">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Blue-Tint-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959872" alt="Blue Tint YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Blue Tint YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/bone-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Bone YZ Boost 350 V2" data-order="8">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/bone-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Bone YZ Boost 350 V2" data-order="8">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Bone-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960810" alt="Bone YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Bone YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/butter-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Butter YZ Boost 350 V2" data-order="9">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/butter-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Butter YZ Boost 350 V2" data-order="9">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Butter-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959426" alt="Butter YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Butter YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/carbon-beluga-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Carbon Beluga YZ Boost 350 V2" data-order="10">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/carbon-beluga-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Carbon Beluga YZ Boost 350 V2" data-order="10">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Carbon-Beluga-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697957656" alt="Carbon Beluga YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Carbon Beluga YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/carbon-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Carbon YZ Boost 350 V2" data-order="11">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/carbon-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Carbon YZ Boost 350 V2" data-order="11">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Carbon-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960457" alt="Carbon YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Carbon YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/cinder-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cinder (Non-Reflective) YZ Boost 350 V2" data-order="12">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/cinder-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cinder (Non-Reflective) YZ Boost 350 V2" data-order="12">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Cinder-Non-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959399" alt="Cinder (Non-Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Cinder (Non-Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/cinder-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cinder (Reflective) YZ Boost 350 V2" data-order="13">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/cinder-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cinder (Reflective) YZ Boost 350 V2" data-order="13">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Cinder-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959345" alt="Cinder (Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Cinder (Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/citrin-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Citrin (Non-Reflective) YZ Boost 350 V2" data-order="14">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/citrin-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Citrin (Non-Reflective) YZ Boost 350 V2" data-order="14">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Citrin-Non-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959293" alt="Citrin (Non-Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Citrin (Non-Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/citrin-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Citrin (Reflective) YZ Boost 350 V2" data-order="15">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/citrin-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Citrin (Reflective) YZ Boost 350 V2" data-order="15">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Citrin-Reflective-Yeezy-Boost-350-V2-Running-Shoes.jpg?v=1697959252" alt="Citrin (Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Citrin (Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/clay-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Clay YZ Boost 350 V2" data-order="16">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/clay-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Clay YZ Boost 350 V2" data-order="16">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Clay-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959208" alt="Clay YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Clay YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/cloud-white-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cloud white (Non-Reflective) YZ Boost 350 V2" data-order="17">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/cloud-white-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cloud white (Non-Reflective) YZ Boost 350 V2" data-order="17">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Cloud-white-Non-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959180" alt="Cloud white (Non-Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Cloud white (Non-Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/core-black-red-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Core Black Red YZ Boost 350 V2" data-order="18">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/core-black-red-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Core Black Red YZ Boost 350 V2" data-order="18">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Core-Black-Red-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960581" alt="Core Black Red YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Core Black Red YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/core-black-white-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Core Black White YZ Boost 350 V2" data-order="19">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/core-black-white-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Core Black White YZ Boost 350 V2" data-order="19">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Core-Black-White-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960538" alt="Core Black White YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Core Black White YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/cream-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cream YZ Boost 350 V2" data-order="20">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/cream-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Cream YZ Boost 350 V2" data-order="20">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Cream-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959127" alt="Cream YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Cream YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/dazzling-blue-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Dazzling Blue YZ Boost 350 V2" data-order="21">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/dazzling-blue-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Dazzling Blue YZ Boost 350 V2" data-order="21">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Dazzling-Blue-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960681" alt="Dazzling Blue YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Dazzling Blue YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/desert-sage-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Desert Sage YZ Boost 350 V2" data-order="22">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/desert-sage-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Desert Sage YZ Boost 350 V2" data-order="22">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Desert-Sage-Yeezy-Boost-350-V2-Running-Shoes.png?v=1697959848" alt="Desert Sage YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Desert Sage YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/earth-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Earth YZ Boost 350 V2" data-order="23">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/earth-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Earth YZ Boost 350 V2" data-order="23">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Earth-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959093" alt="Earth YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Earth YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/fade-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Fade YZ Boost 350 V2" data-order="24">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/fade-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Fade YZ Boost 350 V2" data-order="24">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Fade-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959044" alt="Fade YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Fade YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/flax-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Flax YZ Boost 350 V2" data-order="25">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/flax-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Flax YZ Boost 350 V2" data-order="25">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Flax-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959744" alt="Flax YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Flax YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/glow-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Glow YZ Boost 350 V2" data-order="26">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/glow-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Glow YZ Boost 350 V2" data-order="26">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Glow-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960866" alt="Glow YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Glow YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/hyperspace-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Hyperspace YZ Boost 350 V2" data-order="27">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/hyperspace-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Hyperspace YZ Boost 350 V2" data-order="27">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Hyperspace-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959993" alt="Hyperspace YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Hyperspace YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/israfil-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Israfil YZ Boost 350 V2" data-order="28">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/israfil-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Israfil YZ Boost 350 V2" data-order="28">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Israfil-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959800" alt="Israfil YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Israfil YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/light-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Light YZ Boost 350 V2" data-order="29">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/light-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Light YZ Boost 350 V2" data-order="29">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Light-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960294" alt="Light YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Light YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/linen-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Linen YZ Boost 350 V2" data-order="30">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/linen-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Linen YZ Boost 350 V2" data-order="30">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Linen-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960095" alt="Linen YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Linen YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/lundmark-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Lundmark (Non-Reflective) YZ Boost 350 V2" data-order="31">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/lundmark-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Lundmark (Non-Reflective) YZ Boost 350 V2" data-order="31">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Lundmark-Non-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958994" alt="Lundmark (Non-Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Lundmark (Non-Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/lundmark-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Lundmark (Reflective) YZ Boost 350 V2" data-order="32">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/lundmark-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Lundmark (Reflective) YZ Boost 350 V2" data-order="32">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Lundmark-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958943" alt="Lundmark (Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Lundmark (Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/marsh-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Marsh YZ Boost 350 V2" data-order="33">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/marsh-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Marsh YZ Boost 350 V2" data-order="33">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Marsh-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958891" alt="Marsh YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Marsh YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/mono-cinder-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Mono Cinder YZ Boost 350 V2" data-order="34">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/mono-cinder-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Mono Cinder YZ Boost 350 V2" data-order="34">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mono-Cinder-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958838" alt="Mono Cinder YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Mono Cinder YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/mono-clay-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Mono Clay YZ Boost 350 V2" data-order="35">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/mono-clay-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Mono Clay YZ Boost 350 V2" data-order="35">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mono-Clay-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958791" alt="Mono Clay YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Mono Clay YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/mono-ice-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Mono Ice YZ Boost 350 V2" data-order="36">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/mono-ice-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Mono Ice YZ Boost 350 V2" data-order="36">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mono-Ice-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960138" alt="Mono Ice YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Mono Ice YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/mono-mist-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Mono Mist YZ Boost 350 V2" data-order="37">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/mono-mist-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Mono Mist YZ Boost 350 V2" data-order="37">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mono-Mist-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958748" alt="Mono Mist YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Mono Mist YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/mx-dark-salt-grey-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="MX Dark Salt Grey YZ Boost 350 V2" data-order="38">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/mx-dark-salt-grey-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="MX Dark Salt Grey YZ Boost 350 V2" data-order="38">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MX-Dark-Salt-Grey-Yeezy-Boost-350-V2-Running-Shoes.jpg?v=1697960177" alt="MX Dark Salt Grey YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">MX Dark Salt Grey YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/mx-frost-blue-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="MX Frost Blue YZ Boost 350 V2" data-order="39">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/mx-frost-blue-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="MX Frost Blue YZ Boost 350 V2" data-order="39">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MX-Frost-Blue-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958710" alt="MX Frost Blue YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">MX Frost Blue YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/mx-oat-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="MX Oat YZ Boost 350 V2" data-order="40">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/mx-oat-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="MX Oat YZ Boost 350 V2" data-order="40">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MX-Oat-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960034" alt="MX Oat YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">MX Oat YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/mx-rock-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="MX Rock YZ Boost 350 V2" data-order="41">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/mx-rock-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="MX Rock YZ Boost 350 V2" data-order="41">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MX-Rock-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960218" alt="MX Rock YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">MX Rock YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/natural-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Natural YZ Boost 350 V2" data-order="42">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/natural-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Natural YZ Boost 350 V2" data-order="42">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Natural-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958669" alt="Natural YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Natural YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/salt-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Salt YZ Boost 350 V2" data-order="43">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/salt-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Salt YZ Boost 350 V2" data-order="43">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Salt-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959594" alt="Salt YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Salt YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/sand-taupe-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Sand Taupe YZ Boost 350 V2" data-order="44">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/sand-taupe-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Sand Taupe YZ Boost 350 V2" data-order="44">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Sand-Taupe-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958623" alt="Sand Taupe YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Sand Taupe YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/semi-frozen-yellow-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Semi Frozen Yellow YZ Boost 350 V2" data-order="45">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/semi-frozen-yellow-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Semi Frozen Yellow YZ Boost 350 V2" data-order="45">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Semi-Frozen-Yellow-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960397" alt="Semi Frozen Yellow YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Semi Frozen Yellow YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/sesame-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Sesame YZ Boost 350 V2" data-order="46">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/sesame-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Sesame YZ Boost 350 V2" data-order="46">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Sesame-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959639" alt="Sesame YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Sesame YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/slate-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Slate YZ Boost 350 V2" data-order="47">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/slate-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Slate YZ Boost 350 V2" data-order="47">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Slate-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960727" alt="Slate YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Slate YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/static-black-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Static Black Reflective YZ Boost 350 V2" data-order="48">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/static-black-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Static Black Reflective YZ Boost 350 V2" data-order="48">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Static-Black-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959935" alt="Static Black Reflective YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Static Black Reflective YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/static-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Static Reflective YZ Boost 350 V2" data-order="49">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/static-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Static Reflective YZ Boost 350 V2" data-order="49">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Static-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960267" alt="Static Reflective YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Static Reflective YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/sulfur-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Sulfur YZ Boost 350 V2" data-order="50">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/sulfur-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Sulfur YZ Boost 350 V2" data-order="50">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Sulfur-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958578" alt="Sulfur YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Sulfur YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/synth-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Synth (Non-Reflective) YZ Boost 350 V2" data-order="51">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/synth-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Synth (Non-Reflective) YZ Boost 350 V2" data-order="51">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Synth-Non-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958528" alt="Synth (Non-Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Synth (Non-Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/synth-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Synth (Reflective) YZ Boost 350 V2" data-order="52">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/synth-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Synth (Reflective) YZ Boost 350 V2" data-order="52">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Synth-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958461" alt="Synth (Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Synth (Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/tail-light-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Tail Light YZ Boost 350 V2" data-order="53">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/tail-light-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Tail Light YZ Boost 350 V2" data-order="53">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Tail-Light-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960351" alt="Tail Light YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Tail Light YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/trfrm-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Trfrm YZ Boost 350 V2" data-order="54">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/trfrm-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Trfrm YZ Boost 350 V2" data-order="54">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Trfrm-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958403" alt="Trfrm YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Trfrm YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/yecheil-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yecheil Reflective YZ Boost 350 V2" data-order="55">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/yecheil-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yecheil Reflective YZ Boost 350 V2" data-order="55">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Yecheil-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037279" alt="Yecheil Reflective YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Yecheil Reflective YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/yeezreel-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yeezreel (Non-Reflective) YZ Boost 350 V2" data-order="56">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/yeezreel-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yeezreel (Non-Reflective) YZ Boost 350 V2" data-order="56">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Yeezreel-Non-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958351" alt="Yeezreel (Non-Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Yeezreel (Non-Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/yeezreel-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yeezreel (Reflective) YZ Boost 350 V2" data-order="57">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/yeezreel-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yeezreel (Reflective) YZ Boost 350 V2" data-order="57">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Yeezreel-Reflective-Yeezy-Boost-350-V2-Running-Shoes.png?v=1697958292" alt="Yeezreel (Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Yeezreel (Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/yeshaya-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yeshaya (Non-Reflective) YZ Boost 350 V2" data-order="58">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/yeshaya-non-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yeshaya (Non-Reflective) YZ Boost 350 V2" data-order="58">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Yeshaya-Non-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958223" alt="Yeshaya (Non-Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Yeshaya (Non-Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/yeshaya-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yeshaya (Reflective) YZ Boost 350 V2" data-order="59">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/yeshaya-reflective-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Yeshaya (Reflective) YZ Boost 350 V2" data-order="59">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge volt">Reflective ✦</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Yeshaya-Reflective-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697958155" alt="Yeshaya (Reflective) YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Yeshaya (Reflective) YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2 · Reflective</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/zebra-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Zebra YZ Boost 350 V2" data-order="60">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/zebra-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Zebra YZ Boost 350 V2" data-order="60">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zebra-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037384" alt="Zebra YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Zebra YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/zyon-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Zyon YZ Boost 350 V2" data-order="61">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/zyon-yz-boost-350-v2/" data-collection="350-v2" data-price="149" data-name="Zyon YZ Boost 350 V2" data-order="61">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zyon-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959692" alt="Zyon YZ Boost 350 V2" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Zyon YZ Boost 350 V2</span><span class="price">$149</span></div><span class="sub">350 V2</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/ararat-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Ararat YZ Foam RNNR" data-order="62">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/ararat-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Ararat YZ Foam RNNR" data-order="62">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ararat-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957846" alt="Ararat YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Ararat YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/cinder-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Cinder YZ Foam RNNR" data-order="63">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/cinder-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Cinder YZ Foam RNNR" data-order="63">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Cinder-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957699" alt="Cinder YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Cinder YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/desert-sand-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Desert Sand YZ Foam RNNR" data-order="64">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/desert-sand-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Desert Sand YZ Foam RNNR" data-order="64">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Desert-Sand-Yeezy-Foam-RNNR-Running-Shoes.jpg?v=1697957861" alt="Desert Sand YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Desert Sand YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/mineral-blue-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Mineral Blue YZ Foam RNNR" data-order="65">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/mineral-blue-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Mineral Blue YZ Foam RNNR" data-order="65">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mineral-Blue-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957766" alt="Mineral Blue YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Mineral Blue YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/mist-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Mist YZ Foam RNNR" data-order="66">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/mist-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Mist YZ Foam RNNR" data-order="66">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mist-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957669" alt="Mist YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Mist YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/mx-carbon-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="MX Carbon YZ Foam RNNR" data-order="67">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/mx-carbon-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="MX Carbon YZ Foam RNNR" data-order="67">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MX-Carbon-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957918" alt="MX Carbon YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">MX Carbon YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/mx-cream-clay-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="MX Cream Clay YZ Foam RNNR" data-order="68">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/mx-cream-clay-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="MX Cream Clay YZ Foam RNNR" data-order="68">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MX-Cream-Clay-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957822" alt="MX Cream Clay YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">MX Cream Clay YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/mx-sand-grey-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="149" data-name="MX Sand Grey YZ Foam RNNR" data-order="69">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/mx-sand-grey-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="149" data-name="MX Sand Grey YZ Foam RNNR" data-order="69">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MX-Sand-Grey-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957784" alt="MX Sand Grey YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">MX Sand Grey YZ Foam RNNR</span><span class="price">$149</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/mxt-moon-gray-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="MXT Moon Gray YZ Foam RNNR" data-order="70">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/mxt-moon-gray-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="MXT Moon Gray YZ Foam RNNR" data-order="70">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MXT-Moon-Gray-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957798" alt="MXT Moon Gray YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">MXT Moon Gray YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/ochre-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Ochre YZ Foam RNNR" data-order="71">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/ochre-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Ochre YZ Foam RNNR" data-order="71">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ochre-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957680" alt="Ochre YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Ochre YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/onyx-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Onyx YZ Foam RNNR" data-order="72">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/onyx-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Onyx YZ Foam RNNR" data-order="72">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957735" alt="Onyx YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Onyx YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/sand-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Sand YZ Foam RNNR" data-order="73">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/sand-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Sand YZ Foam RNNR" data-order="73">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Sand-Yeezy-Foam-RNNR-Running-Shoes_26827207-34bf-4719-a266-5a55524c4849.jpg?v=1697957896" alt="Sand YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Sand YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/stone-sage-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Stone Sage YZ Foam RNNR" data-order="74">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/stone-sage-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Stone Sage YZ Foam RNNR" data-order="74">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Stone-Sage-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957879" alt="Stone Sage YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Stone Sage YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/sulfur-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Sulfur YZ Foam RNNR" data-order="75">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/sulfur-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Sulfur YZ Foam RNNR" data-order="75">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Sulfur-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957748" alt="Sulfur YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Sulfur YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/vermilion-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Vermilion YZ Foam RNNR" data-order="76">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/vermilion-yz-foam-rnnr/" data-collection="foam-rnnr" data-price="79" data-name="Vermilion YZ Foam RNNR" data-order="76">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Vermilion-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957995" alt="Vermilion YZ Foam RNNR" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Vermilion YZ Foam RNNR</span><span class="price">$79</span></div><span class="sub">Foam Runners</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/azure-yz-slide/" data-collection="slides" data-price="79" data-name="Azure YZ Slide" data-order="77">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/azure-yz-slide/" data-collection="slides" data-price="79" data-name="Azure YZ Slide" data-order="77">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Azure-Yeezy-Slide-Shoes.webp?v=1697957811" alt="Azure YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Azure YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/bone-2022-2023-restock-yz-slide/" data-collection="slides" data-price="79" data-name="Bone (2022/2023 Restock) YZ Slide" data-order="78">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/bone-2022-2023-restock-yz-slide/" data-collection="slides" data-price="79" data-name="Bone (2022/2023 Restock) YZ Slide" data-order="78">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Bone-20222023-Restock-Yeezy-Slide-Shoes.webp?v=1697957787" alt="Bone (2022/2023 Restock) YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Bone (2022/2023 Restock) YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/bone-yz-slide/" data-collection="slides" data-price="79" data-name="Bone YZ Slide" data-order="79">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/bone-yz-slide/" data-collection="slides" data-price="79" data-name="Bone YZ Slide" data-order="79">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Bone-Yeezy-Slide-Shoes.webp?v=1697957931" alt="Bone YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Bone YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/core-yz-slide/" data-collection="slides" data-price="79" data-name="Core YZ Slide" data-order="80">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/core-yz-slide/" data-collection="slides" data-price="79" data-name="Core YZ Slide" data-order="80">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Core-Yeezy-Slide-Shoes.webp?v=1697957956" alt="Core YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Core YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/desert-sand-yz-slide/" data-collection="slides" data-price="79" data-name="Desert Sand YZ Slide" data-order="81">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/desert-sand-yz-slide/" data-collection="slides" data-price="79" data-name="Desert Sand YZ Slide" data-order="81">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Desert-Sand-Yeezy-Slide-Shoes.webp?v=1697957973" alt="Desert Sand YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Desert Sand YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/earth-brown-yz-slide/" data-collection="slides" data-price="79" data-name="Earth Brown YZ Slide" data-order="82">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/earth-brown-yz-slide/" data-collection="slides" data-price="79" data-name="Earth Brown YZ Slide" data-order="82">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Earth-Brown-Yeezy-Slide-Shoes.webp?v=1697958016" alt="Earth Brown YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Earth Brown YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/enflame-orange-yz-slide/" data-collection="slides" data-price="79" data-name="Enflame Orange YZ Slide" data-order="83">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/enflame-orange-yz-slide/" data-collection="slides" data-price="79" data-name="Enflame Orange YZ Slide" data-order="83">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Enflame-Orange-Yeezy-Slide-Shoes.webp?v=1697958051" alt="Enflame Orange YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Enflame Orange YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/flax-yz-slide/" data-collection="slides" data-price="79" data-name="Flax YZ Slide" data-order="84">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/flax-yz-slide/" data-collection="slides" data-price="79" data-name="Flax YZ Slide" data-order="84">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Flax-Yeezy-Slide-Running-Shoes.webp?v=1697958082" alt="Flax YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Flax YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/glow-green-2022-2023-restock-yz-slide/" data-collection="slides" data-price="79" data-name="Glow Green (2022/2023 Restock) YZ Slide" data-order="85">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/glow-green-2022-2023-restock-yz-slide/" data-collection="slides" data-price="79" data-name="Glow Green (2022/2023 Restock) YZ Slide" data-order="85">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Glow-Green-20222023-Restock-Yeezy-Slide-Shoes.webp?v=1697957826" alt="Glow Green (2022/2023 Restock) YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Glow Green (2022/2023 Restock) YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/glow-green-yz-slide/" data-collection="slides" data-price="79" data-name="Glow Green YZ Slide" data-order="86">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/glow-green-yz-slide/" data-collection="slides" data-price="79" data-name="Glow Green YZ Slide" data-order="86">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Glow-Green-Yeezy-Slide-Shoes.webp?v=1697958034" alt="Glow Green YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Glow Green YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/granite-yz-slide/" data-collection="slides" data-price="79" data-name="Granite YZ Slide" data-order="87">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/granite-yz-slide/" data-collection="slides" data-price="79" data-name="Granite YZ Slide" data-order="87">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Granite-Yeezy-Slide-Shoes.webp?v=1697957824" alt="Granite YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Granite YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/ochre-yz-slide/" data-collection="slides" data-price="79" data-name="Ochre YZ Slide" data-order="88">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/ochre-yz-slide/" data-collection="slides" data-price="79" data-name="Ochre YZ Slide" data-order="88">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ochre-Yeezy-Slide-Running-Shoes.webp?v=1697957946" alt="Ochre YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Ochre YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/onyx-yz-slide/" data-collection="slides" data-price="79" data-name="Onyx YZ Slide" data-order="89">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/onyx-yz-slide/" data-collection="slides" data-price="79" data-name="Onyx YZ Slide" data-order="89">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Slide-Shoes.webp?v=1697957713" alt="Onyx YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Onyx YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="3" href="/product/pure-restock-yz-slide/" data-collection="slides" data-price="79" data-name="Pure (Restock) YZ Slide" data-order="90">
+  </a><a class="card reveal" data-spotlight data-d="3" href="/product/pure-restock-yz-slide/" data-collection="slides" data-price="79" data-name="Pure (Restock) YZ Slide" data-order="90">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Pure-Restock-Yeezy-Slide-Running-Shoes.webp?v=1697958007" alt="Pure (Restock) YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Pure (Restock) YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="4" href="/product/resin-yz-slide/" data-collection="slides" data-price="79" data-name="Resin YZ Slide" data-order="91">
+  </a><a class="card reveal" data-spotlight data-d="4" href="/product/resin-yz-slide/" data-collection="slides" data-price="79" data-name="Resin YZ Slide" data-order="91">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Resin-Yeezy-Slide-Running-Shoes.webp?v=1697958066" alt="Resin YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Resin YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="1" href="/product/soot-yz-slide/" data-collection="slides" data-price="79" data-name="Soot YZ Slide" data-order="92">
+  </a><a class="card reveal" data-spotlight data-d="1" href="/product/soot-yz-slide/" data-collection="slides" data-price="79" data-name="Soot YZ Slide" data-order="92">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Soot-Yeezy-Slide-Running-Shoes.webp?v=1697958095" alt="Soot YZ Slide" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Soot YZ Slide</span><span class="price">$79</span></div><span class="sub">Slides</span></div>
-  </a><a class="card reveal" data-d="2" href="/product/shoe-brush-with-automatic-liquid-dispenser/" data-collection="accessories" data-price="18" data-name="Shoe Brush with Automatic Liquid Dispenser" data-order="93">
+  </a><a class="card reveal" data-spotlight data-d="2" href="/product/shoe-brush-with-automatic-liquid-dispenser/" data-collection="accessories" data-price="18" data-name="Shoe Brush with Automatic Liquid Dispenser" data-order="93">
+    <span class="card-glow" aria-hidden="true"></span>
     <div class="card-media"><div class="badge-wrap"><span class="badge soft">Care</span></div><img src="https://cdn.shopify.com/s/files/1/0557/4570/8145/products/Shoe-Brush-with-Automatic-Liquid-Dispenser-Shoe-Accessories.jpg?v=1697957629" alt="Shoe Brush with Automatic Liquid Dispenser" loading="lazy" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">Shoe Brush with Automatic Liquid Dispenser</span><span class="price">$18</span></div><span class="sub">Accessories</span></div>
   </a></div>
@@ -335,7 +428,7 @@
 </section></main><footer class="footer"><div class="container">
   <div class="footer-top">
     <div>
-      <a class="brand" href="/"><span class="mark">K</span><span>Kicks on Deck</span></a>
+      <a class="brand" href="/"><span class="wordmark">Kicks on Deck</span></a>
       <p class="footer-blurb">Independent footwear for people who chase the silhouette, not the markup. Curated drops, 1:1 craftsmanship, shipped worldwide.</p>
     </div>
     <div class="footer-col"><h5>Shop</h5><a href="/collection/350-v2/">350 V2</a><a href="/collection/foam-rnnr/">Foam Runners</a><a href="/collection/slides/">Slides</a><a href="/collection/accessories/">Accessories</a><a href="/shop/">All Styles</a></div>
