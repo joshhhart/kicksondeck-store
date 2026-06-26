@@ -1,14 +1,26 @@
 /* ============================================================
    KICKS ON DECK — storefront runtime
-   Cart (localStorage) · drawer · search · size select · checkout handoff
+   Cart · drawer · search · checkout · analytics + first-party capture · A/B
    ============================================================ */
 (() => {
   "use strict";
   const CFG = window.KOD_CONFIG || {};
+  const AN = CFG.analytics || {};
+  const DATA_EP = (AN.dataEndpoint || "").replace(/\/+$/, "");
   const CART_KEY = "kod_cart_v1";
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const money = (n) => "$" + Number(n || 0).toLocaleString("en-US");
+
+  /* ---------- analytics (GA4) + first-party data endpoint ---------- */
+  const track = (name, params) => { try { if (window.gtag) window.gtag("event", name, params || {}); } catch {} };
+  async function postData(path, payload) {
+    if (!DATA_EP) return { ok: false, skipped: true };
+    try {
+      const res = await fetch(DATA_EP + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      return await res.json().catch(() => ({ ok: res.ok }));
+    } catch (e) { return { ok: false, error: String(e) }; }
+  }
 
   /* ---------- cart store ---------- */
   const readCart = () => { try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch { return []; } };
@@ -21,6 +33,7 @@
     if (found) found.qty += item.qty || 1;
     else cart.push({ ...item, qty: item.qty || 1 });
     saveCart();
+    track("add_to_cart", { currency: "USD", value: item.price, item_id: key, item_name: item.name });
     toast("Added to bag", item.name);
     openCart();
   }
@@ -91,6 +104,7 @@
     if (!cart.length) return;
     const co = CFG.checkout || {};
     localStorage.setItem("kod_pending_order", JSON.stringify({ items: cart, subtotal: subtotal(), at: Date.now() }));
+    track("begin_checkout", { currency: "USD", value: subtotal(), items: count() });
 
     // Stripe via serverless endpoint — builds a real Checkout Session from the bag.
     if (co.mode === "stripe" && co.endpoint) {
@@ -137,6 +151,7 @@
   const pdp = $("#pdp-data");
   if (pdp) {
     const data = JSON.parse(pdp.textContent);
+    track("view_item", { currency: "USD", value: data.price, item_id: data.id, item_name: data.name });
     let selected = null;
     const warn = $("#size-warn");
     $$(".size-btn").forEach((btn) => btn.addEventListener("click", () => {
@@ -242,8 +257,91 @@
     clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2400);
   }
 
-  /* ---------- newsletter (graceful, no backend) ---------- */
-  $("#news-form")?.addEventListener("submit", (e) => { e.preventDefault(); toast("You're on the list"); e.target.reset(); });
+  /* ---------- email + survey capture ---------- */
+  $("#news-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = e.target, fd = new FormData(form), msg = $("#news-msg");
+    const payload = { email: fd.get("email"), interest: fd.get("interest") || "", size: fd.get("size") || "", source: location.pathname };
+    track("email_signup", { interest: payload.interest, size: payload.size });
+    const r = await postData("/subscribe", payload);
+    form.reset();
+    if (msg) msg.textContent = r.skipped ? "You're on the list." : "You're on the list — watch your inbox.";
+    else toast("You're on the list");
+  });
+
+  /* ---------- vote the next drop ---------- */
+  const voteGrid = $("#vote-grid");
+  if (voteGrid) {
+    const VOTED_KEY = "kod_voted_v1";
+    const renderStats = async () => {
+      if (!DATA_EP) return;
+      let stats; try { stats = await (await fetch(DATA_EP + "/stats")).json(); } catch { return; }
+      const counts = (stats && stats.votes) || {};
+      const total = Object.values(counts).reduce((a, b) => a + (+b || 0), 0);
+      $$("[data-vote]", voteGrid).forEach((b) => {
+        const pct = total ? Math.round((+counts[b.dataset.vote] || 0) / total * 100) : 0;
+        const fill = b.querySelector(".vote-fill"), pctEl = b.querySelector(".vote-pct");
+        if (fill) fill.style.width = pct + "%";
+        if (pctEl) pctEl.textContent = total ? pct + "%" : "—";
+      });
+    };
+    if (localStorage.getItem(VOTED_KEY)) voteGrid.classList.add("voted");
+    renderStats();
+    $$("[data-vote]", voteGrid).forEach((b) => b.addEventListener("click", async () => {
+      if (localStorage.getItem(VOTED_KEY)) return;
+      const choice = b.dataset.vote;
+      localStorage.setItem(VOTED_KEY, choice);
+      voteGrid.classList.add("voted");
+      b.classList.add("picked");
+      track("vote_drop", { choice });
+      await postData("/vote", { choice });
+      renderStats();
+      const note = $("#vote-note"); if (note) note.textContent = "Thanks — your vote's in. Live results below.";
+    }));
+  }
+
+  /* ---------- find-your-pair quiz ---------- */
+  const quizEl = $("#quiz");
+  if (quizEl) {
+    const data = JSON.parse($("#quiz-data").textContent || "{}");
+    const collMap = JSON.parse(quizEl.dataset.coll || "{}");
+    const questions = data.questions || [];
+    const stage = $("#quiz-stage"), bar = $("#quiz-bar"), resultEl = $("#quiz-result");
+    let step = 0; const answers = [];
+    const setBar = () => { if (bar) bar.style.width = Math.round((step / questions.length) * 100) + "%"; };
+    function renderStep() {
+      if (step >= questions.length) return finish();
+      const q = questions[step];
+      setBar();
+      stage.innerHTML = `<div class="quiz-q reveal in"><span class="quiz-count">Question ${step + 1} / ${questions.length}</span><h2>${q.q}</h2><div class="quiz-opts">${q.a.map((a, i) => `<button class="quiz-opt" data-i="${i}">${a.t}</button>`).join("")}</div></div>`;
+      $$(".quiz-opt", stage).forEach((b) => b.addEventListener("click", () => { answers.push(q.a[+b.dataset.i]); step++; renderStep(); }));
+    }
+    async function finish() {
+      setBar();
+      const tally = {}; let reflective = 0;
+      answers.forEach((a) => { tally[a.coll] = (tally[a.coll] || 0) + 1; if (a.reflective) reflective++; });
+      const coll = Object.keys(tally).sort((x, y) => tally[y] - tally[x])[0] || "350-v2";
+      const wantRefl = reflective >= 2;
+      const cat = await loadCatalog();
+      const collTitle = collMap[coll] || "";
+      let pool = cat.filter((p) => (p.collection || "") === collTitle);
+      if (wantRefl) { const r = pool.filter((p) => /reflective/i.test(p.name)); if (r.length) pool = r; }
+      if (!pool.length) pool = cat;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      track("quiz_complete", { coll, reflective: wantRefl, recommended: pick && pick.slug });
+      postData("/quiz", { answers: answers.map((a) => a.t), coll, reflective: wantRefl, recommended: pick && pick.slug });
+      if (stage) stage.hidden = true;
+      if (resultEl) {
+        resultEl.hidden = false;
+        resultEl.innerHTML = `<span class="eyebrow">Your match</span><div class="quiz-pick"><a class="quiz-pick-img" href="/product/${pick.slug}/"><img src="${pick.image}" alt="${pick.name}" loading="lazy"></a><div class="quiz-pick-info"><h2>${pick.name}</h2><p>${pick.collection} · ${money(pick.price)}</p><a class="btn btn-volt btn-lg" href="/product/${pick.slug}/">Shop this pair →</a><button class="btn btn-ghost" id="quiz-retry" type="button">Retake</button></div></div>`;
+        $("#quiz-retry")?.addEventListener("click", () => { step = 0; answers.length = 0; if (stage) stage.hidden = false; resultEl.hidden = true; renderStep(); });
+      }
+    }
+    renderStep();
+  }
+
+  /* ---------- A/B color test (variant set pre-paint in <head>) ---------- */
+  track("experiment_view", { variant: document.documentElement.dataset.variant || "a" });
 
   renderCart();
 })();
