@@ -1,0 +1,32 @@
+{
+  "_note": "Find-your-pair quiz. Each answer carries a 'coll' (collection slug) and optional 'reflective' flag. app.js tallies them to recommend a product from the catalog and posts results to the data worker.",
+  "questions": [
+    {
+      "q": "What's the vibe you're chasing?",
+      "a": [
+        { "t": "Everyday clean", "coll": "350-v2" },
+        { "t": "Comfort all day", "coll": "foam-rnnr" },
+        { "t": "Summer / off-duty", "coll": "slides" },
+        { "t": "Loud statement piece", "coll": "350-v2", "reflective": true }
+      ]
+    },
+    {
+      "q": "Pick your palette",
+      "a": [
+        { "t": "Neutrals & earth tones", "coll": "350-v2" },
+        { "t": "Blacked-out mono", "coll": "slides" },
+        { "t": "Sand & bone", "coll": "foam-rnnr" },
+        { "t": "Reflective / tech", "coll": "350-v2", "reflective": true }
+      ]
+    },
+    {
+      "q": "Where do they get worn?",
+      "a": [
+        { "t": "Daily rotation, on feet", "coll": "350-v2" },
+        { "t": "Lounging / quick runs", "coll": "slides" },
+        { "t": "Gym & active days", "coll": "foam-rnnr" },
+        { "t": "When I want to flex", "coll": "350-v2", "reflective": true }
+      ]
+    }
+  ]
+}

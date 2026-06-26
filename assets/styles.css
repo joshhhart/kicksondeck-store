@@ -406,3 +406,115 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   .hero-img, .hero h1 .line > span, .hero-sub, .scroll-hint { opacity: 1 !important; animation: none !important; transform: translateY(-50%) rotate(-14deg); }
   .hero h1 .line > span { transform: none; }
 }
+
+/* ============================================================
+   GROWTH ENGINE — A/B color test · vote · quiz · capture · blog
+   ============================================================ */
+
+/* ---- A/B variant B: cooler "electric" accent vs the default volt ---- */
+[data-variant="b"] {
+  --volt: #5fb3ff;
+  --volt-2: #36a0ff;
+  --volt-ink: #061321;
+}
+
+/* ---- email + survey ---- */
+.news-survey { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; width: 100%; }
+.news-survey select {
+  flex: 1 1 160px; background: var(--surface-2); color: var(--ink); border: 1px solid var(--line-2);
+  border-radius: var(--radius); padding: 12px 14px; font-family: var(--font-mono); font-size: .82rem;
+  letter-spacing: .02em; cursor: pointer;
+}
+.form-msg { min-height: 1.2em; margin-top: 10px; color: var(--volt); font-family: var(--font-mono); font-size: .82rem; }
+
+/* ---- vote the next drop ---- */
+.vote-band { background: var(--elev); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 48px); }
+.vote-head h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); line-height: .98; margin: 6px 0 10px; }
+.vote-head p { color: var(--ink-dim); max-width: 52ch; }
+.vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 26px 0 14px; }
+.vote-card {
+  position: relative; text-align: left; background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: var(--radius); padding: 16px 18px; cursor: pointer; color: var(--ink);
+  display: flex; flex-direction: column; gap: 4px; transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.vote-card:hover { border-color: var(--volt); transform: translateY(-2px); }
+.vote-label { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; }
+.vote-sub { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.vote-bar { margin-top: 12px; height: 6px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.vote-fill { display: block; height: 100%; width: 0; background: var(--volt); transition: width .8s var(--ease); }
+.vote-pct { position: absolute; top: 16px; right: 18px; font-family: var(--font-mono); font-size: .8rem; color: var(--volt); }
+.vote-grid.voted .vote-card { cursor: default; }
+.vote-grid.voted .vote-card:hover { transform: none; }
+.vote-card.picked { border-color: var(--volt); box-shadow: 0 0 0 1px var(--volt) inset; }
+.vote-note { font-family: var(--font-mono); font-size: .76rem; color: var(--muted); letter-spacing: .03em; }
+
+/* ---- quiz CTA band ---- */
+.quiz-cta {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  background: linear-gradient(120deg, var(--elev), var(--surface)); border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 44px); color: var(--ink);
+  transition: border-color var(--dur) var(--ease);
+}
+.quiz-cta:hover { border-color: var(--volt); }
+.quiz-cta h2 { font-family: var(--font-display); font-size: clamp(1.7rem, 4vw, 2.8rem); line-height: 1; margin: 6px 0 8px; }
+.quiz-cta p { color: var(--ink-dim); }
+.quiz-cta-go { font-family: var(--font-mono); font-size: .85rem; color: var(--volt); white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+
+/* ---- quiz page ---- */
+.quiz { max-width: 720px; margin: 0 auto; }
+.quiz-progress { height: 4px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin-bottom: 36px; }
+.quiz-bar { display: block; height: 100%; width: 0; background: var(--volt); transition: width .4s var(--ease); }
+.quiz-count { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.quiz-q h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.02; margin: 10px 0 24px; }
+.quiz-opts { display: grid; gap: 12px; }
+.quiz-opt {
+  text-align: left; background: var(--surface); border: 1px solid var(--line-2); color: var(--ink);
+  border-radius: var(--radius); padding: 18px 20px; font-size: 1.02rem; cursor: pointer;
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.quiz-opt:hover { border-color: var(--volt); transform: translateX(4px); background: var(--surface-2); }
+.quiz-result { text-align: center; }
+.quiz-pick { display: flex; gap: 28px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 14px; text-align: left; }
+.quiz-pick-img img { width: 240px; max-width: 70vw; border-radius: var(--radius-lg); background: var(--surface); }
+.quiz-pick-info h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.2rem); line-height: 1.04; }
+.quiz-pick-info p { font-family: var(--font-mono); color: var(--muted); margin: 6px 0 18px; }
+.quiz-pick-info .btn { margin-right: 10px; }
+
+/* ---- blog index ---- */
+.post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+.post-card { display: block; color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-2); transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+.post-card:hover { border-color: var(--line-2); transform: translateY(-3px); }
+.post-thumb { aspect-ratio: 16 / 10; overflow: hidden; background: var(--surface); }
+.post-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.post-card > .post-meta, .post-card h3, .post-card p, .post-card .post-readmore { padding-inline: 20px; }
+.post-meta { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+.post-tag { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--volt-ink); background: var(--volt); padding: 3px 9px; border-radius: 100px; }
+.post-date { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+.post-card h3 { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.1; margin: 12px 0 8px; }
+.post-card p { color: var(--ink-dim); font-size: .92rem; }
+.post-readmore { display: inline-block; font-family: var(--font-mono); font-size: .8rem; color: var(--volt); margin: 12px 0 22px; }
+
+/* ---- blog post ---- */
+.post { max-width: 760px; }
+.post-header { margin: 8px 0 28px; }
+.post-header h1 { font-family: var(--font-display); font-size: clamp(2rem, 5.5vw, 3.4rem); line-height: 1.02; margin: 14px 0 12px; }
+.post-byline { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); letter-spacing: .03em; }
+.post-hero { border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 36px; background: var(--surface); }
+.post-hero img { width: 100%; display: block; }
+.post-body { font-size: 1.08rem; line-height: 1.75; color: var(--ink-dim); }
+.post-body h2 { font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem); color: var(--ink); line-height: 1.1; margin: 40px 0 14px; }
+.post-body h3 { font-family: var(--font-display); font-size: 1.25rem; color: var(--ink); margin: 28px 0 10px; }
+.post-body p { margin: 0 0 18px; }
+.post-body a { color: var(--volt); text-decoration: underline; text-underline-offset: 3px; }
+.post-body strong { color: var(--ink); }
+.post-body ul, .post-body ol { margin: 0 0 20px; padding-left: 22px; }
+.post-body li { margin: 0 0 8px; }
+.post-body blockquote { border-left: 3px solid var(--volt); padding: 6px 0 6px 20px; margin: 24px 0; color: var(--ink); font-size: 1.18rem; font-family: var(--font-display); font-weight: 600; line-height: 1.3; }
+.post-body hr { border: none; border-top: 1px solid var(--line); margin: 32px 0; }
+.post-body .post-img, .post-body figure img { width: 100%; border-radius: var(--radius-lg); margin: 24px 0; }
+.post-body code { font-family: var(--font-mono); background: var(--surface-2); padding: 2px 6px; border-radius: 4px; font-size: .9em; }
+
+@media (max-width: 600px) {
+  .quiz-pick { flex-direction: column; text-align: center; }
+  .quiz-pick-info .btn { margin: 6px 4px 0; }
+}

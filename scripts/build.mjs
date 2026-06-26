@@ -10,6 +10,12 @@ const products = data.products;
 const collections = data.collections;
 const DOMAIN = CFG.brand.domain;
 const ORIGIN = `https://${DOMAIN}`;
+const AN = CFG.analytics || {};
+const SOCIAL = CFG.social || {};
+
+const readJSON = (rel, fallback) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, rel), "utf8")); } catch { return fallback; } };
+const drops = readJSON("data/drops.json", { candidates: [] });
+const quiz = readJSON("data/quiz.json", { questions: [] });
 const OG_DEFAULT = (products.find((p) => /zebra/i.test(p.name)) || products[0]).image;
 
 /* ---------------- helpers ---------------- */
@@ -64,6 +70,7 @@ const I = {
 const navLinks = [
   { href: "/shop/", label: "Shop All" },
   ...collections.filter((c) => c.slug !== "accessories").map((c) => ({ href: `/collection/${c.slug}/`, label: c.title })),
+  { href: "/blog/", label: "Blog" },
   { href: "/collection/accessories/", label: "Care" },
 ];
 
@@ -91,9 +98,18 @@ function head(opts) {
 <link rel="preconnect" href="https://cdn.shopify.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-${extraCss}
-<script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand })};document.documentElement.classList.remove('no-js');</script>
+${extraCss}${analyticsTags()}
+<script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand, analytics: { ga4Id: AN.ga4Id || "", dataEndpoint: AN.dataEndpoint || "" } })};document.documentElement.classList.remove('no-js');</script>
+<script>(function(){try{var k='kod_ab_v1',v=localStorage.getItem(k);if(v!=='a'&&v!=='b'){v=Math.random()<0.5?'a':'b';localStorage.setItem(k,v)}document.documentElement.dataset.variant=v}catch(e){}})();</script>
 </head>`;
+}
+
+// GA4 + Search Console tags — only emitted once the IDs are set in site.config.json.
+function analyticsTags() {
+  let s = "";
+  if (AN.gscVerification) s += `\n<meta name="google-site-verification" content="${esc(AN.gscVerification)}">`;
+  if (AN.ga4Id) s += `\n<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(AN.ga4Id)}"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${esc(AN.ga4Id)}');</script>`;
+  return s;
 }
 
 function header(active = "") {
@@ -138,6 +154,12 @@ function drawerAndSearch() {
 </div>`;
 }
 
+function socialLink(url, label) {
+  if (!url) return "";
+  const href = /^https?:\/\//.test(url) ? url : `https://${url}`;
+  return `<a href="${esc(href)}" target="_blank" rel="noopener">${label}</a>`;
+}
+
 function footer() {
   return `<footer class="footer"><div class="container">
   <div class="footer-top">
@@ -147,7 +169,7 @@ function footer() {
     </div>
     <div class="footer-col"><h5>Shop</h5>${collections.map((c) => `<a href="/collection/${c.slug}/">${c.title}</a>`).join("")}<a href="/shop/">All Styles</a></div>
     <div class="footer-col"><h5>Support</h5><a href="mailto:${CFG.brand.email}">Contact</a><a href="/shop/">Sizing</a><a href="mailto:${CFG.brand.email}?subject=Order%20status">Track Order</a><a href="mailto:${CFG.brand.email}?subject=Returns">Returns</a></div>
-    <div class="footer-col"><h5>Connect</h5><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a><a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a><a href="mailto:${CFG.brand.email}">Email</a></div>
+    <div class="footer-col"><h5>Connect</h5>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}<a href="/quiz/">Find your pair</a><a href="mailto:${CFG.brand.email}">Email</a></div>
   </div>
   <div class="footer-bottom">
     <p>© ${new Date().getFullYear()} Kicks on Deck · ${esc(CFG.brand.city)}</p>
@@ -240,14 +262,9 @@ function homePage() {
   </div>
 </section>
 
-<section class="section container">
-  <div class="cta-band reveal">
-    <span class="eyebrow">Get on the list</span>
-    <h2>Early access</h2>
-    <p>Restocks sell out. Drop your email and get first dibs on new arrivals and member-only pricing.</p>
-    <form class="news-form" id="news-form"><input type="email" required placeholder="you@email.com" aria-label="Email"><button class="btn btn-volt" type="submit">Join</button></form>
-  </div>
-</section>`;
+${quizCTA()}
+${voteWidget()}
+${captureBand()}`;
 
   return layout({
     headOpts: { title: "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides", desc: `Shop ${products.length} grail silhouettes — 350 V2, Foam Runners and Slides. 1:1 craftsmanship, honest prices, worldwide shipping.`, canonical: `${ORIGIN}/`, ogImg: hero.image },
@@ -334,6 +351,180 @@ function productPage(p) {
   });
 }
 
+/* ---------------- first-party capture surfaces ---------------- */
+// "Vote the next drop" — gauges demand for what to stock next. Wired by app.js -> /vote + /stats.
+function voteWidget() {
+  if (!drops.candidates || !drops.candidates.length) return "";
+  return `
+<section class="section container" id="vote">
+  <div class="vote-band reveal">
+    <div class="vote-head"><span class="eyebrow">You decide</span><h2>Vote the next drop</h2><p>We restock what you want. Tap the pair you want us to cop next — live results update instantly.</p></div>
+    <div class="vote-grid" id="vote-grid">
+      ${drops.candidates.map((d) => `<button class="vote-card" data-vote="${esc(d.id)}"><span class="vote-label">${esc(d.label)}</span>${d.sub ? `<span class="vote-sub">${esc(d.sub)}</span>` : ""}<span class="vote-bar"><span class="vote-fill" style="width:0%"></span></span><span class="vote-pct">—</span></button>`).join("")}
+    </div>
+    <p class="vote-note" id="vote-note">${drops.candidates.length} contenders · one vote per visitor</p>
+  </div>
+</section>`;
+}
+
+// Email + 2-field survey — builds the owned, retargetable list. Wired by app.js -> /subscribe.
+function captureBand() {
+  return `
+<section class="section container">
+  <div class="cta-band reveal" id="capture">
+    <span class="eyebrow">Get on the list</span>
+    <h2>Early access</h2>
+    <p>Restocks sell out. Join for first dibs on new arrivals, member pricing, and the drops you voted for.</p>
+    <form class="news-form" id="news-form">
+      <input type="email" name="email" required placeholder="you@email.com" aria-label="Email">
+      <div class="news-survey">
+        <select name="interest" aria-label="What are you after?"><option value="">I'm into…</option><option value="350-v2">350 V2</option><option value="foam-rnnr">Foam Runners</option><option value="slides">Slides</option><option value="everything">A bit of everything</option></select>
+        <select name="size" aria-label="Your size"><option value="">My size…</option>${["US 7","US 8","US 9","US 10","US 11","US 12","US 13"].map((s) => `<option value="${s}">${s}</option>`).join("")}</select>
+      </div>
+      <button class="btn btn-volt" type="submit">Join</button>
+    </form>
+    <p class="form-msg" id="news-msg" aria-live="polite"></p>
+  </div>
+</section>`;
+}
+
+function quizCTA() {
+  return `
+<section class="section container">
+  <a class="quiz-cta reveal" href="/quiz/">
+    <div><span class="eyebrow">60-second style match</span><h2>Find your pair</h2><p>Answer 3 questions, get the silhouette built for you.</p></div>
+    <span class="quiz-cta-go">Take the quiz ${I.arrow}</span>
+  </a>
+</section>`;
+}
+
+/* ---------------- blog ---------------- */
+function mdInline(s) {
+  s = esc(s);
+  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, '<img src="$2" alt="$1" loading="lazy" class="post-img">');
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
+  s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  s = s.replace(/(^|[^*])\*([^*\s][^*]*?)\*/g, "$1<em>$2</em>");
+  s = s.replace(/`([^`]+)`/g, "<code>$1</code>");
+  return s;
+}
+function mdToHtml(md) {
+  const lines = String(md).replace(/\r\n/g, "\n").split("\n");
+  const out = []; let para = []; let i = 0;
+  const flush = () => { if (para.length) { out.push(`<p>${mdInline(para.join(" "))}</p>`); para = []; } };
+  while (i < lines.length) {
+    const line = lines[i];
+    if (/^\s*$/.test(line)) { flush(); i++; continue; }
+    if (/^###\s+/.test(line)) { flush(); out.push(`<h3>${mdInline(line.replace(/^###\s+/, ""))}</h3>`); i++; continue; }
+    if (/^##?\s+/.test(line)) { flush(); out.push(`<h2>${mdInline(line.replace(/^##?\s+/, ""))}</h2>`); i++; continue; }
+    if (/^>\s?/.test(line)) { flush(); const q = []; while (i < lines.length && /^>\s?/.test(lines[i])) { q.push(lines[i].replace(/^>\s?/, "")); i++; } out.push(`<blockquote>${mdInline(q.join(" "))}</blockquote>`); continue; }
+    if (/^---\s*$/.test(line)) { flush(); out.push("<hr>"); i++; continue; }
+    if (/^[-*]\s+/.test(line)) { flush(); const it = []; while (i < lines.length && /^[-*]\s+/.test(lines[i])) { it.push(`<li>${mdInline(lines[i].replace(/^[-*]\s+/, ""))}</li>`); i++; } out.push(`<ul>${it.join("")}</ul>`); continue; }
+    if (/^\d+\.\s+/.test(line)) { flush(); const it = []; while (i < lines.length && /^\d+\.\s+/.test(lines[i])) { it.push(`<li>${mdInline(lines[i].replace(/^\d+\.\s+/, ""))}</li>`); i++; } out.push(`<ol>${it.join("")}</ol>`); continue; }
+    if (/^!\[[^\]]*\]\([^)]+\)\s*$/.test(line)) { flush(); out.push(`<figure>${mdInline(line)}</figure>`); i++; continue; }
+    para.push(line); i++;
+  }
+  flush();
+  return out.join("\n");
+}
+function parsePost(raw, slug) {
+  const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  const meta = {}; let body = raw;
+  if (m) {
+    body = m[2];
+    for (const ln of m[1].split("\n")) {
+      const mm = ln.match(/^(\w+):\s*(.*)$/);
+      if (!mm) continue;
+      let v = mm[2].trim();
+      if (/^\[.*\]$/.test(v)) v = v.slice(1, -1).split(",").map((x) => x.trim().replace(/^["']|["']$/g, "")).filter(Boolean);
+      else v = v.replace(/^["']|["']$/g, "");
+      meta[mm[1]] = v;
+    }
+  }
+  return { slug, meta, html: mdToHtml(body), excerpt: meta.excerpt || body.replace(/[#>*`\-]/g, "").trim().slice(0, 150) };
+}
+const POSTS_DIR = path.join(ROOT, "data/posts");
+const posts = fs.existsSync(POSTS_DIR)
+  ? fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"))
+      .map((f) => parsePost(fs.readFileSync(path.join(POSTS_DIR, f), "utf8"), f.replace(/\.md$/, "")))
+      .sort((a, b) => String(b.meta.date || "").localeCompare(String(a.meta.date || "")))
+  : [];
+
+const fmtDate = (d) => { try { return new Date(d + "T00:00:00Z").toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }); } catch { return d || ""; } };
+const postImg = (p) => p.meta.cover || OG_DEFAULT;
+
+function postCard(p) {
+  return `<a class="post-card reveal" href="/blog/${p.slug}/">
+    <div class="post-thumb"><img src="${postImg(p)}" alt="${esc(p.meta.title || p.slug)}" loading="lazy"></div>
+    <div class="post-meta">${p.meta.tag ? `<span class="post-tag">${esc(p.meta.tag)}</span>` : ""}<span class="post-date">${fmtDate(p.meta.date)}</span></div>
+    <h3>${esc(p.meta.title || p.slug)}</h3>
+    <p>${esc(p.excerpt)}</p>
+    <span class="post-readmore">Read ${I.arrow}</span>
+  </a>`;
+}
+
+function blogIndexPage() {
+  const [feat, ...rest] = posts;
+  const body = `
+<section class="container shop-head">
+  <span class="eyebrow">The Journal</span>
+  <h1>Drops, guides<br>& culture</h1>
+  <p style="color:var(--ink-dim);max-width:60ch;margin-top:18px">Sizing guides, rep-vs-real breakdowns, styling, and the Yeezy/hypebeast news worth knowing — written for people who actually wear them.</p>
+</section>
+<section class="container" style="padding-bottom:120px">
+  ${posts.length ? `<div class="post-grid">${posts.map(postCard).join("")}</div>` : `<p style="color:var(--muted)">New stories dropping soon.</p>`}
+  ${voteWidget()}
+</section>`;
+  return layout({ headOpts: { title: "Blog — Sneaker Guides, Yeezy News & Culture | Kicks on Deck", desc: "Sizing guides, rep-vs-real breakdowns, styling tips and Yeezy/hypebeast culture from Kicks on Deck.", canonical: `${ORIGIN}/blog/`, ogImg: feat ? postImg(feat) : OG_DEFAULT }, active: "/blog/", body });
+}
+
+function blogPostPage(p) {
+  const related = (Array.isArray(p.meta.products) ? p.meta.products : (p.meta.products ? [p.meta.products] : []))
+    .map((slug) => products.find((x) => x.slug === slug)).filter(Boolean).slice(0, 4);
+  const ld = {
+    "@context": "https://schema.org", "@type": "BlogPosting", headline: p.meta.title, image: [postImg(p)],
+    datePublished: p.meta.date, dateModified: p.meta.date, author: { "@type": "Organization", name: "Kicks on Deck" },
+    publisher: { "@type": "Organization", name: "Kicks on Deck" }, mainEntityOfPage: `${ORIGIN}/blog/${p.slug}/`, description: p.excerpt,
+  };
+  const body = `
+<article class="container post">
+  <div class="breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>${esc(p.meta.title || p.slug)}</span></div>
+  <header class="post-header reveal">
+    ${p.meta.tag ? `<span class="post-tag">${esc(p.meta.tag)}</span>` : ""}
+    <h1>${esc(p.meta.title || p.slug)}</h1>
+    <p class="post-byline">Kicks on Deck · ${fmtDate(p.meta.date)}${p.meta.read ? ` · ${esc(p.meta.read)}` : ""}</p>
+  </header>
+  ${p.meta.cover ? `<div class="post-hero reveal"><img src="${p.meta.cover}" alt="${esc(p.meta.title || "")}"></div>` : ""}
+  <div class="post-body reveal">${p.html}</div>
+  ${related.length ? `<div class="section" style="padding-top:30px"><div class="section-head"><h2 style="font-size:clamp(1.4rem,3.5vw,2.2rem)">Shop the pairs</h2><a class="link-arrow" href="/shop/">All styles <span>${I.arrow}</span></a></div><div class="product-grid">${related.map((r, i) => card(r, i)).join("")}</div></div>` : ""}
+</article>
+${quizCTA()}
+${captureBand()}
+<script type="application/ld+json">${JSON.stringify(ld)}</script>`;
+  return layout({ headOpts: { title: `${p.meta.title} | Kicks on Deck`, desc: (p.meta.description || p.excerpt).slice(0, 155), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p) }, active: "/blog/", body });
+}
+
+/* ---------------- quiz ---------------- */
+function quizPage() {
+  const collMap = Object.fromEntries(collections.map((c) => [c.slug, c.title]));
+  const body = `
+<section class="container shop-head">
+  <span class="eyebrow">Find your pair</span>
+  <h1>Which pair<br>is you?</h1>
+  <p style="color:var(--ink-dim);max-width:54ch;margin-top:18px">Three quick questions. We'll match you to the silhouette that fits your vibe — and you'll help us learn what to stock next.</p>
+</section>
+<section class="container" style="padding-bottom:120px">
+  <div class="quiz" id="quiz" data-coll='${JSON.stringify(collMap)}'>
+    <div class="quiz-progress"><span class="quiz-bar" id="quiz-bar" style="width:0%"></span></div>
+    <div id="quiz-stage"></div>
+    <div class="quiz-result" id="quiz-result" hidden></div>
+  </div>
+</section>
+${captureBand()}
+<script type="application/json" id="quiz-data">${JSON.stringify(quiz)}</script>`;
+  return layout({ headOpts: { title: "Find Your Pair — Sneaker Style Quiz | Kicks on Deck", desc: "Take the 60-second quiz and get matched to the Yeezy silhouette built for your style.", canonical: `${ORIGIN}/quiz/` }, active: "", body });
+}
+
 /* ---------------- write ---------------- */
 function write(rel, content) {
   const full = path.join(ROOT, rel);
@@ -351,6 +542,11 @@ for (const c of collections) {
 }
 for (const p of products) { write(`product/${p.slug}/index.html`, productPage(p)); n++; }
 
+// blog + quiz
+write("blog/index.html", blogIndexPage()); n++;
+for (const p of posts) { write(`blog/${p.slug}/index.html`, blogPostPage(p)); n++; }
+write("quiz/index.html", quizPage()); n++;
+
 // 404
 write("404.html", layout({ headOpts: { title: "404 — Kicks on Deck", desc: "Page not found", canonical: `${ORIGIN}/404` }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><div class="footer-giant" style="-webkit-text-stroke:1px var(--volt)">404</div><p class="eyebrow" style="margin:20px 0">This pair walked off</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a></div></section>` }));
 
@@ -359,10 +555,10 @@ const catalog = products.map((p) => ({ slug: p.slug, name: p.name, collection: c
 write("data/catalog.json", JSON.stringify(catalog));
 
 // sitemap + robots + CNAME
-const urls = [`${ORIGIN}/`, `${ORIGIN}/shop/`, ...collections.map((c) => `${ORIGIN}/collection/${c.slug}/`), ...products.map((p) => `${ORIGIN}/product/${p.slug}/`)];
+const urls = [`${ORIGIN}/`, `${ORIGIN}/shop/`, `${ORIGIN}/blog/`, `${ORIGIN}/quiz/`, ...collections.map((c) => `${ORIGIN}/collection/${c.slug}/`), ...posts.map((p) => `${ORIGIN}/blog/${p.slug}/`), ...products.map((p) => `${ORIGIN}/product/${p.slug}/`)];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n")}\n</urlset>`);
 write("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 write("CNAME", DOMAIN + "\n");
 
 console.log(`Built ${n} HTML pages + ${products.length} catalog entries.`);
-console.log("Pages: index, shop, " + collections.length + " collections, " + products.length + " products, 404.");
+console.log(`Pages: index, shop, blog (${posts.length} posts), quiz, ${collections.length} collections, ${products.length} products, 404.`);

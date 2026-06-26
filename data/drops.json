@@ -1,0 +1,11 @@
+{
+  "_note": "Candidates shown in the 'Vote the next drop' widget. Edit freely — id must be unique and stable (votes are tallied by id). Rebuild after changing.",
+  "candidates": [
+    { "id": "350-bred", "label": "350 V2 ‘Bred’", "sub": "Black / Red" },
+    { "id": "350-oreo", "label": "350 V2 ‘Oreo’", "sub": "Black / White" },
+    { "id": "foam-stone-sage", "label": "Foam RNNR ‘Stone Sage’", "sub": "Muted green" },
+    { "id": "slide-onyx", "label": "Slide ‘Onyx’", "sub": "Triple black" },
+    { "id": "700-wave", "label": "700 ‘Wave Runner’", "sub": "OG chunky" },
+    { "id": "slide-glow", "label": "Slide ‘Glow Green’", "sub": "Glow in the dark" }
+  ]
+}
