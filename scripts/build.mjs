@@ -19,6 +19,8 @@ const quiz = readJSON("data/quiz.json", { questions: [] });
 const OG_DEFAULT = (products.find((p) => /zebra/i.test(p.name)) || products[0]).image;
 
 /* ---------------- helpers ---------------- */
+// "Reflective" but NOT "Non-Reflective" (the word reflective is a substring of non-reflective).
+const isReflective = (s = "") => /reflective/i.test(s) && !/non[\s-]?reflective/i.test(s);
 const money = (n) => "$" + Number(n || 0).toLocaleString("en-US");
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const priceLabel = (p) => (p.minPrice === p.maxPrice ? money(p.minPrice) : `From ${money(p.minPrice)}`);
@@ -187,7 +189,7 @@ function layout({ headOpts, active, body }) {
 
 /* ---------------- cards ---------------- */
 function card(p, i = 0) {
-  const refl = /reflective/i.test(p.name);
+  const refl = isReflective(p.name);
   const acc = p.collection === "accessories";
   const badge = !p.inStock ? `<span class="badge soft">Sold out</span>` : refl ? `<span class="badge volt">Reflective ✦</span>` : acc ? `<span class="badge soft">Care</span>` : "";
   return `<a class="card reveal" data-spotlight data-d="${(i % 4) + 1}" href="/product/${p.slug}/" data-collection="${p.collection}" data-price="${p.minPrice}" data-name="${esc(p.name)}" data-order="${i}">
@@ -299,7 +301,7 @@ function gridPage({ title, h1, eyebrow, list, canonical, active, intro, showFilt
 
 function productPage(p) {
   const vs = variantList(p);
-  const refl = /reflective/i.test(p.name);
+  const refl = isReflective(p.name);
   const acc = p.collection === "accessories";
   const desc = pdpDesc(p.descHtml) || `<p>${esc(p.descText)}</p>`;
   const sectionLabel = acc ? "Select option" : "Select size";
