@@ -15,7 +15,7 @@
     "_note": "Stripe checkout runs through the Cloudflare Worker in /checkout-worker. Deploy it (see checkout-worker/README.md), then paste the Worker URL into `endpoint` (e.g. https://kod-checkout.<your-subdomain>.workers.dev) and rebuild. Until `endpoint` is set, Checkout falls back to an email order capture so no sale is lost."
   },
   "analytics": {
-    "ga4Id": "",
+    "ga4Id": "G-SMDQ9B1G5L",
     "gscVerification": "",
     "dataEndpoint": "",
     "_note": "ga4Id = GA4 Measurement ID (G-XXXXXXX). gscVerification = the token from Google Search Console's HTML-tag verification method. dataEndpoint = the kod-data Worker URL (see data-worker/README.md) that captures votes, email signups and quiz results. All blank-safe: tags/capture only activate once filled in, then rebuild."
