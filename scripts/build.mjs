@@ -339,7 +339,7 @@ function productPage(p) {
       <span class="eyebrow">${colTitle(p.collection)}${refl ? " · Reflective" : ""}</span>
       <h1>${esc(p.name)}</h1>
       <div class="pdp-price">${money(p.minPrice)}${p.variants[0]?.compareAt ? `<span class="was">${money(p.variants[0].compareAt)}</span>` : ""}</div>
-      <div class="pdp-desc">${desc}</div>
+      <p class="pdp-value">1:1 craftsmanship · honest pricing, no resale markup · inspected before it ships</p>
       <div class="pdp-section">
         <div class="lbl"><span>${sectionLabel}</span><span>${acc ? "" : "Men's US · EU"}</span></div>
         ${single ? `<p style="color:var(--muted);font-family:var(--font-mono);font-size:.8rem">One size · ${esc(vs[0]?.size || "Standard")}</p>` :
@@ -353,6 +353,10 @@ function productPage(p) {
         <div class="trust">${I.shield} Buyer protection</div>
         <div class="trust">${I.truck} Ships in 48h</div>
         <div class="trust">${I.globe} Worldwide</div>
+      </div>
+      <div class="pdp-details">
+        <h2 class="pdp-details-h">The details</h2>
+        <div class="pdp-desc">${desc}</div>
       </div>
     </div>
   </div>
@@ -394,11 +398,12 @@ function captureBand() {
     <p>Restocks sell out. Join for first dibs on new arrivals, member pricing, and the drops you voted for.</p>
     <form class="news-form" id="news-form">
       <input type="email" name="email" required placeholder="you@email.com" aria-label="Email">
+      <button class="btn btn-volt" type="submit">Join</button>
       <div class="news-survey">
+        <span class="news-opt">Optional — so we tailor your drops</span>
         <select name="interest" aria-label="What are you after?"><option value="">I'm into…</option><option value="350-v2">350 V2</option><option value="foam-rnnr">Foam Runners</option><option value="slides">Slides</option><option value="everything">A bit of everything</option></select>
         <select name="size" aria-label="Your size"><option value="">My size…</option>${["US 7","US 8","US 9","US 10","US 11","US 12","US 13"].map((s) => `<option value="${s}">${s}</option>`).join("")}</select>
       </div>
-      <button class="btn btn-volt" type="submit">Join</button>
     </form>
     <p class="form-msg" id="news-msg" aria-live="polite"></p>
   </div>
