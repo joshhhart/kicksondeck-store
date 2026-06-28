@@ -212,7 +212,7 @@ function homePage() {
   const body = `
 <section class="hero">
   <div class="hero-bg"><div class="hero-grid-lines"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
-  <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}">
+  <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}" fetchpriority="high">
   <div class="container hero-content">
     <p class="eyebrow reveal in">SNEAKER CULTURE <span class="dot">●</span> NO MARKUP</p>
     <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
@@ -273,6 +273,7 @@ ${captureBand()}`;
   const homeLd = [
     { "@context": "https://schema.org", "@type": "Organization", "@id": `${ORIGIN}/#org`, name: "Kicks on Deck", url: `${ORIGIN}/`, logo: `${ORIGIN}/assets/favicon.svg`, email: CFG.brand.email, description: "Independent footwear — 1:1 rep Yeezy 350 V2, Foam Runners and Slides. Honest pricing, worldwide shipping.", ...(socials.length ? { sameAs: socials } : {}) },
     { "@context": "https://schema.org", "@type": "WebSite", "@id": `${ORIGIN}/#website`, name: "Kicks on Deck", url: `${ORIGIN}/`, publisher: { "@id": `${ORIGIN}/#org` } },
+    { "@context": "https://schema.org", "@type": "Store", "@id": `${ORIGIN}/#store`, name: "Kicks on Deck", url: `${ORIGIN}/`, image: hero.image, email: CFG.brand.email, telephone: CFG.brand.phone, priceRange: "$$", parentOrganization: { "@id": `${ORIGIN}/#org` }, address: { "@type": "PostalAddress", addressRegion: "FL", addressCountry: "US" }, areaServed: [{ "@type": "AdministrativeArea", name: "South Florida" }, { "@type": "AdministrativeArea", name: "Treasure Coast" }, { "@type": "Country", name: "United States" }] },
   ];
   return layout({
     headOpts: { title: "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides", desc: `Shop ${products.length} grail silhouettes — 350 V2, Foam Runners and Slides. 1:1 craftsmanship, honest prices, worldwide shipping.`, canonical: `${ORIGIN}/`, ogImg: hero.image, ld: homeLd },
