@@ -17,6 +17,7 @@ const HERO_IMG = "/assets/hero-350.webp";
 const readJSON = (rel, fallback) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, rel), "utf8")); } catch { return fallback; } };
 const drops = readJSON("data/drops.json", { candidates: [] });
 const quiz = readJSON("data/quiz.json", { questions: [] });
+const productCopy = readJSON("data/product-copy.json", {});
 const OG_DEFAULT = (products.find((p) => /zebra/i.test(p.name)) || products[0]).image;
 
 /* ---------------- helpers ---------------- */
@@ -318,14 +319,16 @@ function productPage(p) {
   const vs = variantList(p);
   const refl = isReflective(p.name);
   const acc = p.collection === "accessories";
-  const desc = pdpDesc(p.descHtml) || `<p>${esc(p.descText)}</p>`;
+  const copyOverride = productCopy[p.slug];
+  const descPlain = copyOverride ? copyOverride.replace(/\s+/g, " ").trim() : p.descText;
+  const desc = copyOverride ? copyOverride.split(/\n\n+/).map((t) => `<p>${esc(t.trim())}</p>`).join("") : (pdpDesc(p.descHtml) || `<p>${esc(p.descText)}</p>`);
   const sectionLabel = acc ? "Select option" : "Select size";
   const pdata = { id: p.id, slug: p.slug, name: p.name, image: p.image, price: p.minPrice, variants: vs.map((v) => ({ id: v.id, size: v.size })) };
   const related = products.filter((x) => x.collection === p.collection && x.id !== p.id).slice(0, 4);
   const single = vs.length <= 1;
 
   const ld = {
-    "@context": "https://schema.org", "@type": "Product", name: p.name, image: [p.image], description: p.descText,
+    "@context": "https://schema.org", "@type": "Product", name: p.name, image: [p.image], description: descPlain,
     brand: { "@type": "Brand", name: "Kicks on Deck" }, category: colTitle(p.collection),
     offers: { "@type": "Offer", priceCurrency: p.currency || "USD", price: p.minPrice, availability: p.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock", url: `${ORIGIN}/product/${p.slug}/` },
   };
@@ -366,7 +369,7 @@ function productPage(p) {
 <script type="application/ld+json">${JSON.stringify(ld)}</script>`;
 
   return layout({
-    headOpts: { title: `${p.name} — Kicks on Deck`, desc: p.descText.slice(0, 155) || `${p.name} — ${priceLabel(p)}. 1:1 craftsmanship, worldwide shipping.`, canonical: `${ORIGIN}/product/${p.slug}/`, ogImg: p.image },
+    headOpts: { title: `${p.name} — Kicks on Deck`, desc: descPlain.slice(0, 155) || `${p.name} — ${priceLabel(p)}. 1:1 craftsmanship, worldwide shipping.`, canonical: `${ORIGIN}/product/${p.slug}/`, ogImg: p.image },
     active: "",
     body,
   });
@@ -614,7 +617,12 @@ for (const c of collections) {
 for (const p of products) { write(`product/${p.slug}/index.html`, productPage(p)); n++; }
 
 // blog + quiz
-for (const p of posts) { p.cover = `/assets/blog/${p.slug}.svg`; write(`assets/blog/${p.slug}.svg`, blogCover(p)); }
+for (const p of posts) {
+  const webpRel = `assets/blog/${p.slug}.webp`;
+  if (p.meta.image) p.cover = p.meta.image;
+  else if (fs.existsSync(path.join(ROOT, webpRel))) p.cover = `/${webpRel}`;
+  else { p.cover = `/assets/blog/${p.slug}.svg`; write(`assets/blog/${p.slug}.svg`, blogCover(p)); }
+}
 write("blog/index.html", blogIndexPage()); n++;
 for (const p of posts) { write(`blog/${p.slug}/index.html`, blogPostPage(p)); n++; }
 write("quiz/index.html", quizPage()); n++;
