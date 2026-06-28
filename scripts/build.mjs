@@ -12,6 +12,7 @@ const DOMAIN = CFG.brand.domain;
 const ORIGIN = `https://${DOMAIN}`;
 const AN = CFG.analytics || {};
 const SOCIAL = CFG.social || {};
+const HERO_IMG = "/assets/hero-350.webp";
 
 const readJSON = (rel, fallback) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, rel), "utf8")); } catch { return fallback; } };
 const drops = readJSON("data/drops.json", { candidates: [] });
@@ -211,7 +212,7 @@ function homePage() {
   const body = `
 <section class="hero">
   <div class="hero-bg"><div class="hero-grid-lines"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
-  <img class="hero-img" src="${hero.image}" alt="${esc(hero.name)}">
+  <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}">
   <div class="container hero-content">
     <p class="eyebrow reveal in">SNEAKER CULTURE <span class="dot">●</span> NO MARKUP</p>
     <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
