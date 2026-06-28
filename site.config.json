@@ -17,7 +17,7 @@
   "analytics": {
     "ga4Id": "G-SMDQ9B1G5L",
     "gscVerification": "",
-    "dataEndpoint": "",
+    "dataEndpoint": "https://kod-data.hartjosh15.workers.dev",
     "_note": "ga4Id = GA4 Measurement ID (G-XXXXXXX). gscVerification = the token from Google Search Console's HTML-tag verification method. dataEndpoint = the kod-data Worker URL (see data-worker/README.md) that captures votes, email signups and quiz results. All blank-safe: tags/capture only activate once filled in, then rebuild."
   },
   "social": { "instagram": "", "tiktok": "" }
