@@ -1,0 +1,5 @@
+# The static-site build reads these as text. Force LF so frontmatter/regex
+# parsing works on any OS — Windows checkouts default to CRLF, which broke
+# blog frontmatter parsing (titles rendered as "undefined").
+data/posts/*.md text eol=lf
+scripts/*.mjs   text eol=lf

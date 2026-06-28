@@ -301,7 +301,15 @@ function gridPage({ title, h1, eyebrow, list, canonical, active, intro, showFilt
   <div class="product-grid" id="product-grid">${list.map((p, i) => card(p, i)).join("")}</div>
   <div class="empty-state" id="empty-state" style="display:none">No styles in this collection yet.</div>
 </section>`;
-  return layout({ headOpts: { title, desc: intro || h1, canonical }, active, body });
+  const crumb = title.split(/[—|]/)[0].trim();
+  const gridLd = {
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${ORIGIN}/` },
+      { "@type": "ListItem", position: 2, name: crumb, item: canonical },
+    ],
+  };
+  return layout({ headOpts: { title, desc: intro || h1, canonical, ld: gridLd }, active, body });
 }
 
 function productPage(p) {
@@ -435,6 +443,7 @@ function mdToHtml(md) {
   return out.join("\n");
 }
 function parsePost(raw, slug) {
+  raw = String(raw).replace(/\r\n/g, "\n"); // normalize CRLF so frontmatter parses on any platform
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
   const meta = {}; let body = raw;
   if (m) {
@@ -524,7 +533,13 @@ function blogIndexPage() {
   ${posts.length ? `<div class="post-grid">${posts.map(postCard).join("")}</div>` : `<p style="color:var(--muted)">New stories dropping soon.</p>`}
   ${voteWidget()}
 </section>`;
-  return layout({ headOpts: { title: "Blog — Sneaker Guides, Yeezy News & Culture | Kicks on Deck", desc: "Sizing guides, rep-vs-real breakdowns, styling tips and Yeezy/hypebeast culture from Kicks on Deck.", canonical: `${ORIGIN}/blog/`, ogImg: feat ? postImg(feat) : OG_DEFAULT }, active: "/blog/", body });
+  const blogLd = {
+    "@context": "https://schema.org", "@type": "Blog", "@id": `${ORIGIN}/blog/#blog`, name: "Kicks on Deck Journal", url: `${ORIGIN}/blog/`,
+    description: "Sizing guides, rep-vs-real breakdowns, styling tips and Yeezy/hypebeast culture from Kicks on Deck.",
+    publisher: { "@type": "Organization", name: "Kicks on Deck", url: `${ORIGIN}/` },
+    blogPost: posts.map((p) => ({ "@type": "BlogPosting", headline: p.meta.title, url: `${ORIGIN}/blog/${p.slug}/`, datePublished: p.meta.date })),
+  };
+  return layout({ headOpts: { title: "Blog — Sneaker Guides, Yeezy News & Culture | Kicks on Deck", desc: "Sizing guides, rep-vs-real breakdowns, styling tips and Yeezy/hypebeast culture from Kicks on Deck.", canonical: `${ORIGIN}/blog/`, ogImg: feat ? postImg(feat) : OG_DEFAULT, ld: blogLd }, active: "/blog/", body });
 }
 
 function blogPostPage(p) {
