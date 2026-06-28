@@ -510,6 +510,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 @media (max-width: 600px) {
   .quiz-pick { flex-direction: column; text-align: center; }
   .quiz-pick-info .btn { margin: 6px 4px 0; }
+  /* Email capture: stack vertically so the survey selects can't force horizontal overflow */
+  .news-form { flex-direction: column; align-items: stretch; max-width: 100%; }
+  .news-form > input, .news-form > .btn { width: 100%; }
+  .news-survey { flex-direction: column; }
+  .news-survey select { flex: 1 1 auto; width: 100%; min-width: 0; }
 }
 
 /* ============================================================
