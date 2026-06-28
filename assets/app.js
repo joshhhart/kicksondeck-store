@@ -96,7 +96,7 @@
   function emailFallback(co) {
     const lines = cart.map((c) => `• ${c.qty}× ${c.name}${c.size ? " — " + c.size : ""} (${money(c.price)})`).join("\n");
     const body = `I'd like to order:\n\n${lines}\n\nSubtotal: ${money(subtotal())}\n\nName:\nShipping address:\nPhone:`;
-    const email = co.contactEmail || "hartjosh15@gmail.com";
+    const email = co.contactEmail || "info@kicksondeck.store";
     window.location.href = `mailto:${email}?subject=${encodeURIComponent("Order — Kicks on Deck")}&body=${encodeURIComponent(body)}`;
   }
 

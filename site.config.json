@@ -2,7 +2,7 @@
   "brand": {
     "name": "Kicks on Deck",
     "domain": "kicksondeck.store",
-    "email": "hartjosh15@gmail.com",
+    "email": "info@kicksondeck.store",
     "phone": "+1 786 577 8035",
     "city": "Palm City, FL"
   },
@@ -11,7 +11,7 @@
     "endpoint": "https://kod-checkout.hartjosh15.workers.dev",
     "ghlStoreUrl": "https://shop.kicksondeck.store",
     "stripeUrl": "",
-    "contactEmail": "hartjosh15@gmail.com",
+    "contactEmail": "info@kicksondeck.store",
     "_note": "Stripe checkout runs through the Cloudflare Worker in /checkout-worker. Deploy it (see checkout-worker/README.md), then paste the Worker URL into `endpoint` (e.g. https://kod-checkout.<your-subdomain>.workers.dev) and rebuild. Until `endpoint` is set, Checkout falls back to an email order capture so no sale is lost."
   },
   "analytics": {
