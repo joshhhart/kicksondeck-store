@@ -4,6 +4,9 @@ products_raw.json
 .claude/
 .env
 .env.*
+*.env
+*.env.txt
+enviroment.env.txt
 *.log
 .DS_Store
 Thumbs.db

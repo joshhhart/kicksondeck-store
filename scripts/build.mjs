@@ -77,7 +77,7 @@ const navLinks = [
 ];
 
 function head(opts) {
-  const { title, desc, canonical, ogImg = OG_DEFAULT, extraCss = "" } = opts;
+  const { title, desc, canonical, ogImg = OG_DEFAULT, extraCss = "", ld = null } = opts;
   return `<!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -102,7 +102,7 @@ function head(opts) {
 <link rel="stylesheet" href="/assets/styles.css">
 ${extraCss}${analyticsTags()}
 <script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand, analytics: { ga4Id: AN.ga4Id || "", dataEndpoint: AN.dataEndpoint || "" } })};document.documentElement.classList.remove('no-js');</script>
-</head>`;
+${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>\n` : ""}</head>`;
 }
 
 // GA4 + Search Console tags — only emitted once the IDs are set in site.config.json.
@@ -268,8 +268,13 @@ ${quizCTA()}
 ${voteWidget()}
 ${captureBand()}`;
 
+  const socials = [SOCIAL.instagram, SOCIAL.tiktok].filter(Boolean).map((u) => (/^https?:\/\//.test(u) ? u : `https://${u}`));
+  const homeLd = [
+    { "@context": "https://schema.org", "@type": "Organization", "@id": `${ORIGIN}/#org`, name: "Kicks on Deck", url: `${ORIGIN}/`, logo: `${ORIGIN}/assets/favicon.svg`, email: CFG.brand.email, description: "Independent footwear — 1:1 rep Yeezy 350 V2, Foam Runners and Slides. Honest pricing, worldwide shipping.", ...(socials.length ? { sameAs: socials } : {}) },
+    { "@context": "https://schema.org", "@type": "WebSite", "@id": `${ORIGIN}/#website`, name: "Kicks on Deck", url: `${ORIGIN}/`, publisher: { "@id": `${ORIGIN}/#org` } },
+  ];
   return layout({
-    headOpts: { title: "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides", desc: `Shop ${products.length} grail silhouettes — 350 V2, Foam Runners and Slides. 1:1 craftsmanship, honest prices, worldwide shipping.`, canonical: `${ORIGIN}/`, ogImg: hero.image },
+    headOpts: { title: "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides", desc: `Shop ${products.length} grail silhouettes — 350 V2, Foam Runners and Slides. 1:1 craftsmanship, honest prices, worldwide shipping.`, canonical: `${ORIGIN}/`, ogImg: hero.image, ld: homeLd },
     active: "/",
     body,
   });
