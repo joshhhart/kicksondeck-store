@@ -28,9 +28,23 @@ GET  /export.csv?token=YOUR_TOKEN                               -> your email li
    create the Worker, then under **Settings → Bindings → Add → D1 database**, bind
    variable name **`DB`** to `kod_data`.
 
-## One-time setup — CLI route (recommended)
+## One-time setup — one-shot script (easiest)
 
 On any computer with Node (download the repo ZIP from GitHub if it's not local):
+
+```bash
+cd data-worker
+npx wrangler login     # one browser click
+node setup.mjs         # does everything below automatically
+```
+
+`setup.mjs` creates the D1 database, writes its id into `wrangler.toml`, runs the
+schema, generates + sets the `EXPORT_TOKEN`, deploys, and prints your worker URL +
+token. Paste the URL back to Claude to finish wiring it into the site.
+
+## One-time setup — manual CLI route
+
+If you'd rather run each step yourself:
 
 ```bash
 cd data-worker
