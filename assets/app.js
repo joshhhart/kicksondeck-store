@@ -469,17 +469,16 @@
 
   var shoe = hero.querySelector(".hero-shoe");
   var stage = hero.querySelector(".hero-stage");
+  var cta = hero.querySelector(".hero-cta");
   var mv = document.createElement("model-viewer");
   mv.className = "hero-mv";
   mv.setAttribute("src", glb);
-  mv.setAttribute("camera-controls", "");
-  mv.setAttribute("disable-zoom", "");
-  mv.setAttribute("disable-pan", "");
-  mv.setAttribute("disable-tap", "");
+  // Slow turntable showcase — no scroll-driven spinning.
+  mv.setAttribute("auto-rotate", "");
+  mv.setAttribute("auto-rotate-delay", "0");
+  mv.setAttribute("rotation-per-second", "22deg");
   mv.setAttribute("interaction-prompt", "none");
-  mv.setAttribute("camera-orbit", "-35deg 80deg auto");
-  mv.setAttribute("min-camera-orbit", "-Infinity 0deg auto");
-  mv.setAttribute("max-camera-orbit", "Infinity 180deg auto");
+  mv.setAttribute("camera-orbit", "-30deg 84deg auto");
   mv.setAttribute("field-of-view", "30deg");
   mv.setAttribute("exposure", "1.15");
   mv.setAttribute("shadow-intensity", "1");
@@ -490,13 +489,19 @@
   shoe.appendChild(mv);
   hero.classList.add("hero--3d");
 
-  // Failsafe: if the model doesn't load in time (slow device / blocked CDN),
-  // revert to the original static hero so no one gets a broken, empty tall hero.
+  // Reveal the CTAs after the showcase establishes (or on first scroll).
+  var revealed = false;
+  function revealCta() { if (!revealed && cta) { revealed = true; cta.classList.add("is-in"); } }
+  setTimeout(revealCta, 1500);
+
+  // Failsafe: if the model doesn't load (slow device / blocked CDN), revert to
+  // the original static hero so no one gets a broken hero.
   var failsafe = setTimeout(function () {
     if (!hero.classList.contains("hero--3d-ready")) {
       hero.classList.remove("hero--3d");
       if (mv && mv.parentNode) mv.parentNode.removeChild(mv);
       window.removeEventListener("scroll", onScroll);
+      if (cta) cta.classList.add("is-in");
     }
   }, 7000);
   mv.addEventListener("load", function () {
@@ -507,20 +512,16 @@
 
   var ticking = false;
   function update() {
-    var total = hero.offsetHeight - window.innerHeight;
-    var p = total > 0 ? Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / total)) : 0;
-    // Spin completes (just over one full turn) by ~80% of the track, then exit.
-    var spin = Math.min(1, p / 0.8);
-    var theta = (-25 + spin * 380).toFixed(1);
-    var phi = (86 - spin * 22).toFixed(1);
-    mv.cameraOrbit = theta + "deg " + phi + "deg auto";
-    if (mv.jumpCameraToGoal) mv.jumpCameraToGoal();
-    var ex = Math.max(0, Math.min(1, (p - 0.8) / 0.2));
+    // Fade the whole showcase out as it scrolls away (no spin tied to scroll).
+    var ex = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.7)));
     stage.style.setProperty("--ex", ex.toFixed(3));
-    stage.style.setProperty("--gx", ((p - 0.5) * 180).toFixed(1)); // ghost wordmark parallax
+    stage.style.setProperty("--gx", (Math.min(1, window.scrollY / window.innerHeight) * 70).toFixed(1));
     ticking = false;
   }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  function onScroll() {
+    if (window.scrollY > 20) revealCta();
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
 })();

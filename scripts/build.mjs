@@ -214,8 +214,10 @@ function homePage() {
   const body = `
 <section class="hero" id="hero" data-hero3d="${HERO_GLB}">
   <div class="hero-bg"><div class="hero-grid-lines"></div><div class="hero-glow" aria-hidden="true"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
+  <a class="hero-link" href="/shop/" aria-label="Shop the rotation"></a>
   <div class="hero-stage">
     <div class="hero-ghost" aria-hidden="true"><span>350</span></div>
+    <div class="hero-podium" aria-hidden="true"></div>
     <div class="hero-shoe">
       <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}" fetchpriority="high">
     </div>
