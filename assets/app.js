@@ -478,13 +478,15 @@
   mv.setAttribute("auto-rotate-delay", "0");
   mv.setAttribute("rotation-per-second", "22deg");
   mv.setAttribute("interaction-prompt", "none");
-  mv.setAttribute("camera-orbit", "-30deg 84deg auto");
-  mv.setAttribute("field-of-view", "30deg");
-  mv.setAttribute("exposure", "1.15");
-  mv.setAttribute("shadow-intensity", "1");
-  mv.setAttribute("shadow-softness", "0.85");
+  mv.setAttribute("camera-orbit", "-30deg 82deg auto");
+  mv.setAttribute("field-of-view", "28deg");
+  // Punchier, more dynamic studio lighting: higher exposure, filmic tone map,
+  // crisper contact shadow for dimensionality and reflective highlights.
+  mv.setAttribute("exposure", "1.4");
+  mv.setAttribute("shadow-intensity", "1.35");
+  mv.setAttribute("shadow-softness", "0.5");
   mv.setAttribute("environment-image", "neutral");
-  mv.setAttribute("tone-mapping", "neutral");
+  mv.setAttribute("tone-mapping", "aces");
   mv.setAttribute("aria-hidden", "true");
   shoe.appendChild(mv);
   hero.classList.add("hero--3d");

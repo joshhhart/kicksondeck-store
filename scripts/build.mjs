@@ -230,7 +230,6 @@ function homePage() {
       </div>
     </div>
     <div class="hero-readout" aria-hidden="true"><span class="ro-k">Now spinning</span><span class="ro-v">${esc(hero.name)}</span></div>
-    <div class="scroll-hint">Scroll to spin</div>
   </div>
 </section>
 

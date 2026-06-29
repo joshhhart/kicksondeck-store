@@ -613,7 +613,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 .hero--3d .hero-podium::after {
   content: ""; position: absolute; inset: -2%; border-radius: 50%;
   background: conic-gradient(from 0deg, transparent 0deg, rgba(216,255,62,0.18) 38deg, transparent 110deg);
-  animation: heroTurn 7s linear infinite;
+  /* reverse so the turntable sweep matches the shoe's auto-rotate direction */
+  animation: heroTurn 7s linear infinite reverse;
 }
 @keyframes heroTurn { to { transform: rotate(360deg); } }
 
@@ -642,7 +643,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   width: min(80vw, 940px); filter: drop-shadow(0 56px 100px rgba(0,0,0,0.7));
 }
 .hero--3d .hero-mv {
-  width: min(104vw, 1380px); height: min(98svh, 1000px); pointer-events: none;
+  width: min(122vw, 1640px); height: min(106svh, 1180px); pointer-events: none;
   background: transparent; --poster-color: transparent; outline: none;
   opacity: 0; transition: opacity .8s var(--ease-out);
 }
