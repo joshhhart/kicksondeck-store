@@ -368,7 +368,11 @@
 
   // Particles — drifting volt field behind the hero, lightly cursor-reactive
   (() => {
-    const cv = $("#hero-particles"); if (!cv || reduceMotion) return;
+    // Skip the particle field when the 3D hero will take over (it overlaps the
+    // 3D scene with messy connecting lines). Mirrors the 3D-hero eligibility.
+    const heroEl = document.getElementById("hero");
+    const willBe3d = heroEl && heroEl.dataset.hero3d && !(navigator.connection && navigator.connection.saveData);
+    const cv = $("#hero-particles"); if (!cv || reduceMotion || willBe3d) return;
     const ctx = cv.getContext("2d"); if (!ctx) return;
     let w = 0, h = 0, dpr = 1, parts = [], raf = 0; const mouse = { x: -999, y: -999 };
     const count = () => Math.min(64, Math.round(window.innerWidth / 24));
