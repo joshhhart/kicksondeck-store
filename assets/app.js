@@ -450,3 +450,74 @@
 
   renderCart();
 })();
+
+/* ===== 3D scroll hero: spin the Yeezy on scroll, then exit. Desktop + motion only. ===== */
+(function () {
+  var hero = document.getElementById("hero");
+  if (!hero) return;
+  var glb = hero.getAttribute("data-hero3d");
+  if (!glb) return;
+  // Guardrails: skip on small screens, reduced-motion, or data-saver — keeps mobile fast.
+  if (!window.matchMedia("(min-width: 880px)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (navigator.connection && navigator.connection.saveData) return;
+
+  var script = document.createElement("script");
+  script.type = "module";
+  script.src = "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
+  document.head.appendChild(script);
+
+  var shoe = hero.querySelector(".hero-shoe");
+  var stage = hero.querySelector(".hero-stage");
+  var mv = document.createElement("model-viewer");
+  mv.className = "hero-mv";
+  mv.setAttribute("src", glb);
+  mv.setAttribute("camera-controls", "");
+  mv.setAttribute("disable-zoom", "");
+  mv.setAttribute("disable-pan", "");
+  mv.setAttribute("disable-tap", "");
+  mv.setAttribute("interaction-prompt", "none");
+  mv.setAttribute("camera-orbit", "-35deg 80deg auto");
+  mv.setAttribute("min-camera-orbit", "-Infinity 0deg auto");
+  mv.setAttribute("max-camera-orbit", "Infinity 180deg auto");
+  mv.setAttribute("field-of-view", "30deg");
+  mv.setAttribute("exposure", "1.15");
+  mv.setAttribute("shadow-intensity", "1");
+  mv.setAttribute("shadow-softness", "0.85");
+  mv.setAttribute("environment-image", "neutral");
+  mv.setAttribute("tone-mapping", "neutral");
+  mv.setAttribute("aria-hidden", "true");
+  shoe.appendChild(mv);
+  hero.classList.add("hero--3d");
+
+  // Failsafe: if the model doesn't load in time (slow device / blocked CDN),
+  // revert to the original static hero so no one gets a broken, empty tall hero.
+  var failsafe = setTimeout(function () {
+    if (!hero.classList.contains("hero--3d-ready")) {
+      hero.classList.remove("hero--3d");
+      if (mv && mv.parentNode) mv.parentNode.removeChild(mv);
+      window.removeEventListener("scroll", onScroll);
+    }
+  }, 7000);
+  mv.addEventListener("load", function () {
+    clearTimeout(failsafe);
+    hero.classList.add("hero--3d-ready");
+    update();
+  });
+
+  var ticking = false;
+  function update() {
+    var total = hero.offsetHeight - window.innerHeight;
+    var p = total > 0 ? Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / total)) : 0;
+    var theta = (-35 + p * 360).toFixed(1);
+    var phi = (82 - p * 24).toFixed(1);
+    mv.cameraOrbit = theta + "deg " + phi + "deg auto";
+    if (mv.jumpCameraToGoal) mv.jumpCameraToGoal();
+    var ex = Math.max(0, Math.min(1, (p - 0.82) / 0.18));
+    stage.style.setProperty("--ex", ex.toFixed(3));
+    ticking = false;
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+})();

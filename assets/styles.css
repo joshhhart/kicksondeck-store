@@ -574,3 +574,42 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   .hero-particles, #spark-canvas { display: none; }
   .pill-ind { transition: none; }
 }
+
+/* ===== 3D scroll hero (progressive enhancement; desktop + motion only) ===== */
+/* Base mode: wrappers are transparent so the static/mobile hero is unchanged. */
+.hero-stage, .hero-shoe { display: contents; }
+
+/* Active mode: JS adds .hero--3d on desktop. Hero becomes a tall scroll track
+   with a pinned stage; the shoe spins via model-viewer as you scroll. */
+.hero--3d { display: block; min-height: 320vh; align-items: stretch; padding: 0; }
+.hero--3d .hero-stage {
+  display: grid; align-content: end;
+  position: sticky; top: 0; height: 100svh; overflow: hidden;
+  padding: 120px var(--gutter) clamp(40px, 6vw, 80px);
+}
+.hero--3d .hero-shoe {
+  display: grid; place-items: center;
+  position: absolute; inset: 0; z-index: 0;
+  transform: scale(calc(1 + var(--ex, 0) * 0.55));
+  filter: blur(calc(var(--ex, 0) * 16px));
+  opacity: calc(1 - var(--ex, 0) * 1.1);
+  will-change: transform, filter, opacity;
+}
+.hero--3d .hero-shoe .hero-img {
+  position: static; transform: none; animation: none; opacity: 1;
+  width: min(60vw, 740px); filter: drop-shadow(0 40px 80px rgba(0,0,0,0.6));
+}
+.hero--3d .hero-mv {
+  width: min(80vw, 880px); height: 84svh; pointer-events: none;
+  background: transparent; --poster-color: transparent; outline: none;
+  opacity: 0; transition: opacity .6s var(--ease-out);
+}
+.hero--3d.hero--3d-ready .hero-mv { opacity: 1; }
+.hero--3d.hero--3d-ready .hero-shoe .hero-img { display: none; }
+.hero--3d .hero-content {
+  z-index: 2; pointer-events: auto;
+  opacity: calc(1 - var(--ex, 0) * 1.4);
+  transform: translateY(calc(var(--ex, 0) * -28px));
+  will-change: transform, opacity;
+}
+.hero--3d .scroll-hint { z-index: 2; opacity: calc(1 - var(--ex, 0) * 2); }

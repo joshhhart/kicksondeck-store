@@ -13,6 +13,7 @@ const ORIGIN = `https://${DOMAIN}`;
 const AN = CFG.analytics || {};
 const SOCIAL = CFG.social || {};
 const HERO_IMG = "/assets/hero-350.webp";
+const HERO_GLB = "/assets/3d/zebra-350.glb";
 
 const readJSON = (rel, fallback) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, rel), "utf8")); } catch { return fallback; } };
 const drops = readJSON("data/drops.json", { candidates: [] });
@@ -211,18 +212,22 @@ function homePage() {
   featured = featured.slice(0, 8);
 
   const body = `
-<section class="hero">
+<section class="hero" id="hero" data-hero3d="${HERO_GLB}">
   <div class="hero-bg"><div class="hero-grid-lines"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
-  <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}" fetchpriority="high">
-  <div class="container hero-content">
-    <p class="eyebrow reveal in">SNEAKER CULTURE <span class="dot">●</span> NO MARKUP</p>
-    <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
-    <div class="hero-sub">
-      <p>Grail silhouettes, 1:1 craftsmanship, honest prices. ${products.length} styles in rotation — built to wear, not to flip.</p>
-      <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation ${I.arrow}</a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a></div>
+  <div class="hero-stage">
+    <div class="hero-shoe">
+      <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}" fetchpriority="high">
     </div>
+    <div class="container hero-content">
+      <p class="eyebrow reveal in">SNEAKER CULTURE <span class="dot">●</span> NO MARKUP</p>
+      <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
+      <div class="hero-sub">
+        <p>Grail silhouettes, 1:1 craftsmanship, honest prices. ${products.length} styles in rotation — built to wear, not to flip.</p>
+        <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation ${I.arrow}</a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a></div>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll to spin</div>
   </div>
-  <div class="scroll-hint">Scroll</div>
 </section>
 
 <section class="stats">
