@@ -627,8 +627,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 .hero--3d .hero-ghost span {
   font-weight: 900; letter-spacing: -0.05em; line-height: 0.72; white-space: nowrap; user-select: none;
   font-size: clamp(24rem, 60vw, 72rem);
-  color: rgba(255,255,255,0.035); -webkit-text-stroke: 1.6px rgba(255,255,255,0.08);
-  text-shadow: 4px 4px 0 rgba(255,255,255,0.02), 10px 10px 0 rgba(216,255,62,0.025), 28px 28px 46px rgba(0,0,0,0.6);
+  color: rgba(255,255,255,0.05); -webkit-text-stroke: 1px rgba(255,255,255,0.05);
+  text-shadow: 0 30px 64px rgba(0,0,0,0.6);
 }
 
 /* the shoe — large, centered showcase; gently fades out on scroll */
@@ -643,7 +643,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   width: min(80vw, 940px); filter: drop-shadow(0 56px 100px rgba(0,0,0,0.7));
 }
 .hero--3d .hero-mv {
-  width: min(122vw, 1640px); height: min(106svh, 1180px); pointer-events: none;
+  width: min(140vw, 1860px); height: min(114svh, 1300px); pointer-events: none;
   background: transparent; --poster-color: transparent; outline: none;
   opacity: 0; transition: opacity .8s var(--ease-out);
 }

@@ -482,7 +482,7 @@
   mv.setAttribute("field-of-view", "28deg");
   // Punchier, more dynamic studio lighting: higher exposure, filmic tone map,
   // crisper contact shadow for dimensionality and reflective highlights.
-  mv.setAttribute("exposure", "1.4");
+  mv.setAttribute("exposure", "1.05");
   mv.setAttribute("shadow-intensity", "1.35");
   mv.setAttribute("shadow-softness", "0.5");
   mv.setAttribute("environment-image", "neutral");
