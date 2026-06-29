@@ -450,3 +450,81 @@
 
   renderCart();
 })();
+
+/* ===== 3D scroll hero: spin the Yeezy on scroll, then exit. Desktop + motion only. ===== */
+(function () {
+  var hero = document.getElementById("hero");
+  if (!hero) return;
+  var glb = hero.getAttribute("data-hero3d");
+  if (!glb) return;
+  // Guardrails: skip on reduced-motion or data-saver. Runs on mobile too (the
+  // showcase is a fixed blur/fade, no scroll-driven motion).
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (navigator.connection && navigator.connection.saveData) return;
+
+  var script = document.createElement("script");
+  script.type = "module";
+  script.src = "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
+  document.head.appendChild(script);
+
+  var shoe = hero.querySelector(".hero-shoe");
+  var stage = hero.querySelector(".hero-stage");
+  var cta = hero.querySelector(".hero-cta");
+  var mv = document.createElement("model-viewer");
+  mv.className = "hero-mv";
+  mv.setAttribute("src", glb);
+  // Slow turntable showcase — no scroll-driven spinning.
+  mv.setAttribute("auto-rotate", "");
+  mv.setAttribute("auto-rotate-delay", "0");
+  mv.setAttribute("rotation-per-second", "22deg");
+  mv.setAttribute("interaction-prompt", "none");
+  mv.setAttribute("camera-orbit", "-30deg 82deg auto");
+  mv.setAttribute("field-of-view", "28deg");
+  // Punchier, more dynamic studio lighting: higher exposure, filmic tone map,
+  // crisper contact shadow for dimensionality and reflective highlights.
+  mv.setAttribute("exposure", "1.05");
+  mv.setAttribute("shadow-intensity", "1.35");
+  mv.setAttribute("shadow-softness", "0.5");
+  mv.setAttribute("environment-image", "neutral");
+  mv.setAttribute("tone-mapping", "aces");
+  mv.setAttribute("aria-hidden", "true");
+  shoe.appendChild(mv);
+  hero.classList.add("hero--3d");
+
+  // Reveal the CTAs after the showcase establishes (or on first scroll).
+  var revealed = false;
+  function revealCta() { if (!revealed && cta) { revealed = true; cta.classList.add("is-in"); } }
+  setTimeout(revealCta, 1500);
+
+  // Failsafe: if the model doesn't load (slow device / blocked CDN), revert to
+  // the original static hero so no one gets a broken hero.
+  var failsafe = setTimeout(function () {
+    if (!hero.classList.contains("hero--3d-ready")) {
+      hero.classList.remove("hero--3d");
+      if (mv && mv.parentNode) mv.parentNode.removeChild(mv);
+      window.removeEventListener("scroll", onScroll);
+      if (cta) cta.classList.add("is-in");
+    }
+  }, 7000);
+  mv.addEventListener("load", function () {
+    clearTimeout(failsafe);
+    hero.classList.add("hero--3d-ready");
+    update();
+  });
+
+  var ticking = false;
+  function update() {
+    // Fade the whole showcase out as it scrolls away (no spin tied to scroll).
+    var ex = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.7)));
+    stage.style.setProperty("--ex", ex.toFixed(3));
+    stage.style.setProperty("--gx", (Math.min(1, window.scrollY / window.innerHeight) * 70).toFixed(1));
+    ticking = false;
+  }
+  function onScroll() {
+    if (window.scrollY > 20) revealCta();
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  window.addEventListener("resize", onScroll, { passive: true });
+})();

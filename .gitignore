@@ -10,3 +10,4 @@ enviroment.env.txt
 *.log
 .DS_Store
 Thumbs.db
+_herotest.html
