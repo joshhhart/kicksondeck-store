@@ -213,8 +213,9 @@ function homePage() {
 
   const body = `
 <section class="hero" id="hero" data-hero3d="${HERO_GLB}">
-  <div class="hero-bg"><div class="hero-grid-lines"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
+  <div class="hero-bg"><div class="hero-grid-lines"></div><div class="hero-glow" aria-hidden="true"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
   <div class="hero-stage">
+    <div class="hero-ghost" aria-hidden="true"><span>350</span></div>
     <div class="hero-shoe">
       <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}" fetchpriority="high">
     </div>
@@ -226,6 +227,7 @@ function homePage() {
         <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation ${I.arrow}</a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a></div>
       </div>
     </div>
+    <div class="hero-readout" aria-hidden="true"><span class="ro-k">Now spinning</span><span class="ro-v">${esc(hero.name)}</span></div>
     <div class="scroll-hint">Scroll to spin</div>
   </div>
 </section>

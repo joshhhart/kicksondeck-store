@@ -509,12 +509,15 @@
   function update() {
     var total = hero.offsetHeight - window.innerHeight;
     var p = total > 0 ? Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / total)) : 0;
-    var theta = (-35 + p * 360).toFixed(1);
-    var phi = (82 - p * 24).toFixed(1);
+    // Spin completes (just over one full turn) by ~80% of the track, then exit.
+    var spin = Math.min(1, p / 0.8);
+    var theta = (-25 + spin * 380).toFixed(1);
+    var phi = (86 - spin * 22).toFixed(1);
     mv.cameraOrbit = theta + "deg " + phi + "deg auto";
     if (mv.jumpCameraToGoal) mv.jumpCameraToGoal();
-    var ex = Math.max(0, Math.min(1, (p - 0.82) / 0.18));
+    var ex = Math.max(0, Math.min(1, (p - 0.8) / 0.2));
     stage.style.setProperty("--ex", ex.toFixed(3));
+    stage.style.setProperty("--gx", ((p - 0.5) * 180).toFixed(1)); // ghost wordmark parallax
     ticking = false;
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }

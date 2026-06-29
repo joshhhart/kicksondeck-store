@@ -576,40 +576,76 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 }
 
 /* ===== 3D scroll hero (progressive enhancement; desktop + motion only) ===== */
-/* Base mode: wrappers are transparent so the static/mobile hero is unchanged. */
+/* Base mode: wrappers transparent so the static/mobile hero is unchanged.
+   3D-only decoration is hidden until JS adds .hero--3d. */
 .hero-stage, .hero-shoe { display: contents; }
+.hero-ghost, .hero-readout, .hero-glow { display: none; }
 
-/* Active mode: JS adds .hero--3d on desktop. Hero becomes a tall scroll track
-   with a pinned stage; the shoe spins via model-viewer as you scroll. */
-.hero--3d { display: block; min-height: 320vh; align-items: stretch; padding: 0; }
+/* ---- Active mode: pinned stage, shoe spins on scroll, clean zoned layout ---- */
+.hero--3d { display: block; min-height: 210vh; align-items: stretch; padding: 0; }
 .hero--3d .hero-stage {
-  display: grid; align-content: end;
   position: sticky; top: 0; height: 100svh; overflow: hidden;
-  padding: 120px var(--gutter) clamp(40px, 6vw, 80px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas: "top" "mid" "foot";
+  padding: clamp(86px, 9vw, 124px) var(--gutter) clamp(34px, 5vw, 66px);
 }
-.hero--3d .hero-shoe {
+
+/* volt spotlight + giant ghost wordmark, both behind the shoe */
+.hero--3d .hero-glow {
+  display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(44% 40% at 54% 44%, rgba(216,255,62,0.18), rgba(216,255,62,0.04) 42%, transparent 72%);
+  opacity: calc(1 - var(--ex, 0));
+}
+.hero--3d .hero-ghost {
   display: grid; place-items: center;
-  position: absolute; inset: 0; z-index: 0;
-  transform: scale(calc(1 + var(--ex, 0) * 0.55));
-  filter: blur(calc(var(--ex, 0) * 16px));
-  opacity: calc(1 - var(--ex, 0) * 1.1);
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  transform: translateX(calc(var(--gx, 0) * 1px)) scale(calc(1 + var(--ex, 0) * 0.28));
+  opacity: calc(0.85 - var(--ex, 0));
+}
+.hero--3d .hero-ghost span {
+  font-weight: 900; letter-spacing: -0.05em; line-height: 0.74; white-space: nowrap; user-select: none;
+  font-size: clamp(15rem, 36vw, 46rem);
+  color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.065);
+}
+
+/* the shoe — centered hero, sits in the middle band (no overlap with copy) */
+.hero--3d .hero-shoe {
+  grid-area: mid; display: grid; place-items: center; position: relative; z-index: 1;
+  transform: translateY(calc(var(--ex, 0) * -9vh)) scale(calc(1 + var(--ex, 0) * 0.42));
+  filter: blur(calc(var(--ex, 0) * 18px));
+  opacity: calc(1 - var(--ex, 0) * 1.15);
   will-change: transform, filter, opacity;
 }
 .hero--3d .hero-shoe .hero-img {
   position: static; transform: none; animation: none; opacity: 1;
-  width: min(60vw, 740px); filter: drop-shadow(0 40px 80px rgba(0,0,0,0.6));
+  width: min(48vw, 600px); filter: drop-shadow(0 48px 90px rgba(0,0,0,0.65));
 }
 .hero--3d .hero-mv {
-  width: min(80vw, 880px); height: 84svh; pointer-events: none;
+  width: min(60vw, 720px); height: 100%; max-height: 70svh; pointer-events: none;
   background: transparent; --poster-color: transparent; outline: none;
-  opacity: 0; transition: opacity .6s var(--ease-out);
+  opacity: 0; transition: opacity .7s var(--ease-out);
 }
 .hero--3d.hero--3d-ready .hero-mv { opacity: 1; }
 .hero--3d.hero--3d-ready .hero-shoe .hero-img { display: none; }
+
+/* headline + CTA as one clean block, anchored bottom-left */
 .hero--3d .hero-content {
-  z-index: 2; pointer-events: auto;
-  opacity: calc(1 - var(--ex, 0) * 1.4);
-  transform: translateY(calc(var(--ex, 0) * -28px));
+  grid-area: foot; align-self: end; justify-self: start;
+  margin: 0; padding: 0; width: auto; max-width: 460px; z-index: 3; pointer-events: auto;
+  opacity: calc(1 - var(--ex, 0) * 1.5); transform: translateY(calc(var(--ex, 0) * -22px));
   will-change: transform, opacity;
 }
-.hero--3d .scroll-hint { z-index: 2; opacity: calc(1 - var(--ex, 0) * 2); }
+.hero--3d .hero-content h1 { font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: 0.9; }
+.hero--3d .hero-content .hero-sub { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; margin-top: clamp(18px, 2.6vw, 28px); }
+.hero--3d .hero-content .hero-sub p { max-width: 380px; }
+
+/* spec readout + scroll cue, bottom-right */
+.hero--3d .hero-readout {
+  grid-area: foot; align-self: end; justify-self: end; text-align: right; z-index: 3;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 3px;
+  opacity: calc(1 - var(--ex, 0) * 1.6); transform: translateY(calc(var(--ex, 0) * -22px));
+}
+.hero--3d .hero-readout .ro-k { font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-dim); }
+.hero--3d .hero-readout .ro-v { font-weight: 800; font-size: 0.98rem; color: var(--ink); }
+.hero--3d .scroll-hint { grid-area: foot; align-self: end; justify-self: center; z-index: 3; opacity: calc(1 - var(--ex, 0) * 2.4); }
