@@ -641,7 +641,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 .hero--3d .hero-ghost span {
   font-weight: 900; letter-spacing: -0.05em; line-height: 0.72; white-space: nowrap; user-select: none;
   font-size: clamp(24rem, 60vw, 72rem);
-  color: rgba(255,255,255,0.05); -webkit-text-stroke: 1px rgba(255,255,255,0.05);
+  /* solid soft fill only — no text-stroke (its glyph outlines read as faint stray lines) */
+  color: rgba(255,255,255,0.06);
   text-shadow: 0 30px 64px rgba(0,0,0,0.6);
 }
 
