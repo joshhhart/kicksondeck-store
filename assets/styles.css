@@ -605,7 +605,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   opacity: calc(1 - var(--ex, 0));
 }
 
-/* turntable pedestal under the shoe */
+/* turntable pedestal under the shoe — mobile only (hidden on desktop below) */
 .hero--3d .hero-podium {
   display: block; position: absolute; left: var(--shoe-x); top: var(--podium-y);
   width: min(40vw, 520px); aspect-ratio: 1;
@@ -626,6 +626,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   animation: heroTurn 7s linear infinite reverse;
 }
 @keyframes heroTurn { to { transform: rotate(360deg); } }
+/* platform reads well on the stacked mobile layout but feels redundant on the
+   wide desktop showcase (the floor glow already grounds the shoe) — hide it there */
+@media (min-width: 761px) { .hero--3d .hero-podium { display: none; } }
 
 /* giant 3D ghost wordmark behind the shoe */
 .hero--3d .hero-ghost {
@@ -694,7 +697,15 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   .hero--3d .hero-podium { width: min(84vw, 470px); }
   .hero--3d .hero-ghost { place-items: start center; }
   .hero--3d .hero-ghost span { font-size: clamp(13rem, 78vw, 24rem); }
-  .hero--3d .hero-content { left: var(--gutter); right: var(--gutter); bottom: clamp(24px, 7vw, 52px); max-width: none; }
+  .hero--3d .hero-content { left: var(--gutter); right: var(--gutter); bottom: clamp(24px, 7vw, 52px); max-width: none; isolation: isolate; }
+  /* full-bleed scrim behind the copy: on short iOS viewports the shoe sole drops
+     into the headline; this fades the shoe into a dark base so the copy stays clean
+     no matter where the dynamic address bar puts the fold */
+  .hero--3d .hero-content::before {
+    content: ""; position: absolute; left: 50%; transform: translateX(-50%);
+    width: 100vw; bottom: -40px; top: -110px; z-index: -1; pointer-events: none;
+    background: linear-gradient(to top, #0a0a0b 0%, #0a0a0b 74%, rgba(10,10,11,0.6) 90%, transparent 100%);
+  }
   .hero--3d .hero-content h1 { font-size: clamp(3rem, 16vw, 5rem); }
   .hero--3d .hero-content .hero-sub p { max-width: 38ch; }
   /* drop the decorative readout on phones to keep the copy clean */
