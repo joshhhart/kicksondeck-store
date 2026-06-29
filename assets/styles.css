@@ -583,6 +583,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 /* the 3D model element only renders in active 3D mode; hidden otherwise so a
    teardown (resize to mobile / failsafe) cleanly falls back to the static image */
 .hero-mv { display: none; }
+/* the drifting particle network clutters the 3D scene with connecting lines — hide it in 3D mode */
+.hero--3d .hero-particles { display: none; }
 
 /* ---- Active mode: SLOW TURNTABLE SHOWCASE. One screen tall; the shoe
    auto-rotates slowly on a pedestal, then the whole hero fades out on scroll. ---- */
