@@ -457,8 +457,8 @@
   if (!hero) return;
   var glb = hero.getAttribute("data-hero3d");
   if (!glb) return;
-  // Guardrails: skip on small screens, reduced-motion, or data-saver — keeps mobile fast.
-  if (!window.matchMedia("(min-width: 880px)").matches) return;
+  // Guardrails: skip on reduced-motion or data-saver. Runs on mobile too (the
+  // showcase is a fixed blur/fade, no scroll-driven motion).
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   if (navigator.connection && navigator.connection.saveData) return;
 
@@ -526,19 +526,5 @@
   }
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  // Re-evaluate on resize: matchMedia is only checked once at load, so a window
-  // that loads wide (3D built) then narrows to phone width would otherwise keep
-  // the desktop-only staging. Toggle 3D mode to match the current width, which
-  // cleanly falls back to the static hero on mobile widths.
-  function onResize() {
-    var ok = window.matchMedia("(min-width: 880px)").matches
-      && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (ok) {
-      if (mv.parentNode && !hero.classList.contains("hero--3d")) hero.classList.add("hero--3d");
-    } else {
-      hero.classList.remove("hero--3d");
-    }
-    onScroll();
-  }
-  window.addEventListener("resize", onResize, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
 })();
