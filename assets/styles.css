@@ -583,7 +583,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 
 /* ---- Active mode: pinned stage; ONE big centered shoe spins on scroll.
    Everything is absolutely positioned so the shoe can never be squeezed. ---- */
-.hero--3d { display: block; min-height: 180vh; align-items: stretch; padding: 0; }
+.hero--3d { display: block; min-height: 180vh; align-items: stretch; padding: 0; overflow: visible; }
 .hero--3d .hero-stage { display: block; position: sticky; top: 0; height: 100svh; overflow: hidden; }
 
 /* volt spotlight (behind shoe) + floor-reflection pool (under shoe) */
@@ -599,13 +599,15 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 .hero--3d .hero-ghost {
   display: grid; place-items: center;
   position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-  transform: translateX(calc(var(--gx, 0) * 1px)) scale(calc(1 + var(--ex, 0) * 0.3));
-  opacity: calc(0.8 - var(--ex, 0) * 0.8);
+  transform: perspective(1600px) rotateY(-16deg) rotateX(7deg) translateX(calc(var(--gx, 0) * 1px)) scale(calc(1 + var(--ex, 0) * 0.3));
+  transform-style: preserve-3d;
+  opacity: calc(0.95 - var(--ex, 0) * 0.95);
 }
 .hero--3d .hero-ghost span {
   font-weight: 900; letter-spacing: -0.05em; line-height: 0.72; white-space: nowrap; user-select: none;
-  font-size: clamp(20rem, 52vw, 62rem);
-  color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.06);
+  font-size: clamp(24rem, 60vw, 72rem);
+  color: rgba(255,255,255,0.035); -webkit-text-stroke: 1.6px rgba(255,255,255,0.08);
+  text-shadow: 4px 4px 0 rgba(255,255,255,0.02), 10px 10px 0 rgba(216,255,62,0.025), 28px 28px 46px rgba(0,0,0,0.6);
 }
 
 /* THE SHOE — large, centered (nudged right so the headline stays clear) */
@@ -618,10 +620,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 }
 .hero--3d .hero-shoe .hero-img {
   position: static; transform: none; animation: none; opacity: 1;
-  width: min(64vw, 780px); filter: drop-shadow(0 56px 100px rgba(0,0,0,0.7));
+  width: min(82vw, 980px); filter: drop-shadow(0 56px 100px rgba(0,0,0,0.7));
 }
 .hero--3d .hero-mv {
-  width: min(76vw, 920px); height: min(90svh, 900px); pointer-events: none;
+  width: min(108vw, 1480px); height: min(106svh, 1080px); pointer-events: none;
   background: transparent; --poster-color: transparent; outline: none;
   opacity: 0; transition: opacity .7s var(--ease-out);
 }
@@ -631,11 +633,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 /* headline + CTA, bottom-left, over the shoe (z3) for depth */
 .hero--3d .hero-content {
   position: absolute; left: var(--gutter); bottom: clamp(40px, 6vw, 80px);
-  margin: 0; padding: 0; width: auto; max-width: 440px; z-index: 3; pointer-events: auto;
+  margin: 0; padding: 0; width: auto; max-width: 600px; z-index: 3; pointer-events: auto;
   opacity: calc(1 - var(--ex, 0) * 1.5); transform: translateY(calc(var(--ex, 0) * -22px));
   will-change: transform, opacity;
 }
-.hero--3d .hero-content h1 { font-size: clamp(2.3rem, 4.6vw, 4.2rem); line-height: 0.9; text-shadow: 0 6px 40px rgba(10,10,11,0.7); }
+.hero--3d .hero-content h1 { font-size: clamp(3.4rem, 7vw, 7rem); line-height: 0.85; text-shadow: 0 3px 0 rgba(0,0,0,0.5), 0 18px 44px rgba(10,10,11,0.7); }
 .hero--3d .hero-content .hero-sub { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: clamp(16px, 2.4vw, 26px); }
 .hero--3d .hero-content .hero-sub p { max-width: 360px; }
 
