@@ -580,6 +580,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
    3D-only decoration is hidden until JS adds .hero--3d. */
 .hero-stage, .hero-shoe { display: contents; }
 .hero-ghost, .hero-readout, .hero-glow, .hero-podium, .hero-link { display: none; }
+/* the 3D model element only renders in active 3D mode; hidden otherwise so a
+   teardown (resize to mobile / failsafe) cleanly falls back to the static image */
+.hero-mv { display: none; }
 
 /* ---- Active mode: SLOW TURNTABLE SHOWCASE. One screen tall; the shoe
    auto-rotates slowly on a pedestal, then the whole hero fades out on scroll. ---- */
@@ -601,7 +604,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 /* turntable pedestal under the shoe */
 .hero--3d .hero-podium {
   display: block; position: absolute; left: 54%; top: 62%;
-  width: min(40vw, 520px); aspect-ratio: 1; transform: translate(-50%, -50%) rotateX(74deg);
+  width: min(40vw, 520px); aspect-ratio: 1;
+  /* track the shoe's scroll motion (lift + scale) so the platform stays parented to it */
+  transform: translate(-50%, calc(-50% + var(--ex, 0) * -6vh)) rotateX(74deg) scale(calc(1 + var(--ex, 0) * 0.16));
   z-index: 0; pointer-events: none; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(216,255,62,0.10), rgba(216,255,62,0.03) 58%, transparent 72%);
   opacity: calc(0.9 - var(--ex, 0));
@@ -643,12 +648,14 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   width: min(80vw, 940px); filter: drop-shadow(0 56px 100px rgba(0,0,0,0.7));
 }
 .hero--3d .hero-mv {
+  display: block;
   width: min(140vw, 1860px); height: min(114svh, 1300px); pointer-events: none;
   background: transparent; --poster-color: transparent; outline: none;
   opacity: 0; transition: opacity .8s var(--ease-out);
 }
 .hero--3d.hero--3d-ready .hero-mv { opacity: 1; }
-.hero--3d.hero--3d-ready .hero-shoe .hero-img { display: none; }
+/* hide the static photo the moment 3D mode engages so it never flashes before the model */
+.hero--3d .hero-shoe .hero-img { display: none; }
 
 /* headline bottom-left; text falls through to the hero link, buttons don't */
 .hero--3d .hero-content {
