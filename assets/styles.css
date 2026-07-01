@@ -574,3 +574,143 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
   .hero-particles, #spark-canvas { display: none; }
   .pill-ind { transition: none; }
 }
+
+/* ===== 3D scroll hero (progressive enhancement; desktop + motion only) ===== */
+/* Base mode: wrappers transparent so the static/mobile hero is unchanged.
+   3D-only decoration is hidden until JS adds .hero--3d. */
+.hero-stage, .hero-shoe { display: contents; }
+.hero-ghost, .hero-readout, .hero-glow, .hero-podium, .hero-link { display: none; }
+/* the 3D model element only renders in active 3D mode; hidden otherwise so a
+   teardown (resize to mobile / failsafe) cleanly falls back to the static image */
+.hero-mv { display: none; }
+/* the drifting particle network clutters the 3D scene with connecting lines — hide it in 3D mode */
+.hero--3d .hero-particles { display: none; }
+
+/* ---- Active mode: SLOW TURNTABLE SHOWCASE. One screen tall; the shoe
+   auto-rotates slowly on a pedestal, then the whole hero fades out on scroll. ---- */
+.hero--3d {
+  display: block; min-height: 100svh; align-items: stretch; padding: 0; overflow: hidden;
+  /* shared anchor: the model and the podium are both centered on --shoe-x so they stay aligned */
+  --shoe-x: 64%; --shoe-y: 50%; --podium-y: 63%;
+}
+.hero--3d .hero-stage { display: block; position: relative; height: 100svh; }
+
+/* whole hero is a click target -> shop (real buttons sit above this) */
+.hero--3d .hero-link { display: block; position: absolute; inset: 0; z-index: 2; }
+
+/* volt spotlight + floor pool */
+.hero--3d .hero-glow {
+  display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(46% 46% at 54% 40%, rgba(216,255,62,0.16), rgba(216,255,62,0.03) 46%, transparent 72%),
+    radial-gradient(34% 10% at 54% 82%, rgba(216,255,62,0.14), transparent 72%);
+  opacity: calc(1 - var(--ex, 0));
+}
+
+/* turntable pedestal under the shoe — mobile only (hidden on desktop below) */
+.hero--3d .hero-podium {
+  display: block; position: absolute; left: var(--shoe-x); top: var(--podium-y);
+  width: min(40vw, 520px); aspect-ratio: 1;
+  /* fixed position — shoe and platform don't move on scroll, they just fade together */
+  transform: translate(-50%, -50%) rotateX(74deg);
+  z-index: 0; pointer-events: none; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(216,255,62,0.10), rgba(216,255,62,0.03) 58%, transparent 72%);
+  opacity: calc(0.9 - var(--ex, 0));
+}
+.hero--3d .hero-podium::before {
+  content: ""; position: absolute; inset: 9%; border-radius: 50%;
+  border: 2px solid rgba(216,255,62,0.22);
+}
+.hero--3d .hero-podium::after {
+  content: ""; position: absolute; inset: -2%; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(216,255,62,0.18) 38deg, transparent 110deg);
+  /* reverse so the turntable sweep matches the shoe's auto-rotate direction */
+  animation: heroTurn 7s linear infinite reverse;
+}
+@keyframes heroTurn { to { transform: rotate(360deg); } }
+/* platform reads well on the stacked mobile layout but feels redundant on the
+   wide desktop showcase (the floor glow already grounds the shoe) — hide it there */
+@media (min-width: 761px) { .hero--3d .hero-podium { display: none; } }
+
+/* giant 3D ghost wordmark behind the shoe */
+.hero--3d .hero-ghost {
+  display: grid; place-items: center; position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  transform: perspective(1600px) rotateY(-16deg) rotateX(7deg) translateX(calc(var(--gx, 0) * 1px));
+  transform-style: preserve-3d; opacity: calc(0.95 - var(--ex, 0) * 1.5);
+}
+.hero--3d .hero-ghost span {
+  font-weight: 900; letter-spacing: -0.05em; line-height: 0.72; white-space: nowrap; user-select: none;
+  font-size: clamp(24rem, 60vw, 72rem);
+  /* solid soft fill only — no text-stroke (its glyph outlines read as faint stray lines) */
+  color: rgba(255,255,255,0.06);
+  text-shadow: 0 30px 64px rgba(0,0,0,0.6);
+}
+
+/* the shoe — large, centered showcase; gently fades out on scroll */
+.hero--3d .hero-shoe {
+  position: absolute; inset: 0; z-index: 1;
+  /* fixed position; only blur + fade on scroll (no lift/scale) so it stays put with the platform */
+  filter: blur(calc(var(--ex, 0) * 16px)); opacity: calc(1 - var(--ex, 0) * 1.3);
+  will-change: filter, opacity;
+}
+.hero--3d .hero-shoe .hero-img {
+  position: static; transform: none; animation: none; opacity: 1;
+  width: min(80vw, 940px); filter: drop-shadow(0 56px 100px rgba(0,0,0,0.7));
+}
+.hero--3d .hero-mv {
+  display: block; position: absolute; left: var(--shoe-x); top: var(--shoe-y);
+  transform: translate(-50%, -50%);
+  width: min(140vw, 1860px); height: min(114svh, 1300px); pointer-events: none;
+  background: transparent; --poster-color: transparent; outline: none;
+  opacity: 0; transition: opacity .8s var(--ease-out);
+}
+.hero--3d.hero--3d-ready .hero-mv { opacity: 1; }
+/* hide the static photo the moment 3D mode engages so it never flashes before the model */
+.hero--3d .hero-shoe .hero-img { display: none; }
+
+/* headline bottom-left; text falls through to the hero link, buttons don't */
+.hero--3d .hero-content {
+  position: absolute; left: var(--gutter); bottom: clamp(40px, 6vw, 80px);
+  margin: 0; padding: 0; width: auto; max-width: 600px; z-index: 3; pointer-events: none;
+  opacity: calc(1 - var(--ex, 0) * 1.6); transform: translateY(calc(var(--ex, 0) * -20px));
+}
+.hero--3d .hero-content h1 { font-size: clamp(3.4rem, 7vw, 7rem); line-height: 0.85; text-shadow: 0 3px 0 rgba(0,0,0,0.5), 0 18px 44px rgba(10,10,11,0.7); }
+.hero--3d .hero-content .hero-sub { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: clamp(16px, 2.4vw, 26px); }
+.hero--3d .hero-content .hero-sub p { max-width: 360px; }
+/* CTAs hidden until the showcase establishes / first scroll */
+.hero--3d .hero-cta { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); pointer-events: auto; }
+.hero--3d .hero-cta.is-in { opacity: 1; transform: none; }
+
+/* spec readout, bottom-right */
+.hero--3d .hero-readout {
+  position: absolute; right: var(--gutter); bottom: clamp(40px, 6vw, 80px); text-align: right; z-index: 3;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 3px; pointer-events: none;
+  opacity: calc(1 - var(--ex, 0) * 1.6);
+}
+.hero--3d .hero-readout .ro-k { font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-dim); }
+.hero--3d .hero-readout .ro-v { font-weight: 800; font-size: 0.98rem; color: var(--ink); }
+.hero--3d .scroll-hint { z-index: 3; opacity: calc(1 - var(--ex, 0) * 2.4); }
+
+/* ---- Mobile 3D layout: stack vertically — shoe + platform in the top half,
+   copy anchored to the bottom so they never overlap. ---- */
+@media (max-width: 760px) {
+  /* center the shoe and lift the whole composition into the top half */
+  .hero--3d { --shoe-x: 50%; --shoe-y: 30svh; --podium-y: 40svh; }
+  .hero--3d .hero-mv { width: min(168vw, 640px); height: min(56svh, 520px); }
+  .hero--3d .hero-podium { width: min(84vw, 470px); }
+  .hero--3d .hero-ghost { place-items: start center; }
+  .hero--3d .hero-ghost span { font-size: clamp(13rem, 78vw, 24rem); }
+  .hero--3d .hero-content { left: var(--gutter); right: var(--gutter); bottom: clamp(24px, 7vw, 52px); max-width: none; isolation: isolate; }
+  /* full-bleed scrim behind the copy: on short iOS viewports the shoe sole drops
+     into the headline; this fades the shoe into a dark base so the copy stays clean
+     no matter where the dynamic address bar puts the fold */
+  .hero--3d .hero-content::before {
+    content: ""; position: absolute; left: 50%; transform: translateX(-50%);
+    width: 100vw; bottom: -40px; top: -110px; z-index: -1; pointer-events: none;
+    background: linear-gradient(to top, #0a0a0b 0%, #0a0a0b 74%, rgba(10,10,11,0.6) 90%, transparent 100%);
+  }
+  .hero--3d .hero-content h1 { font-size: clamp(3rem, 16vw, 5rem); }
+  .hero--3d .hero-content .hero-sub p { max-width: 38ch; }
+  /* drop the decorative readout on phones to keep the copy clean */
+  .hero--3d .hero-readout { display: none; }
+}

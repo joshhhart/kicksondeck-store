@@ -13,6 +13,7 @@ const ORIGIN = `https://${DOMAIN}`;
 const AN = CFG.analytics || {};
 const SOCIAL = CFG.social || {};
 const HERO_IMG = "/assets/hero-350.webp";
+const HERO_GLB = "/assets/3d/zebra-350.glb";
 
 const readJSON = (rel, fallback) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, rel), "utf8")); } catch { return fallback; } };
 const drops = readJSON("data/drops.json", { candidates: [] });
@@ -211,18 +212,25 @@ function homePage() {
   featured = featured.slice(0, 8);
 
   const body = `
-<section class="hero">
-  <div class="hero-bg"><div class="hero-grid-lines"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
-  <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}" fetchpriority="high">
-  <div class="container hero-content">
-    <p class="eyebrow reveal in">SNEAKER CULTURE <span class="dot">●</span> NO MARKUP</p>
-    <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
-    <div class="hero-sub">
-      <p>Grail silhouettes, 1:1 craftsmanship, honest prices. ${products.length} styles in rotation — built to wear, not to flip.</p>
-      <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation ${I.arrow}</a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a></div>
+<section class="hero" id="hero" data-hero3d="${HERO_GLB}">
+  <div class="hero-bg"><div class="hero-grid-lines"></div><div class="hero-glow" aria-hidden="true"></div><canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas></div>
+  <a class="hero-link" href="/shop/" aria-label="Shop the rotation"></a>
+  <div class="hero-stage">
+    <div class="hero-ghost" aria-hidden="true"><span>350</span></div>
+    <div class="hero-podium" aria-hidden="true"></div>
+    <div class="hero-shoe">
+      <img class="hero-img" src="${HERO_IMG}" alt="${esc(hero.name)}" fetchpriority="high">
     </div>
+    <div class="container hero-content">
+      <p class="eyebrow reveal in">SNEAKER CULTURE <span class="dot">●</span> NO MARKUP</p>
+      <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
+      <div class="hero-sub">
+        <p>Grail silhouettes, 1:1 craftsmanship, honest prices. ${products.length} styles in rotation — built to wear, not to flip.</p>
+        <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation ${I.arrow}</a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a></div>
+      </div>
+    </div>
+    <div class="hero-readout" aria-hidden="true"><span class="ro-k">Now spinning</span><span class="ro-v">${esc(hero.name)}</span></div>
   </div>
-  <div class="scroll-hint">Scroll</div>
 </section>
 
 <section class="stats">
