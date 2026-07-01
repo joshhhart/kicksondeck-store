@@ -57,6 +57,12 @@ const colMeta = Object.fromEntries(collections.map((c) => [c.slug, c]));
 const colTitle = (slug) => (colMeta[slug]?.title || "Sneakers");
 const firstImg = (slug) => (products.find((p) => p.collection === slug)?.image || products[0].image);
 
+// BreadcrumbList JSON-LD — mirrors the visual breadcrumb so SERPs can render a breadcrumb trail.
+const crumbLd = (items) => ({
+  "@context": "https://schema.org", "@type": "BreadcrumbList",
+  itemListElement: items.map((it, i) => ({ "@type": "ListItem", position: i + 1, name: it.name, item: it.url })),
+});
+
 /* ---------------- icons ---------------- */
 const I = {
   search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>',
@@ -374,7 +380,12 @@ function productPage(p) {
   ${related.length ? `<div class="section" style="padding-bottom:40px"><div class="section-head"><h2 style="font-size:clamp(1.6rem,4vw,2.8rem)">More ${colTitle(p.collection)}</h2><a class="link-arrow" href="/collection/${p.collection}/">View all <span>${I.arrow}</span></a></div><div class="product-grid">${related.map((r, i) => card(r, i)).join("")}</div></div>` : ""}
 </section>
 <script type="application/json" id="pdp-data">${JSON.stringify(pdata)}</script>
-<script type="application/ld+json">${JSON.stringify(ld)}</script>`;
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+<script type="application/ld+json">${JSON.stringify(crumbLd([
+  { name: "Home", url: `${ORIGIN}/` },
+  { name: colTitle(p.collection), url: `${ORIGIN}/collection/${p.collection}/` },
+  { name: p.name, url: `${ORIGIN}/product/${p.slug}/` },
+]))}</script>`;
 
   return layout({
     headOpts: { title: `${p.name} — Kicks on Deck`, desc: descPlain.slice(0, 155) || `${p.name} — ${priceLabel(p)}. 1:1 craftsmanship, worldwide shipping.`, canonical: `${ORIGIN}/product/${p.slug}/`, ogImg: p.image },
@@ -582,7 +593,12 @@ function blogPostPage(p) {
 </article>
 ${quizCTA()}
 ${captureBand()}
-<script type="application/ld+json">${JSON.stringify(ld)}</script>`;
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+<script type="application/ld+json">${JSON.stringify(crumbLd([
+  { name: "Home", url: `${ORIGIN}/` },
+  { name: "Blog", url: `${ORIGIN}/blog/` },
+  { name: p.meta.title || p.slug, url: `${ORIGIN}/blog/${p.slug}/` },
+]))}</script>`;
   return layout({ headOpts: { title: `${p.meta.title} | Kicks on Deck`, desc: (p.meta.description || p.excerpt).slice(0, 155), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p) }, active: "/blog/", body });
 }
 
