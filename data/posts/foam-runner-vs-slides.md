@@ -31,7 +31,7 @@ Both run big, and both get returned because nobody reads this part first.
 
 **Foam Runners** run large for most feet. If you're between sizes or want a secure fit, size down one full size. Stay true-to-size only if you have wide feet or genuinely like extra room. Do not size up — a loose Foam Runner slaps your heel with every step, and percussion was not the goal.
 
-**Slides** also run big and are meant to sit roomy, but there's a limit. Size down half a size if you're between sizes or want the strap to actually hold. True-to-size is fine if you like the loose, barely-there feel. Too big and the slide turns into a flip-flop that forgot its job.
+**Slides** also run big and are meant to sit roomy, but there's a limit. Size down half a size if you're between sizes or want the strap to actually hold. True-to-size is fine if you like the loose, barely-there feel. Too big and the slide turns into a flip-flop that forgot its job. The [full Yeezy Slides sizing guide](/blog/yeezy-slides-sizing/) covers the whole-size-only catch and what wide feet should do.
 
 When in doubt on either, size down before you size up. A snug slip-on is comfortable. A loose one is a tripping hazard with a designer footbed.
 

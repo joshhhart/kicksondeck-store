@@ -36,7 +36,7 @@ Slides are the fastest "I'm leaving the house" shoe there is. Lean in.
 
 ### Quick sizing note
 
-Yeezy Slides run **big** — size **down one** if you're a half size, and consider down one even at whole sizes if you like them snug. They stretch slightly with wear.
+Yeezy Slides run **big** — size **down one** if you're a half size, and consider down one even at whole sizes if you like them snug. They stretch slightly with wear. Full breakdown in the [Yeezy Slides sizing guide](/blog/yeezy-slides-sizing/).
 
 > The whole point of a slide is zero effort. The styling is just making sure "zero effort" still looks deliberate.
 
