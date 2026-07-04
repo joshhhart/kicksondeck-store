@@ -33,3 +33,5 @@ The foam can feel firm against bare skin on day one and softens with wear. A thi
 See what's in the [Foam Runner collection](/collection/foam-rnnr/) — the [Ararat](/product/ararat-yz-foam-rnnr/) is a great low-risk first pair.
 
 *Still torn between Foam Runners, 350s and Slides? The [quiz](/quiz/) sorts it in under a minute.*
+
+Once they fit right, keep them looking new with the [Foam Runner cleaning guide](/blog/how-to-clean-yeezy-foam-runner-and-slides/) — EVA foam stains differently than knit.

@@ -48,3 +48,5 @@ Cop the **Foam Runner** if you want one summer slip-on that can actually go the 
 Cop the **Slides** if you want max comfort with zero ceremony — pool, recovery, around the house, and the days when leaving the driveway counts as cardio. They're cheap enough to own in multiples and easy enough to rinse and forget. They're the better *second* pair, and honestly most people end up wanting both.
 
 Still torn? Take the [60-second fit quiz](/quiz/) and let it decide for you. Or skip the debate and browse the [full rotation](/shop/) — Foam Runners and Slides are both in stock, because summer is long and one slip-on is never really enough.
+
+Whichever you cop, EVA foam needs different upkeep than a knit upper — the [Foam Runner & Slides cleaning guide](/blog/how-to-clean-yeezy-foam-runner-and-slides/) covers the safe method and what actually stains it.

@@ -36,3 +36,5 @@ Boost yellows from **UV and heat**, not just dirt. A clean pair left on a sunny 
 Rotate your pairs so no single one bakes in the sun, store them out of direct light, and hit them with a quick dry-brush after every few wears. The [Cream/Triple White](/product/cream-yz-boost-350-v2/) and other light 350s stay crisp for years with five minutes of upkeep.
 
 Browse the [350 V2 lineup](/collection/350-v2/), grab a [care kit](/collection/accessories/), and if you're still deciding which pair to baby first, the [60-second quiz](/quiz/) will match you.
+
+Rocking Foam Runners or Slides too? EVA foam needs a different approach than knit — see the [Foam Runner & Slides cleaning guide](/blog/how-to-clean-yeezy-foam-runner-and-slides/).
