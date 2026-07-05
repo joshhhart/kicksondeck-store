@@ -340,6 +340,12 @@ function productPage(p) {
   const pdata = { id: p.id, slug: p.slug, name: p.name, image: p.image, price: p.minPrice, variants: vs.map((v) => ({ id: v.id, size: v.size })) };
   const related = products.filter((x) => x.collection === p.collection && x.id !== p.id).slice(0, 4);
   const single = vs.length <= 1;
+  const GUIDES_BY_COLLECTION = {
+    "350-v2": ["rep-vs-real-yeezy-350-v2", "yeezy-350-v2-sizing"],
+    "foam-rnnr": ["yeezy-foam-runner-sizing", "how-to-clean-yeezy-foam-runner-and-slides"],
+    "slides": ["yeezy-slides-sizing", "how-to-clean-yeezy-foam-runner-and-slides"],
+  };
+  const guides = (GUIDES_BY_COLLECTION[p.collection] || []).map((s) => posts.find((post) => post.slug === s)).filter(Boolean);
 
   const ld = {
     "@context": "https://schema.org", "@type": "Product", name: p.name, image: [p.image], description: descPlain,
@@ -374,6 +380,7 @@ function productPage(p) {
       <div class="pdp-details">
         <h2 class="pdp-details-h">The details</h2>
         <div class="pdp-desc">${desc}</div>
+        ${guides.length ? `<div class="pdp-guides" style="margin-top:20px;font-family:var(--font-mono);font-size:.8rem"><span style="color:var(--muted)">Guides:</span> ${guides.map((g) => `<a class="link-arrow" href="/blog/${g.slug}/" style="margin-right:14px">${esc(g.meta.title || g.slug)}</a>`).join("")}</div>` : ""}
       </div>
     </div>
   </div>
@@ -653,6 +660,13 @@ write("quiz/index.html", quizPage()); n++;
 
 // 404
 write("404.html", layout({ headOpts: { title: "404 — Kicks on Deck", desc: "Page not found", canonical: `${ORIGIN}/404` }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><div class="footer-giant" style="-webkit-text-stroke:1px var(--volt)">404</div><p class="eyebrow" style="margin:20px 0">This pair walked off</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a></div></section>` }));
+
+// legacy URL redirects (pre-restructure paths still receiving search traffic)
+const REDIRECTS = { "collections": "/shop/" };
+for (const [from, to] of Object.entries(REDIRECTS)) {
+  write(`${from}/index.html`, `<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<title>Redirecting… — Kicks on Deck</title>\n<link rel="canonical" href="${ORIGIN}${to}">\n<meta http-equiv="refresh" content="0; url=${to}">\n<meta name="robots" content="noindex">\n</head>\n<body style="background:#0a0a0b;color:#f5f5f5;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0">\n<p>Moved to <a href="${to}" style="color:#c6ff2e">${to}</a>&hellip;</p>\n<script>location.replace(${JSON.stringify(to)});</script>\n</body></html>`);
+  n++;
+}
 
 // slim catalog for search
 const catalog = products.map((p) => ({ slug: p.slug, name: p.name, collection: colTitle(p.collection), price: p.minPrice, image: p.image }));
