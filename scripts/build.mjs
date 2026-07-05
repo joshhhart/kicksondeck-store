@@ -27,6 +27,12 @@ const isReflective = (s = "") => /reflective/i.test(s) && !/non[\s-]?reflective/
 const money = (n) => "$" + Number(n || 0).toLocaleString("en-US");
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const priceLabel = (p) => (p.minPrice === p.maxPrice ? money(p.minPrice) : `From ${money(p.minPrice)}`);
+const trimDesc = (s = "", max = 155) => {
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : max)}…`;
+};
 
 function sizeLabel(raw) {
   const seg = String(raw).split("/")[0].trim();
@@ -395,7 +401,7 @@ function productPage(p) {
 ]))}</script>`;
 
   return layout({
-    headOpts: { title: `${p.name} — Kicks on Deck`, desc: descPlain.slice(0, 155) || `${p.name} — ${priceLabel(p)}. 1:1 craftsmanship, worldwide shipping.`, canonical: `${ORIGIN}/product/${p.slug}/`, ogImg: p.image },
+    headOpts: { title: `${p.name} — Kicks on Deck`, desc: trimDesc(descPlain) || `${p.name} — ${priceLabel(p)}. 1:1 craftsmanship, worldwide shipping.`, canonical: `${ORIGIN}/product/${p.slug}/`, ogImg: p.image },
     active: "",
     body,
   });
@@ -606,7 +612,7 @@ ${captureBand()}
   { name: "Blog", url: `${ORIGIN}/blog/` },
   { name: p.meta.title || p.slug, url: `${ORIGIN}/blog/${p.slug}/` },
 ]))}</script>`;
-  return layout({ headOpts: { title: `${p.meta.title} | Kicks on Deck`, desc: (p.meta.description || p.excerpt).slice(0, 155), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p) }, active: "/blog/", body });
+  return layout({ headOpts: { title: `${p.meta.title} | Kicks on Deck`, desc: trimDesc(p.meta.description || p.excerpt), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p) }, active: "/blog/", body });
 }
 
 /* ---------------- quiz ---------------- */

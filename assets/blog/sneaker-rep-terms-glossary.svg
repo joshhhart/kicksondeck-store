@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Sneaker Rep Terms Glossary — What &quot;1:1&quot;, &quot;OG&quot;, and &quot;Batch&quot; Actually Mean">
+<defs>
+<radialGradient id="glow" cx="68.0%" cy="23.7%" r="60%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.30"/><stop offset="45%" stop-color="#d8ff3e" stop-opacity="0.05"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></linearGradient>
+</defs>
+<rect width="1200" height="750" fill="#0a0a0b"/>
+<rect width="1200" height="750" fill="url(#glow)"/>
+<line x1="-80" y1="0" x2="280" y2="750" stroke="#d8ff3e" stroke-width="1.1" opacity="0.080"/><line x1="120" y1="0" x2="480" y2="750" stroke="#d8ff3e" stroke-width="1.4" opacity="0.125"/><line x1="320" y1="0" x2="680" y2="750" stroke="#d8ff3e" stroke-width="1.9" opacity="0.144"/><line x1="520" y1="0" x2="880" y2="750" stroke="#d8ff3e" stroke-width="2.1" opacity="0.136"/><line x1="720" y1="0" x2="1080" y2="750" stroke="#d8ff3e" stroke-width="1.1" opacity="0.052"/><line x1="920" y1="0" x2="1280" y2="750" stroke="#d8ff3e" stroke-width="3.0" opacity="0.147"/>
+<rect width="1200" height="750" fill="url(#vig)"/>
+<rect width="1200" height="750" filter="url(#grain)" opacity="0.6"/>
+<g font-family="ui-monospace, monospace">
+<text x="64" y="88" fill="#d8ff3e" font-size="26" letter-spacing="6" font-weight="700">EXPLAINERS</text>
+<text x="64" y="642" fill="#f4f4f1" font-size="66" font-weight="800" letter-spacing="-1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
+<text x="64" y="688" fill="#9a9aa0" font-size="22" letter-spacing="4">kicksondeck.store</text>
+</g>
+</svg>
