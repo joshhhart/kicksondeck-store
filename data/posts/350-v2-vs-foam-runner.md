@@ -12,6 +12,9 @@ The 350 V2 and the Foam Runner are both easy to recognize from across the room, 
 
 If you're trying to pick one pair, the real question is not which silhouette is louder. It is where you plan to wear it, how much structure you want underfoot, and whether you enjoy explaining your shoes to people at gas stations.
 
+
+![Editorial sneaker detail for 350 v2 vs foam runner](/assets/blog/350-v2-vs-foam-runner-2.webp)
+
 ## The case for the 350 V2
 
 The 350 V2 is the safer daily driver. You get a Primeknit upper, a boost midsole, a low profile, and enough shape to look like an actual sneaker instead of a fossil someone found behind a space heater. It works with sweats, cargos, denim, shorts, airport fits, and the classic “I had five minutes to get dressed but still care” uniform.
@@ -21,6 +24,9 @@ Comfort is the big sell. Boost still feels soft without turning into mush, and t
 The downside is maintenance. Primeknit collects dust, light colorways show every bad decision, and the boost midsole can yellow if you leave it cooking in the sun. A 350 V2 is easy to wear, but it is not completely no-care. If you want the clean Cream or Zebra look, you are signing up for occasional brushing. Very tragic. Five minutes of effort.
 
 Sizing is straightforward: go true-to-size for most pairs if you like a snug knit fit. If your feet are wide or you hate toe pressure, go up a half size. The 350 V2 should feel secure, not cramped. If your toes are plotting legal action, you bought too small.
+
+
+![Editorial sneaker detail for 350 v2 vs foam runner](/assets/blog/350-v2-vs-foam-runner-3.webp)
 
 ## The case for the Foam Runner
 

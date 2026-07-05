@@ -10,6 +10,9 @@ products: [zebra-yz-boost-350-v2, beluga-2-0-yz-boost-350-v2, cream-yz-boost-350
 
 The Yeezy Boost 350 V2 is the most recognizable silhouette of the last decade — and also the most confusing, because there are *dozens* of colorways and the names rarely tell you what the shoe actually looks like. This is the map.
 
+
+![Editorial sneaker detail for yeezy 350 v2 colorways guide](/assets/blog/yeezy-350-v2-colorways-guide-2.webp)
+
 ## The icons everyone knows
 
 A handful of colorways did the heavy lifting for the 350 V2's fame:
@@ -17,6 +20,9 @@ A handful of colorways did the heavy lifting for the 350 V2's fame:
 - **[Zebra](/product/zebra-yz-boost-350-v2/)** — white Primeknit with the bold red "SPLY-350" stripe. The single most photographed 350 V2 ever. If you own one pair, most people start here.
 - **[Beluga 2.0](/product/beluga-2-0-yz-boost-350-v2/)** — grey upper with the orange stripe. The OG hype shoe, softened into an everyday grey for 2.0.
 - **Bred** — triple black with a red stripe. The stealth flex.
+
+
+![Editorial sneaker detail for yeezy 350 v2 colorways guide](/assets/blog/yeezy-350-v2-colorways-guide-3.webp)
 
 ## The quiet ones that age best
 
