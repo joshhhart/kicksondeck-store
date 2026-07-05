@@ -30,7 +30,7 @@ The foam can feel firm against bare skin on day one and softens with wear. A thi
 
 > TL;DR: half size → size down. Whole size → true to size. When unsure, size down — a slightly snug Foam Runner beats a clown-shoe one.
 
-See what's in the [Foam Runner collection](/collection/foam-rnnr/) — the [Ararat](/product/ararat-yz-foam-rnnr/) is a great low-risk first pair.
+See what's in the [Foam Runner collection](/collection/foam-rnnr/) — the [Ararat](/product/ararat-yz-foam-rnnr/) is a great low-risk first pair. Not sure which color to start with? The [Foam Runner colorways guide](/blog/yeezy-foam-runner-colorways-guide/) maps every pair to a rotation spot.
 
 *Still torn between Foam Runners, 350s and Slides? The [quiz](/quiz/) sorts it in under a minute.*
 
