@@ -11,6 +11,9 @@ Summer is slip-on season, and the Yeezy Foam Runner vs Slides debate is the one 
 
 The real question isn't which looks louder — it's how far you plan to walk, how much foot security you want, and whether "outfit" this weekend means clean socks or actual jeans.
 
+
+![Editorial sneaker detail for foam runner vs slides](/assets/blog/foam-runner-vs-slides-2.webp)
+
 ## Comfort and feel underfoot
 
 The Foam Runner is the do-everything option. One-piece EVA foam, a contoured footbed, ventilation holes, and enough structure that your foot sits *in* the shoe instead of *on* it. You can walk a mall, do a grocery run, or stand around a cookout without your arch filing a complaint. It's cushioned, light, and surprisingly capable for something that looks like it hatched.
@@ -18,6 +21,9 @@ The Foam Runner is the do-everything option. One-piece EVA foam, a contoured foo
 Slides are pure minimum-effort comfort. A soft foam footbed, a single wide strap, and that's the whole pitch. They're plush and roomy and perfect for short-distance duty — pool, shower, dorm hall, taking the trash out, the first ten feet of any day. What they don't give you is lockdown. Nothing holds your heel, so long walks turn into a low-key ankle workout you didn't sign up for.
 
 Short version: the [Foam Runner](/collection/foam-rnnr/) is built to actually go places. [Slides](/collection/slides/) are built to barely leave the house — and be extremely happy about it.
+
+
+![Editorial sneaker detail for foam runner vs slides](/assets/blog/foam-runner-vs-slides-3.webp)
 
 ## Grip, structure, and where you'll wear them
 

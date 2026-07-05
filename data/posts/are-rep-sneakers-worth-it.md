@@ -10,11 +10,17 @@ products: [antlia-yz-boost-350-v2-reflective, zebra-yz-boost-350-v2]
 
 "Are reps worth it?" is really three questions: *is the quality there, is the math worth it, and can I trust the seller.* Honest answers below.
 
+
+![Editorial sneaker detail for are rep sneakers worth it](/assets/blog/are-rep-sneakers-worth-it-2.webp)
+
 ## The quality question
 
 Rep quality is a tiered market. The bottom tier is genuinely bad — wrong proportions, yellow soles, sloppy stitching. The **top tier (1:1)** is a different product: real boost-grade soles, correct Primeknit weave, the details done right. The [Antlia Reflective](/product/antlia-yz-boost-350-v2-reflective/) is a good example of how far top-tier has come.
 
 If you've only seen cheap reps, you're judging the wrong tier.
+
+
+![Editorial sneaker detail for are rep sneakers worth it](/assets/blog/are-rep-sneakers-worth-it-3.webp)
 
 ## The math question
 

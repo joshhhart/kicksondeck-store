@@ -10,9 +10,15 @@ products: [zebra-yz-boost-350-v2, cream-yz-boost-350-v2, beluga-2-0-yz-boost-350
 
 The 350 V2 is the rare sneaker that works with almost anything in your closet — which is exactly why people get lazy with it. The shoe does most of the heavy lifting; your only job is to not get in its way. Get the proportions right and a neutral pair quietly upgrades a fit you threw on in five minutes. Here are seven that work.
 
+
+![Editorial sneaker detail for how to style yeezy 350 v2](/assets/blog/how-to-style-yeezy-350-v2-2.webp)
+
 ## 1. The tonal sweat set
 
 Matching sweats plus a tonal pair is the easiest win there is. An off-white or grey set with a [Cream 350](/product/cream-yz-boost-350-v2/) reads clean and put-together without trying. Keep everything in the same temperature — warm neutrals together, cool greys together — and it looks deliberate instead of "laundry day."
+
+
+![Editorial sneaker detail for how to style yeezy 350 v2](/assets/blog/how-to-style-yeezy-350-v2-3.webp)
 
 ## 2. Straight denim, cuffed once
 

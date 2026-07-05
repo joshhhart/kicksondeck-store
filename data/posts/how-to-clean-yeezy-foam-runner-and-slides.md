@@ -10,12 +10,18 @@ products: [mist-yz-foam-rnnr, onyx-yz-slide, shoe-brush-with-automatic-liquid-di
 
 Foam Runners and Slides are one-piece EVA foam — no knit, no stitching, no boost sole. That's exactly why people baby the wrong parts of the cleaning process and skip the parts that matter. Dirt sits *in* the textured surface, not on top of it, and the wrong cleaner leaves grey blotches that never fully lift. Here's the method that actually works.
 
+
+![Editorial sneaker detail for how to clean yeezy foam runner and slides](/assets/blog/how-to-clean-yeezy-foam-runner-and-slides-2.webp)
+
 ## What you actually need
 
 - Lukewarm water, never hot
 - A soft-bristle brush — the textured tread on both silhouettes grabs dirt, so a [dedicated sneaker brush](/product/shoe-brush-with-automatic-liquid-dispenser/) gets into the ridges better than a rag
 - A few drops of mild soap or dish soap — no bleach, no magic eraser
 - A microfiber towel
+
+
+![Editorial sneaker detail for how to clean yeezy foam runner and slides](/assets/blog/how-to-clean-yeezy-foam-runner-and-slides-3.webp)
 
 ## The method
 

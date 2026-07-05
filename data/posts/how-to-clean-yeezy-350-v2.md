@@ -10,12 +10,18 @@ products: [cream-yz-boost-350-v2, shoe-brush-with-automatic-liquid-dispenser]
 
 The Primeknit upper attracts dirt and the boost sole yellows — that's the tax on wearing the cleanest silhouette in the game. Good news: cleaning a 350 V2 is easy if you're gentle and skip the stuff that does damage. Here's the no-drama method.
 
+
+![Editorial sneaker detail for how to clean yeezy 350 v2](/assets/blog/how-to-clean-yeezy-350-v2-2.webp)
+
 ## What you actually need
 
 - Lukewarm water
 - A soft brush (an old toothbrush works; a proper [sneaker brush](/product/shoe-brush-with-automatic-liquid-dispenser/) is gentler on knit)
 - A drop of mild soap or sneaker cleaner — **not** bleach, **not** the dishwasher
 - A microfiber towel
+
+
+![Editorial sneaker detail for how to clean yeezy 350 v2](/assets/blog/how-to-clean-yeezy-350-v2-3.webp)
 
 ## The method
 
