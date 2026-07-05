@@ -35,6 +35,6 @@ Dialed-in fit: your foot fills the footbed edge to edge, heel near the back lip,
 
 > TL;DR: Yeezy Slides **run big**. Go **one full size down** (US 10 → slide 9). Half sizes **round down**. Wide feet only drop a **half**. The strap is tight at first and loosens — don't size up to fix it.
 
-Got the fit sorted? The hard part is just picking a pair. If you're deciding between the low-effort slide and the do-everything clog, the [Foam Runner vs Slides breakdown](/blog/foam-runner-vs-slides/) settles it, and [how to style Yeezy Slides](/blog/how-to-style-yeezy-slides/) covers the fits that actually work.
+Got the fit sorted? The hard part is just picking a pair. Start with the [full Slide colorway guide](/blog/yeezy-slides-colorways-guide/) to see what's out there, or if you're deciding between the low-effort slide and the do-everything clog, the [Foam Runner vs Slides breakdown](/blog/foam-runner-vs-slides/) settles it, and [how to style Yeezy Slides](/blog/how-to-style-yeezy-slides/) covers the fits that actually work.
 
 *Not sure slides are even your move? The [60-second quiz](/quiz/) matches you to the right silhouette — or [vote the next drop](/#vote) and we'll stock the winner.*
