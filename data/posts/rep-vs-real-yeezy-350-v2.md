@@ -11,14 +11,14 @@ products: [beluga-2-0-yz-boost-350-v2, zebra-yz-boost-350-v2, bone-yz-boost-350-
 Let's be straight: we sell replicas, and we say so on every page. So instead of pretending there's no difference, here's the honest version of where rep and retail 350 V2s actually diverge — and what a good 1:1 gets right.
 
 
-![Editorial sneaker detail for rep vs real yeezy 350 v2](/assets/blog/rep-vs-real-yeezy-350-v2-2.webp)
+![the Zebra 350 V2](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zebra-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037384)
 
 ## The Primeknit upper
 
 This is where quality shows first. Retail uses a specific Primeknit weave with a slightly stiff, structured hand-feel. A weak rep feels flat and "sock-like"; a strong 1:1 nails the ribbed texture and the way the pattern shifts color across the foot. On the better pairs — like the [Beluga 2.0](/product/beluga-2-0-yz-boost-350-v2/) — the weave is the giveaway that it's a tier-one production.
 
 
-![Editorial sneaker detail for rep vs real yeezy 350 v2](/assets/blog/rep-vs-real-yeezy-350-v2-3.webp)
+![the Beluga 2.0 350 V2](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Beluga-2_0-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697960494)
 
 ## The boost sole
 

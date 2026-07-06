@@ -11,7 +11,7 @@ products: [mist-yz-foam-rnnr, onyx-yz-slide, shoe-brush-with-automatic-liquid-di
 Foam Runners and Slides are one-piece EVA foam — no knit, no stitching, no boost sole. That's exactly why people baby the wrong parts of the cleaning process and skip the parts that matter. Dirt sits *in* the textured surface, not on top of it, and the wrong cleaner leaves grey blotches that never fully lift. Here's the method that actually works.
 
 
-![Editorial sneaker detail for how to clean yeezy foam runner and slides](/assets/blog/how-to-clean-yeezy-foam-runner-and-slides-2.webp)
+![the Mist Foam Runner](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mist-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957669)
 
 ## What you actually need
 
@@ -21,7 +21,7 @@ Foam Runners and Slides are one-piece EVA foam — no knit, no stitching, no boo
 - A microfiber towel
 
 
-![Editorial sneaker detail for how to clean yeezy foam runner and slides](/assets/blog/how-to-clean-yeezy-foam-runner-and-slides-3.webp)
+![the Onyx Slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Slide-Shoes.webp?v=1697957713)
 
 ## The method
 

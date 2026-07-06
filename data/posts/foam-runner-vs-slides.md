@@ -12,7 +12,7 @@ Summer is slip-on season, and the Yeezy Foam Runner vs Slides debate is the one 
 The real question isn't which looks louder — it's how far you plan to walk, how much foot security you want, and whether "outfit" this weekend means clean socks or actual jeans.
 
 
-![Editorial sneaker detail for foam runner vs slides](/assets/blog/foam-runner-vs-slides-2.webp)
+![the Mist Foam Runner](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mist-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957669)
 
 ## Comfort and feel underfoot
 
@@ -23,7 +23,7 @@ Slides are pure minimum-effort comfort. A soft foam footbed, a single wide strap
 Short version: the [Foam Runner](/collection/foam-rnnr/) is built to actually go places. [Slides](/collection/slides/) are built to barely leave the house — and be extremely happy about it.
 
 
-![Editorial sneaker detail for foam runner vs slides](/assets/blog/foam-runner-vs-slides-3.webp)
+![the Bone Slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Bone-Yeezy-Slide-Shoes.webp?v=1697957931)
 
 ## Grip, structure, and where you'll wear them
 

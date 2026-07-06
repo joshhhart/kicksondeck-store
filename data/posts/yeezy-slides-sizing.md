@@ -11,14 +11,14 @@ products: [bone-yz-slide, core-yz-slide]
 Yeezy Slides are the easiest shoe in the lineup to *wear* and the easiest one to *size wrong*. The question everyone types before they buy is the same: **do Yeezy Slides run big or small?** Short answer — they run big, and they only come in whole sizes, which is the whole reason people get it wrong. Here's the no-return version.
 
 
-![Editorial sneaker detail for yeezy slides sizing](/assets/blog/yeezy-slides-sizing-2.webp)
+![the Bone Slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Bone-Yeezy-Slide-Shoes.webp?v=1697957931)
 
 ## Do Yeezy Slides run big or small?
 
 **They run big.** A slide has no laces and no knit to hug your foot, so a size that's even slightly long slaps at the heel and hangs off the toe. Most people take their Yeezy Slides **a full size down** from their normal sneaker size. If you wear a US 10 in the [350 V2](/collection/350-v2/), you're almost always a **9** in [slides](/collection/slides/).
 
 
-![Editorial sneaker detail for yeezy slides sizing](/assets/blog/yeezy-slides-sizing-3.webp)
+![the Core Slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Core-Yeezy-Slide-Shoes.webp?v=1697957956)
 
 ## The whole-size-only problem
 
