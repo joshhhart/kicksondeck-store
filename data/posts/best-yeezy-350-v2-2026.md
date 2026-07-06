@@ -38,6 +38,6 @@ The grey-and-orange Beluga is the move if you're bored of neutrals but not ready
 
 > Buying your first pair? Get a **neutral**. Buying your third? Get the **loud one** you've been eyeing since 2021.
 
-The full lineup lives in the [350 V2 collection](/collection/350-v2/), and we restock based on demand — so if your grail isn't up, [tell us](/#vote).
+The full lineup lives in the [350 V2 collection](/collection/350-v2/), and we restock based on demand — so if your grail isn't up, [tell us](/#vote). See exactly how that works in the [restock guide](/blog/yeezy-350-v2-restock-guide/).
 
 *Not even sure 350s are your silhouette? [Take the quiz.](/quiz/)*
