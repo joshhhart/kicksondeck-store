@@ -13,7 +13,7 @@ The 350 V2 and the Foam Runner are both easy to recognize from across the room, 
 If you're trying to pick one pair, the real question is not which silhouette is louder. It is where you plan to wear it, how much structure you want underfoot, and whether you enjoy explaining your shoes to people at gas stations.
 
 
-![Editorial sneaker detail for 350 v2 vs foam runner](/assets/blog/350-v2-vs-foam-runner-2.webp)
+![the Zebra 350 V2](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zebra-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037384)
 
 ## The case for the 350 V2
 
@@ -26,7 +26,7 @@ The downside is maintenance. Primeknit collects dust, light colorways show every
 Sizing is straightforward: go true-to-size for most pairs if you like a snug knit fit. If your feet are wide or you hate toe pressure, go up a half size. The 350 V2 should feel secure, not cramped. If your toes are plotting legal action, you bought too small.
 
 
-![Editorial sneaker detail for 350 v2 vs foam runner](/assets/blog/350-v2-vs-foam-runner-3.webp)
+![the Onyx Foam Runner](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957735)
 
 ## The case for the Foam Runner
 

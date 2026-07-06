@@ -11,14 +11,14 @@ products: [onyx-yz-foam-rnnr, ararat-yz-foam-rnnr]
 The Yeezy Foam Runner is the comfiest thing in the Yeezy lineup and the most-returned because of one thing: **sizing**. It only comes in whole sizes, the foam is rigid at first, and the fit doesn't match a normal sneaker. Here's the no-guesswork version.
 
 
-![Editorial sneaker detail for yeezy foam runner sizing](/assets/blog/yeezy-foam-runner-sizing-2.webp)
+![the Onyx Foam Runner](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957735)
 
 ## Do Foam Runners run big or small?
 
 They run **big**, especially in whole-size-up territory. The molded foam has a roomy toe box and a wide footbed.
 
 
-![Editorial sneaker detail for yeezy foam runner sizing](/assets/blog/yeezy-foam-runner-sizing-3.webp)
+![the Ararat Foam Runner](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ararat-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957846)
 
 ## The simple rule
 

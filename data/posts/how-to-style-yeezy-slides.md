@@ -11,14 +11,14 @@ products: [onyx-yz-slide, bone-yz-slide]
 Yeezy Slides went from "house shoe" to a genuine off-duty staple. The trick is treating them like a sneaker, not an afterthought. Six fits that work:
 
 
-![Editorial sneaker detail for how to style yeezy slides](/assets/blog/how-to-style-yeezy-slides-2.webp)
+![the Onyx Slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Slide-Shoes.webp?v=1697957713)
 
 ## 1. The monochrome lounge set
 
 Matching sweat set + a tonal slide (like the blacked-out [Onyx Slide](/product/onyx-yz-slide/)). Effortless, airport-friendly, photographs clean.
 
 
-![Editorial sneaker detail for how to style yeezy slides](/assets/blog/how-to-style-yeezy-slides-3.webp)
+![the Bone Slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Bone-Yeezy-Slide-Shoes.webp?v=1697957931)
 
 ## 2. Slides + straight denim
 

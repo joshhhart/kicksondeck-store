@@ -11,14 +11,14 @@ products: [zebra-yz-boost-350-v2, cream-yz-boost-350-v2]
 The 350 V2 is the silhouette everyone asks about, and the question is always the same: **what size do I get?** Good news — it's one of the most predictable Yeezys to size. Here's the no-guesswork version.
 
 
-![Editorial sneaker detail for yeezy 350 v2 sizing](/assets/blog/yeezy-350-v2-sizing-2.webp)
+![the Zebra 350 V2](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zebra-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037384)
 
 ## Do 350 V2s run true to size?
 
 For most people, **yes — true to size (TTS)**. The Primeknit upper hugs the foot and gives a little once it breaks in, so your normal sneaker size is the right starting point. The fit is snug-but-sock-friendly, not roomy.
 
 
-![Editorial sneaker detail for yeezy 350 v2 sizing](/assets/blog/yeezy-350-v2-sizing-3.webp)
+![the Cream 350 V2](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Cream-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1697959127)
 
 ## The simple rule
 
