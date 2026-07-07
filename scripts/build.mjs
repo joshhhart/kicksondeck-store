@@ -484,6 +484,40 @@ function mdToHtml(md) {
   flush();
   return out.join("\n");
 }
+// Auto-detects Q&A-style sections (## heading ending in "?") and turns them into
+// FAQPage entries — no frontmatter authoring needed, and it only fires on posts
+// already written in question form (e.g. the sizing guides).
+function extractFaq(body) {
+  const lines = String(body).replace(/\r\n/g, "\n").split("\n");
+  const faq = []; let i = 0;
+  while (i < lines.length) {
+    const h = lines[i].match(/^##\s+(.+?)\s*\?\s*$/);
+    if (!h) { i++; continue; }
+    const q = `${h[1].trim()}?`;
+    i++;
+    while (i < lines.length && /^\s*$/.test(lines[i])) i++; // skip blank lines after the heading
+    const ansLines = [];
+    while (i < lines.length && !/^##?\s+/.test(lines[i])) {
+      if (/^\s*$/.test(lines[i])) {
+        if (!/^>\s?/.test(lines[i + 1] || "")) break; // stop unless a blockquote continues the thought
+        i++; continue;
+      }
+      ansLines.push(lines[i].replace(/^>\s?/, "")); i++;
+    }
+    const plain = ansLines.join(" ")
+      .replace(/!\[[^\]]*\]\([^)]+\)/g, "")
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .replace(/\*\*([^*]+)\*\*/g, "$1")
+      .replace(/(^|[^*])\*([^*\s][^*]*?)\*/g, "$1$2")
+      .replace(/`([^`]+)`/g, "$1")
+      .replace(/^>\s?/gm, "")
+      .replace(/^[-*]\s+/gm, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (plain) faq.push({ q, a: plain });
+  }
+  return faq;
+}
 function parsePost(raw, slug) {
   raw = String(raw).replace(/\r\n/g, "\n"); // normalize CRLF so frontmatter parses on any platform
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
@@ -499,7 +533,7 @@ function parsePost(raw, slug) {
       meta[mm[1]] = v;
     }
   }
-  return { slug, meta, html: mdToHtml(body), excerpt: meta.excerpt || body.replace(/[#>*`\-]/g, "").trim().slice(0, 150) };
+  return { slug, meta, html: mdToHtml(body), faq: extractFaq(body), excerpt: meta.excerpt || body.replace(/[#>*`\-]/g, "").trim().slice(0, 150) };
 }
 const POSTS_DIR = path.join(ROOT, "data/posts");
 const posts = fs.existsSync(POSTS_DIR)
@@ -592,6 +626,10 @@ function blogPostPage(p) {
     datePublished: p.meta.date, dateModified: p.meta.date, author: { "@type": "Organization", name: "Kicks on Deck" },
     publisher: { "@type": "Organization", name: "Kicks on Deck" }, mainEntityOfPage: `${ORIGIN}/blog/${p.slug}/`, description: p.excerpt,
   };
+  const faqLd = (p.faq && p.faq.length) ? {
+    "@context": "https://schema.org", "@type": "FAQPage",
+    mainEntity: p.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  } : null;
   const body = `
 <article class="container post">
   <div class="breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>${esc(p.meta.title || p.slug)}</span></div>
@@ -611,7 +649,8 @@ ${captureBand()}
   { name: "Home", url: `${ORIGIN}/` },
   { name: "Blog", url: `${ORIGIN}/blog/` },
   { name: p.meta.title || p.slug, url: `${ORIGIN}/blog/${p.slug}/` },
-]))}</script>`;
+]))}</script>
+${faqLd ? `<script type="application/ld+json">${JSON.stringify(faqLd)}</script>\n` : ""}`;
   return layout({ headOpts: { title: `${p.meta.title} | Kicks on Deck`, desc: trimDesc(p.meta.description || p.excerpt), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p) }, active: "/blog/", body });
 }
 
