@@ -40,6 +40,6 @@ On a [Zebra](/product/zebra-yz-boost-350-v2/), the red side stripe and mirrored 
 
 > A quality 1:1 isn't about fooling anyone. It's about getting 95% of the shoe for a fraction of the resale tax.
 
-That's the whole pitch. Browse what's in [rotation now](/collection/350-v2/) — every pair is inspected before it ships, and QC photos are available on request.
+That's the whole pitch. Want to see it colorway by colorway instead of point by point? Check [what a good 350 V2 rep actually looks like](/blog/yeezy-350-v2-reps-what-they-look-like/) across Zebra, Beluga, Black Red and Bone. Browse what's in [rotation now](/collection/350-v2/) — every pair is inspected before it ships, and QC photos are available on request.
 
 *Want us to write a deep-dive on a specific colorway? [Vote on the next drop](/#vote) and tell us.*
