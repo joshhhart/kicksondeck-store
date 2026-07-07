@@ -47,6 +47,6 @@ A simple rule:
 
 Browse the full lineup in the [350 V2 collection](/collection/350-v2/) — there are more colorways in rotation than any single guide can cover, and we restock based on what you tell us you want.
 
-More of a warm-weather slip-on person? The [Foam Runner colorways guide](/blog/yeezy-foam-runner-colorways-guide/) does the same thing for the summer silhouette.
+More of a warm-weather slip-on person? The [Foam Runner colorways guide](/blog/yeezy-foam-runner-colorways-guide/) does the same thing for the summer silhouette. Want to see the quality, not just the color? [Here's what these reps actually look like](/blog/yeezy-350-v2-reps-what-they-look-like/) up close.
 
 *Not sure which silhouette suits you at all? Take the [60-second quiz](/quiz/) and we'll match you.*
