@@ -41,3 +41,7 @@ See what's in the [Foam Runner collection](/collection/foam-rnnr/) — the [Arar
 *Still torn between Foam Runners, 350s and Slides? The [quiz](/quiz/) sorts it in under a minute.*
 
 Once they fit right, keep them looking new with the [Foam Runner cleaning guide](/blog/how-to-clean-yeezy-foam-runner-and-slides/) — EVA foam stains differently than knit.
+
+## Are Foam Runners men's sizing or unisex?
+
+They're made on a unisex last with no separate men's/women's numbering — just pick your usual US shoe size (or size down per the rule above) rather than converting between men's and women's charts.
