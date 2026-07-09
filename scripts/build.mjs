@@ -37,6 +37,10 @@ const trimDesc = (s = "", max = 155) => {
 function sizeLabel(raw) {
   const seg = String(raw).split("/")[0].trim();
   const eu = seg.match(/EU[R]?\s*=?\s*([\d.]+)/i);
+  // Kids formats (10K, 3Y, "Kids 12") — none in the catalog yet, but the GHL sync
+  // may add them; render correctly the day they appear.
+  const kid = seg.match(/\b(\d+(?:\.\d+)?)\s*([KY])\b/i);
+  if (kid) return { main: kid[1] + kid[2].toUpperCase(), sub: eu ? "EU " + eu[1] : "Kids" };
   let m = seg.match(/MEN\s*=?\s*US\s*([\d.]+)/i);
   if (m) return { main: "US " + m[1], sub: eu ? "EU " + eu[1] : "" };
   const w = seg.match(/WOMEN\s*S?\s*([\d.]+)\s*\(\s*MEN\s*([\d.]+)\s*\)/i);
@@ -58,6 +62,18 @@ function pdpDesc(html) {
   s = s.replace(/(\s*<br\s*\/?>\s*){2,}/gi, "</p><p>");
   return s.trim();
 }
+
+// Women's-fit guidance per collection — every shoe is unisex, but only the 350s
+// carry explicit W labels; Foam Runners and Slides are sized on the men's US scale.
+const FIT_NOTES = {
+  "350-v2": { text: "Fits men &amp; women — women's sizes listed as W (from W5).", guide: "/blog/yeezy-350-v2-sizing/" },
+  "foam-rnnr": { text: "Unisex, men's US scale — women size down ~1.5 (a W8 ≈ US 6.5).", guide: "/blog/yeezy-foam-runner-sizing/" },
+  "slides": { text: "Unisex, men's US scale — women size down ~1.5; slides run big.", guide: "/blog/yeezy-slides-sizing/" },
+};
+const fitNote = (p) => {
+  const n = FIT_NOTES[p.collection];
+  return n ? `<p style="color:var(--muted);font-family:var(--font-mono);font-size:.72rem;margin-top:10px">${n.text} <a href="${n.guide}" style="color:var(--volt);text-decoration:underline">Sizing guide</a></p>` : "";
+};
 
 const colMeta = Object.fromEntries(collections.map((c) => [c.slug, c]));
 const colTitle = (slug) => (colMeta[slug]?.title || "Sneakers");
@@ -370,9 +386,10 @@ function productPage(p) {
       <div class="pdp-price">${money(p.minPrice)}${p.variants[0]?.compareAt ? `<span class="was">${money(p.variants[0].compareAt)}</span>` : ""}</div>
       <p class="pdp-value">1:1 craftsmanship · honest pricing, no resale markup · inspected before it ships</p>
       <div class="pdp-section">
-        <div class="lbl"><span>${sectionLabel}</span><span>${acc ? "" : "Men's US · EU"}</span></div>
+        <div class="lbl"><span>${sectionLabel}</span><span>${acc ? "" : "Unisex · US / EU"}</span></div>
         ${single ? `<p style="color:var(--muted);font-family:var(--font-mono);font-size:.8rem">One size · ${esc(vs[0]?.size || "Standard")}</p>` :
         `<div class="size-grid">${vs.map((v) => `<button class="size-btn" data-vid="${v.id}" data-size="${esc(v.size)}" data-price="${v.price}">${esc(v.main)}${v.sub ? `<small>${esc(v.sub)}</small>` : ""}</button>`).join("")}</div>`}
+        ${fitNote(p)}
       </div>
       <div class="pdp-actions">
         <div class="size-warn" id="size-warn">Please select a ${acc ? "option" : "size"} first</div>
@@ -687,7 +704,7 @@ write("index.html", homePage()); n++;
 write("shop/index.html", gridPage({ title: `Shop All — ${products.length} Styles | Kicks on Deck`, h1: "Shop<br>All", eyebrow: `The full rotation · ${products.length} styles`, list: products, canonical: `${ORIGIN}/shop/`, active: "/shop/", intro: "Every silhouette in stock — 350 V2, Foam Runners, Slides and care. Filter, sort, and find your size.", showFilters: true })); n++;
 for (const c of collections) {
   const list = products.filter((p) => p.collection === c.slug);
-  write(`collection/${c.slug}/index.html`, gridPage({ title: `${c.title} — Kicks on Deck`, h1: c.title.replace(/ /g, "<br>"), eyebrow: c.tagline, list, canonical: `${ORIGIN}/collection/${c.slug}/`, active: `/collection/${c.slug}/`, intro: `${c.count} ${c.title} styles in rotation. ${c.tagline}.`, showFilters: false }));
+  write(`collection/${c.slug}/index.html`, gridPage({ title: `${c.title} — Kicks on Deck`, h1: c.title.replace(/ /g, "<br>"), eyebrow: c.tagline, list, canonical: `${ORIGIN}/collection/${c.slug}/`, active: `/collection/${c.slug}/`, intro: `${c.count} ${c.title} styles in rotation. ${c.tagline}.${FIT_NOTES[c.slug] ? " Unisex sizing for men and women." : ""}`, showFilters: false }));
   n++;
 }
 for (const p of products) { write(`product/${p.slug}/index.html`, productPage(p)); n++; }
