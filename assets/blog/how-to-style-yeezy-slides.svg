@@ -1,17 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="How to Style Yeezy Slides — 6 Fits That Actually Work">
 <defs>
-<radialGradient id="glow" cx="84.0%" cy="16.7%" r="60%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.30"/><stop offset="45%" stop-color="#d8ff3e" stop-opacity="0.05"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
 <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
-<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></linearGradient>
+<radialGradient id="floor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.28"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<radialGradient id="wash" cx="78%" cy="30%" r="70%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.10"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<clipPath id="shoeclip"><path d="M24,150 C24,116 66,94 148,84 L396,60 C452,54 490,80 496,118 L502,186 C505,220 486,240 448,240 L66,242 C36,242 24,226 24,196 Z"/></clipPath>
 </defs>
 <rect width="1200" height="750" fill="#0a0a0b"/>
-<rect width="1200" height="750" fill="url(#glow)"/>
-<circle cx="1008" cy="125" r="90" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.220"/><circle cx="1008" cy="125" r="185" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.195"/><circle cx="1008" cy="125" r="280" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.170"/><circle cx="1008" cy="125" r="375" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.145"/><circle cx="1008" cy="125" r="470" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.120"/><circle cx="1008" cy="125" r="565" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.095"/><circle cx="1008" cy="125" r="660" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.070"/>
-<rect width="1200" height="750" fill="url(#vig)"/>
-<rect width="1200" height="750" filter="url(#grain)" opacity="0.6"/>
-<g font-family="ui-monospace, monospace">
-<text x="64" y="88" fill="#d8ff3e" font-size="26" letter-spacing="6" font-weight="700">STYLING</text>
-<text x="64" y="642" fill="#f4f4f1" font-size="66" font-weight="800" letter-spacing="-1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
-<text x="64" y="688" fill="#9a9aa0" font-size="22" letter-spacing="4">kicksondeck.store</text>
+<rect width="1200" height="750" fill="url(#wash)"/>
+<path d="M620,90 C 800,60 1000,130 1240,80" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.140"/><path d="M620,200 C 800,170 1000,240 1240,190" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.125"/><path d="M620,310 C 800,280 1000,350 1240,300" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.110"/><path d="M620,420 C 800,390 1000,460 1240,410" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.095"/><path d="M620,530 C 800,500 1000,570 1240,520" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.080"/><path d="M620,640 C 800,610 1000,680 1240,630" fill="none" stroke="#d8ff3e" stroke-width="1.2" opacity="0.065"/>
+<g transform="translate(620,330) rotate(-8)">
+  <ellipse cx="270" cy="268" rx="290" ry="42" fill="url(#floor)"/>
+  <path d="M24,150 C24,116 66,94 148,84 L396,60 C452,54 490,80 496,118 L502,186 C505,220 486,240 448,240 L66,242 C36,242 24,226 24,196 Z" fill="#16161a" stroke="#d8ff3e" stroke-width="3"/>
+  <g clip-path="url(#shoeclip)"><circle cx="474.04487430118024" cy="81.82077579665929" r="2.8" fill="#d8ff3e" opacity="0.14"/><circle cx="218.11889216769487" cy="196.52119635604322" r="5.6" fill="#d8ff3e" opacity="0.14"/><circle cx="294.2104934155941" cy="154.3604727787897" r="4.8" fill="#d8ff3e" opacity="0.14"/><circle cx="390.7979687070474" cy="114.42031839862466" r="5.7" fill="#d8ff3e" opacity="0.14"/><circle cx="322.72940897382796" cy="110.82005499396473" r="3.6" fill="#d8ff3e" opacity="0.14"/><circle cx="367.3427231842652" cy="157.8842651564628" r="3.3" fill="#d8ff3e" opacity="0.14"/><circle cx="391.95081705227494" cy="202.46418935712427" r="5.5" fill="#d8ff3e" opacity="0.14"/><circle cx="379.3242225749418" cy="183.07421796023846" r="5.6" fill="#d8ff3e" opacity="0.14"/><circle cx="149.21330410055816" cy="97.26271722931415" r="2.4" fill="#d8ff3e" opacity="0.14"/><circle cx="206.7105742217973" cy="145.48617507331073" r="2.3" fill="#d8ff3e" opacity="0.14"/><circle cx="409.16605208069086" cy="129.1691807238385" r="5.2" fill="#d8ff3e" opacity="0.14"/><circle cx="455.4659935226664" cy="103.77827560529113" r="4.0" fill="#d8ff3e" opacity="0.14"/><circle cx="169.62977749295533" cy="149.81176356319338" r="4.1" fill="#d8ff3e" opacity="0.14"/><circle cx="116.15420511458069" cy="104.93265711702406" r="2.8" fill="#d8ff3e" opacity="0.14"/></g>
+  <path d="M52,242 L58,214 M118,242 L124,210 M188,243 L194,208 M258,243 L264,208 M328,242 L334,208 M398,241 L404,208" stroke="#0a0a0b" stroke-width="9" stroke-linecap="round"/><path d="M40,140 C160,108 330,88 480,102" fill="none" stroke="#d8ff3e" stroke-width="2.4" opacity="0.5"/>
 </g>
+<g font-family="ui-monospace, monospace">
+  <rect x="60" y="64" rx="17" height="34" width="146" fill="#d8ff3e"/>
+  <text x="133" y="87" fill="#0a0a0b" font-size="19" letter-spacing="4" font-weight="700" text-anchor="middle">STYLING</text>
+</g>
+<g font-family="system-ui, sans-serif" font-weight="800" fill="#f4f4f1" letter-spacing="-1">
+  <text x="62" y="300" font-size="58">HOW TO STYLE</text>
+  <text x="62" y="370" font-size="58">YEEZY SLIDES -</text>
+  <text x="62" y="440" font-size="58">6 FITS THAT…</text>
+</g>
+<line x1="62" y1="632" x2="342" y2="632" stroke="#d8ff3e" stroke-width="3"/>
+<g font-family="ui-monospace, monospace">
+  <text x="62" y="676" fill="#f4f4f1" font-size="30" font-weight="800" letter-spacing="1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
+  <text x="62" y="708" fill="#9a9aa0" font-size="19" letter-spacing="4">KICKSONDECK.STORE</text>
+</g>
+<rect width="1200" height="750" filter="url(#grain)" opacity="0.55"/>
 </svg>

@@ -1,17 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Every Yeezy Slide Colorway, Explained (2026 Guide)">
 <defs>
-<radialGradient id="glow" cx="72.2%" cy="24.9%" r="60%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.30"/><stop offset="45%" stop-color="#d8ff3e" stop-opacity="0.05"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
 <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
-<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></linearGradient>
+<radialGradient id="floor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.28"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<radialGradient id="wash" cx="78%" cy="30%" r="70%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.10"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<clipPath id="shoeclip"><path d="M24,150 C24,116 66,94 148,84 L396,60 C452,54 490,80 496,118 L502,186 C505,220 486,240 448,240 L66,242 C36,242 24,226 24,196 Z"/></clipPath>
 </defs>
 <rect width="1200" height="750" fill="#0a0a0b"/>
-<rect width="1200" height="750" fill="url(#glow)"/>
-<line x1="-80" y1="0" x2="280" y2="750" stroke="#d8ff3e" stroke-width="1.2" opacity="0.116"/><line x1="120" y1="0" x2="480" y2="750" stroke="#d8ff3e" stroke-width="1.6" opacity="0.124"/><line x1="320" y1="0" x2="680" y2="750" stroke="#d8ff3e" stroke-width="2.8" opacity="0.120"/><line x1="520" y1="0" x2="880" y2="750" stroke="#d8ff3e" stroke-width="1.9" opacity="0.054"/><line x1="720" y1="0" x2="1080" y2="750" stroke="#d8ff3e" stroke-width="1.7" opacity="0.106"/><line x1="920" y1="0" x2="1280" y2="750" stroke="#d8ff3e" stroke-width="1.8" opacity="0.140"/>
-<rect width="1200" height="750" fill="url(#vig)"/>
-<rect width="1200" height="750" filter="url(#grain)" opacity="0.6"/>
-<g font-family="ui-monospace, monospace">
-<text x="64" y="88" fill="#d8ff3e" font-size="26" letter-spacing="6" font-weight="700">GUIDES</text>
-<text x="64" y="642" fill="#f4f4f1" font-size="66" font-weight="800" letter-spacing="-1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
-<text x="64" y="688" fill="#9a9aa0" font-size="22" letter-spacing="4">kicksondeck.store</text>
+<rect width="1200" height="750" fill="url(#wash)"/>
+<circle cx="990" cy="190" r="120" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.160"/><circle cx="990" cy="190" r="230" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.135"/><circle cx="990" cy="190" r="340" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.110"/><circle cx="990" cy="190" r="450" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.085"/><circle cx="990" cy="190" r="560" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.060"/>
+<g transform="translate(620,330) rotate(-8)">
+  <ellipse cx="270" cy="268" rx="290" ry="42" fill="url(#floor)"/>
+  <path d="M24,150 C24,116 66,94 148,84 L396,60 C452,54 490,80 496,118 L502,186 C505,220 486,240 448,240 L66,242 C36,242 24,226 24,196 Z" fill="#16161a" stroke="#d8ff3e" stroke-width="3"/>
+  <g clip-path="url(#shoeclip)"><circle cx="402.78449004516006" cy="104.79535551276058" r="3.5" fill="#d8ff3e" opacity="0.14"/><circle cx="92.39055070560426" cy="172.52700325101614" r="3.2" fill="#d8ff3e" opacity="0.14"/><circle cx="370.5053549911827" cy="208.96938018966466" r="4.8" fill="#d8ff3e" opacity="0.14"/><circle cx="245.29304549563676" cy="85.63831805251539" r="3.3" fill="#d8ff3e" opacity="0.14"/><circle cx="294.446112960577" cy="134.3300076527521" r="5.6" fill="#d8ff3e" opacity="0.14"/><circle cx="308.65506728645414" cy="92.36804464831948" r="4.3" fill="#d8ff3e" opacity="0.14"/><circle cx="352.8671815339476" cy="180.96495150122792" r="4.6" fill="#d8ff3e" opacity="0.14"/><circle cx="185.80983000341803" cy="159.87713453359902" r="3.8" fill="#d8ff3e" opacity="0.14"/><circle cx="378.47664350643754" cy="201.92842943128198" r="3.0" fill="#d8ff3e" opacity="0.14"/><circle cx="225.786896715872" cy="115.73546044528484" r="4.5" fill="#d8ff3e" opacity="0.14"/><circle cx="121.10087829641998" cy="167.66342733521014" r="4.1" fill="#d8ff3e" opacity="0.14"/><circle cx="331.34490211028606" cy="150.57818080298603" r="2.6" fill="#d8ff3e" opacity="0.14"/><circle cx="202.97451708465815" cy="149.81147560756654" r="5.1" fill="#d8ff3e" opacity="0.14"/><circle cx="353.914370178245" cy="112.08931362256408" r="3.8" fill="#d8ff3e" opacity="0.14"/></g>
+  <path d="M52,242 L58,214 M118,242 L124,210 M188,243 L194,208 M258,243 L264,208 M328,242 L334,208 M398,241 L404,208" stroke="#0a0a0b" stroke-width="9" stroke-linecap="round"/><path d="M40,140 C160,108 330,88 480,102" fill="none" stroke="#d8ff3e" stroke-width="2.4" opacity="0.5"/>
 </g>
+<g font-family="ui-monospace, monospace">
+  <rect x="60" y="64" rx="17" height="34" width="130" fill="#d8ff3e"/>
+  <text x="125" y="87" fill="#0a0a0b" font-size="19" letter-spacing="4" font-weight="700" text-anchor="middle">GUIDES</text>
+</g>
+<g font-family="system-ui, sans-serif" font-weight="800" fill="#f4f4f1" letter-spacing="-1">
+  <text x="62" y="300" font-size="58">EVERY YEEZY</text>
+  <text x="62" y="370" font-size="58">SLIDE COLORWAY,</text>
+  <text x="62" y="440" font-size="58">EXPLAINED (2026…</text>
+</g>
+<line x1="62" y1="632" x2="342" y2="632" stroke="#d8ff3e" stroke-width="3"/>
+<g font-family="ui-monospace, monospace">
+  <text x="62" y="676" fill="#f4f4f1" font-size="30" font-weight="800" letter-spacing="1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
+  <text x="62" y="708" fill="#9a9aa0" font-size="19" letter-spacing="4">KICKSONDECK.STORE</text>
+</g>
+<rect width="1200" height="750" filter="url(#grain)" opacity="0.55"/>
 </svg>

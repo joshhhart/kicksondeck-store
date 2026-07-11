@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="How to Clean Yeezy Foam Runners &amp; Slides (Without Wrecking the Foam)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="350 V2 vs Foam Runner — Which Should You Cop?">
 <defs>
 <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
 <radialGradient id="floor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.28"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
@@ -7,7 +7,7 @@
 </defs>
 <rect width="1200" height="750" fill="#0a0a0b"/>
 <rect width="1200" height="750" fill="url(#wash)"/>
-<line x1="540" y1="-40" x2="340" y2="790" stroke="#d8ff3e" stroke-width="1.5" opacity="0.099"/><line x1="680" y1="-40" x2="480" y2="790" stroke="#d8ff3e" stroke-width="1.0" opacity="0.112"/><line x1="820" y1="-40" x2="620" y2="790" stroke="#d8ff3e" stroke-width="1.1" opacity="0.085"/><line x1="960" y1="-40" x2="760" y2="790" stroke="#d8ff3e" stroke-width="1.9" opacity="0.094"/><line x1="1100" y1="-40" x2="900" y2="790" stroke="#d8ff3e" stroke-width="1.7" opacity="0.120"/>
+<line x1="540" y1="-40" x2="340" y2="790" stroke="#d8ff3e" stroke-width="1.0" opacity="0.079"/><line x1="680" y1="-40" x2="480" y2="790" stroke="#d8ff3e" stroke-width="1.6" opacity="0.058"/><line x1="820" y1="-40" x2="620" y2="790" stroke="#d8ff3e" stroke-width="1.1" opacity="0.097"/><line x1="960" y1="-40" x2="760" y2="790" stroke="#d8ff3e" stroke-width="1.8" opacity="0.078"/><line x1="1100" y1="-40" x2="900" y2="790" stroke="#d8ff3e" stroke-width="1.2" opacity="0.071"/>
 <g transform="translate(620,330) rotate(-8)">
   <ellipse cx="270" cy="268" rx="290" ry="42" fill="url(#floor)"/>
   <path d="M26,206 C10,162 30,110 90,82 C158,50 248,46 326,70 C404,94 470,138 492,180 C506,208 496,232 460,238 L76,244 C42,244 34,228 26,206 Z" fill="#16161a" stroke="#d8ff3e" stroke-width="3"/>
@@ -15,13 +15,13 @@
   <ellipse cx="150" cy="118" rx="30" ry="21" fill="#0a0a0b" stroke="#d8ff3e" stroke-width="2" opacity="0.95" transform="rotate(-18 150 118)"/><ellipse cx="236" cy="96" rx="32" ry="23" fill="#0a0a0b" stroke="#d8ff3e" stroke-width="2" opacity="0.95" transform="rotate(-6 236 96)"/><ellipse cx="318" cy="108" rx="27" ry="19" fill="#0a0a0b" stroke="#d8ff3e" stroke-width="2" opacity="0.95" transform="rotate(10 318 108)"/><ellipse cx="196" cy="172" rx="25" ry="17" fill="#0a0a0b" stroke="#d8ff3e" stroke-width="2" opacity="0.95" transform="rotate(-12 196 172)"/><ellipse cx="298" cy="168" rx="29" ry="19" fill="#0a0a0b" stroke="#d8ff3e" stroke-width="2" opacity="0.95" transform="rotate(4 298 168)"/><ellipse cx="392" cy="150" rx="24" ry="16" fill="#0a0a0b" stroke="#d8ff3e" stroke-width="2" opacity="0.95" transform="rotate(14 392 150)"/>
 </g>
 <g font-family="ui-monospace, monospace">
-  <rect x="60" y="64" rx="17" height="34" width="98" fill="#d8ff3e"/>
-  <text x="109" y="87" fill="#0a0a0b" font-size="19" letter-spacing="4" font-weight="700" text-anchor="middle">CARE</text>
+  <rect x="60" y="64" rx="17" height="34" width="114" fill="#d8ff3e"/>
+  <text x="117" y="87" fill="#0a0a0b" font-size="19" letter-spacing="4" font-weight="700" text-anchor="middle">GUIDE</text>
 </g>
 <g font-family="system-ui, sans-serif" font-weight="800" fill="#f4f4f1" letter-spacing="-1">
-  <text x="62" y="300" font-size="68">HOW TO CLEAN</text>
-  <text x="62" y="380" font-size="68">YEEZY FOAM</text>
-  <text x="62" y="460" font-size="68">RUNNERS…</text>
+  <text x="62" y="300" font-size="58">350 V2 VS FOAM</text>
+  <text x="62" y="370" font-size="58">RUNNER - WHICH</text>
+  <text x="62" y="440" font-size="58">SHOULD YOU COP?</text>
 </g>
 <line x1="62" y1="632" x2="342" y2="632" stroke="#d8ff3e" stroke-width="3"/>
 <g font-family="ui-monospace, monospace">
