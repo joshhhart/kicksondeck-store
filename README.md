@@ -64,3 +64,5 @@ GitHub Pages serves the apex `kicksondeck.store`. In Namecheap → Advanced DNS,
 
 Remove any old Shopify A/CNAME records first. Allow up to a few hours to propagate,
 then enable "Enforce HTTPS" in the repo's Pages settings.
+
+<!-- codex env test: github wiring verified -->
