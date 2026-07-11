@@ -14,6 +14,8 @@ Every corner of the rep world throws around terms like "1:1", "OG", and "batch" 
 
 The top quality tier. A 1:1 pair is made to match the retail shoe's proportions, materials, and construction as closely as possible — correct panel shapes, real Boost-style soles, accurate stitching. It's the tier worth paying for; anything below it is a different (and noticeably worse) product.
 
+![the Zebra 350 V2, an example of a 1:1 Primeknit upper with correct panel shapes and Boost-style sole](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Zebra-Yeezy-Boost-350-V2-Running-Shoes.webp?v=1738037384)
+
 ## OG ("original")
 
 Short for "original," referring to how closely a detail — a box, a tag, a sole texture — matches the retail version. "OG box" means the packaging matches the retail packaging. It's a quality signal, not a claim that the shoe itself is retail.
@@ -33,6 +35,8 @@ A separate manufacturing category — shoes made in the same factories as retail
 ## QC (quality control) photos
 
 Real photos of *your specific pair* before it ships — stitching close-ups, sole shots, tag detail — so you know what you're getting before it's in a box. Always ask for these; any seller who won't provide them is a red flag.
+
+![the all-black Onyx Yeezy Foam RNNR, a single-molded silhouette where QC photos check the mold texture and color match](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957735)
 
 > None of this makes a rep an original. It's still a replica — no brand affiliation, no brand warranty. These terms just describe *how well the replica was made*, which is what actually separates a great pair from a bad one.
 

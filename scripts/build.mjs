@@ -785,9 +785,31 @@ write("quiz/index.html", quizPage()); n++;
 write("404.html", layout({ headOpts: { title: "404 — Kicks on Deck", desc: "Page not found", canonical: `${ORIGIN}/404` }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><div class="footer-giant" style="-webkit-text-stroke:1px var(--volt)">404</div><p class="eyebrow" style="margin:20px 0">This pair walked off</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a></div></section>` }));
 
 // legacy URL redirects (pre-restructure paths still receiving search traffic)
-const REDIRECTS = { "collections": "/shop/" };
+// data-driven so new legacy-URL leaks found in GA4 landing-page reports can be added
+// as one line each, instead of hand-authoring a static stub file per path.
+const REDIRECTS = {
+  "collections": "/shop/",
+  "blogs/news": "/blog/",
+  "blogs/news/revolutionizing-footwear-how-adidas-and-kanye-wests-yeezy-boost-350-dominates-the-sneaker-world": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/step-into-style-and-comfort-discover-the-iconic-yeezy-boost-350-at-kicksondeck-store": "/collection/350-v2/",
+  "blogs/news/yeezy-boost-350-discover-why-these-iconic-sneakers-are-must-haves-for-collectors-kicksondeck-store": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/discover-how-the-yeezy-boost-350-redefines-sneaker-culture-a-deep-dive-into-the-adidas-and-kanye-west-phenomenon": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/discover-the-ultimate-fusion-of-fashion-and-function-with-adidas-yeezy-boost-350-at-kicksondeck-store": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/uncover-the-hype-why-adidas-yeezy-boost-350-sneakers-are-a-must-have-for-fashion-and-comfort": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/unlock-the-legacy-why-adidas-yeezy-boost-350-sneakers-are-a-must-have-for-sneakerheads-and-style-enthusiasts": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/unlock-yeezy-magic-discover-the-hype-of-adidas-yeezy-boost-350-at-kicksondeck-store": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/kanye-wests-legal-drama-genius-or-delusion": "/blog/",
+  "blogs/news/unleash-style-and-comfort-the-impact-of-yeezy-boost-350-on-sneaker-culture": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/unlocking-the-hype-why-the-adidas-yeezy-boost-350-is-a-must-have-for-sneaker-enthusiasts": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/why-the-adidas-yeezy-boost-350-continues-to-dominate-sneaker-culture-a-deep-dive-from-kicksondeck-store": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/why-yeezy-boost-350s-are-a-must-have-in-every-sneakerheads-collection": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/discover-the-iconic-adidas-and-kanye-west-collaboration-yeezy-boost-350-a-sneaker-revolution": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/discover-the-iconic-yeezy-boost-350-a-must-have-for-sneaker-collectors-at-kicksondeck": "/collection/350-v2/",
+  "blogs/news/discover-the-iconic-yeezy-boost-350-elevate-your-sneaker-game-with-kicksondeck": "/collection/350-v2/",
+  "blogs/news/discover-the-iconic-yeezy-boost-350-uniting-high-fashion-hip-hop-and-cutting-edge-footwear-technology": "/blog/yeezy-350-v2-colorways-guide/",
+};
 for (const [from, to] of Object.entries(REDIRECTS)) {
-  write(`${from}/index.html`, `<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<title>Redirecting… — Kicks on Deck</title>\n<link rel="canonical" href="${ORIGIN}${to}">\n<meta http-equiv="refresh" content="0; url=${to}">\n<meta name="robots" content="noindex">\n</head>\n<body style="background:#0a0a0b;color:#f5f5f5;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0">\n<p>Moved to <a href="${to}" style="color:#c6ff2e">${to}</a>&hellip;</p>\n<script>location.replace(${JSON.stringify(to)});</script>\n</body></html>`);
+  write(`${from}/index.html`, `<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<title>Redirecting… — Kicks on Deck</title>\n<link rel="canonical" href="${ORIGIN}${to}">\n<meta http-equiv="refresh" content="0; url=${to}">\n<meta name="robots" content="noindex,follow">\n</head>\n<body style="background:#0a0a0b;color:#f5f5f5;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0">\n<p>Moved to <a href="${to}" style="color:#c6ff2e">${to}</a>&hellip;</p>\n<script>location.replace(${JSON.stringify(to)});</script>\n</body></html>`);
   n++;
 }
 
