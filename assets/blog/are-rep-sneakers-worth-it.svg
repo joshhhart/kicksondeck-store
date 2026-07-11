@@ -1,17 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Are Rep Sneakers Worth It? An Honest Buyer's Guide">
 <defs>
-<radialGradient id="glow" cx="79.1%" cy="40.8%" r="60%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.30"/><stop offset="45%" stop-color="#d8ff3e" stop-opacity="0.05"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
 <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
-<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></linearGradient>
+<radialGradient id="floor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.28"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<radialGradient id="wash" cx="78%" cy="30%" r="70%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.10"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<clipPath id="shoeclip"><path d="M22,214 C16,182 34,148 84,122 C138,94 216,76 296,80 C382,84 450,116 488,160 C504,178 510,196 505,212 C500,229 480,237 450,239 L84,245 C48,245 27,237 22,214 Z"/></clipPath>
 </defs>
 <rect width="1200" height="750" fill="#0a0a0b"/>
-<rect width="1200" height="750" fill="url(#glow)"/>
-<line x1="-80" y1="0" x2="280" y2="750" stroke="#d8ff3e" stroke-width="1.3" opacity="0.061"/><line x1="120" y1="0" x2="480" y2="750" stroke="#d8ff3e" stroke-width="2.7" opacity="0.122"/><line x1="320" y1="0" x2="680" y2="750" stroke="#d8ff3e" stroke-width="1.7" opacity="0.125"/><line x1="520" y1="0" x2="880" y2="750" stroke="#d8ff3e" stroke-width="1.6" opacity="0.106"/><line x1="720" y1="0" x2="1080" y2="750" stroke="#d8ff3e" stroke-width="2.7" opacity="0.120"/><line x1="920" y1="0" x2="1280" y2="750" stroke="#d8ff3e" stroke-width="1.4" opacity="0.097"/>
-<rect width="1200" height="750" fill="url(#vig)"/>
-<rect width="1200" height="750" filter="url(#grain)" opacity="0.6"/>
-<g font-family="ui-monospace, monospace">
-<text x="64" y="88" fill="#d8ff3e" font-size="26" letter-spacing="6" font-weight="700">EXPLAINERS</text>
-<text x="64" y="642" fill="#f4f4f1" font-size="66" font-weight="800" letter-spacing="-1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
-<text x="64" y="688" fill="#9a9aa0" font-size="22" letter-spacing="4">kicksondeck.store</text>
+<rect width="1200" height="750" fill="url(#wash)"/>
+<line x1="540" y1="-40" x2="340" y2="790" stroke="#d8ff3e" stroke-width="1.9" opacity="0.089"/><line x1="680" y1="-40" x2="480" y2="790" stroke="#d8ff3e" stroke-width="1.5" opacity="0.062"/><line x1="820" y1="-40" x2="620" y2="790" stroke="#d8ff3e" stroke-width="1.1" opacity="0.118"/><line x1="960" y1="-40" x2="760" y2="790" stroke="#d8ff3e" stroke-width="1.7" opacity="0.079"/><line x1="1100" y1="-40" x2="900" y2="790" stroke="#d8ff3e" stroke-width="1.8" opacity="0.074"/>
+<g transform="translate(620,330) rotate(-8)">
+  <ellipse cx="270" cy="268" rx="290" ry="42" fill="url(#floor)"/>
+  <path d="M22,214 C16,182 34,148 84,122 C138,94 216,76 296,80 C382,84 450,116 488,160 C504,178 510,196 505,212 C500,229 480,237 450,239 L84,245 C48,245 27,237 22,214 Z" fill="#16161a" stroke="#d8ff3e" stroke-width="3"/>
+  <g clip-path="url(#shoeclip)"><path d="M0,70 C 140,58 380,84 540,64" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,88 C 140,76 380,102 540,82" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,106 C 140,94 380,120 540,100" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,124 C 140,112 380,138 540,118" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,142 C 140,130 380,156 540,136" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,160 C 140,148 380,174 540,154" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,178 C 140,166 380,192 540,172" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,196 C 140,184 380,210 540,190" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,214 C 140,202 380,228 540,208" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,232 C 140,220 380,246 540,226" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/><path d="M0,250 C 140,238 380,264 540,244" fill="none" stroke="#d8ff3e" stroke-width="1.1" opacity="0.16"/></g>
+  <path d="M26,204 C130,226 390,230 500,194" fill="none" stroke="#0a0a0b" stroke-width="7" opacity="0.85"/><path d="M96,120 C150,158 210,170 296,166" fill="none" stroke="#d8ff3e" stroke-width="2.4" opacity="0.5"/><ellipse cx="112" cy="112" rx="34" ry="14" fill="none" stroke="#d8ff3e" stroke-width="2.4" opacity="0.6" transform="rotate(-14 112 112)"/>
 </g>
+<g font-family="ui-monospace, monospace">
+  <rect x="60" y="64" rx="17" height="34" width="194" fill="#d8ff3e"/>
+  <text x="157" y="87" fill="#0a0a0b" font-size="19" letter-spacing="4" font-weight="700" text-anchor="middle">EXPLAINERS</text>
+</g>
+<g font-family="system-ui, sans-serif" font-weight="800" fill="#f4f4f1" letter-spacing="-1">
+  <text x="62" y="300" font-size="58">ARE REP</text>
+  <text x="62" y="370" font-size="58">SNEAKERS WORTH</text>
+  <text x="62" y="440" font-size="58">IT? AN HONEST…</text>
+</g>
+<line x1="62" y1="632" x2="342" y2="632" stroke="#d8ff3e" stroke-width="3"/>
+<g font-family="ui-monospace, monospace">
+  <text x="62" y="676" fill="#f4f4f1" font-size="30" font-weight="800" letter-spacing="1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
+  <text x="62" y="708" fill="#9a9aa0" font-size="19" letter-spacing="4">KICKSONDECK.STORE</text>
+</g>
+<rect width="1200" height="750" filter="url(#grain)" opacity="0.55"/>
 </svg>

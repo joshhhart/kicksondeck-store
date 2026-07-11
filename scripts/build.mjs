@@ -562,45 +562,108 @@ const posts = fs.existsSync(POSTS_DIR)
 const fmtDate = (d) => { try { return new Date(d + "T00:00:00Z").toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }); } catch { return d || ""; } };
 const postImg = (p) => p.cover || OG_DEFAULT;
 
-// Code-generated branded cover art (no shoe photos): deterministic per-slug SVG —
-// near-black canvas, green glow, aerospace geometry + grain. Written to assets/blog/<slug>.svg.
+/* ---------------- blog cover art system ----------------
+   Deterministic, self-contained SVG covers (SVG-in-<img> can't load external
+   fonts/photos, so everything is vector): editorial layout — pillar chip, big
+   wrapped display title, pillar-coded background geometry, and a duotone vector
+   silhouette of the shoe type the post is about (350 / Foam RNNR / Slide).
+   No brand logos or trademarks — silhouettes only. */
+
+const COVER_SHOES = {
+  // Local coords ~ 540x300, toe pointing right. Drawn as: fill body + volt outline,
+  // knit/foam texture clipped inside, sole line, ground shadow.
+  "350": {
+    body: "M22,214 C16,182 34,148 84,122 C138,94 216,76 296,80 C382,84 450,116 488,160 C504,178 510,196 505,212 C500,229 480,237 450,239 L84,245 C48,245 27,237 22,214 Z",
+    detail: '<path d="M26,204 C130,226 390,230 500,194" fill="none" stroke="#0a0a0b" stroke-width="7" opacity="0.85"/><path d="M96,120 C150,158 210,170 296,166" fill="none" stroke="#d8ff3e" stroke-width="2.4" opacity="0.5"/><ellipse cx="112" cy="112" rx="34" ry="14" fill="none" stroke="#d8ff3e" stroke-width="2.4" opacity="0.6" transform="rotate(-14 112 112)"/>',
+    texture: "knit",
+  },
+  foam: {
+    body: "M26,206 C10,162 30,110 90,82 C158,50 248,46 326,70 C404,94 470,138 492,180 C506,208 496,232 460,238 L76,244 C42,244 34,228 26,206 Z",
+    detail: ["150,118,30,21,-18", "236,96,32,23,-6", "318,108,27,19,10", "196,172,25,17,-12", "298,168,29,19,4", "392,150,24,16,14"]
+      .map((h) => { const [x, y, rx, ry, r] = h.split(","); return `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="#0a0a0b" stroke="#d8ff3e" stroke-width="2" opacity="0.95" transform="rotate(${r} ${x} ${y})"/>`; }).join(""),
+    texture: "none",
+  },
+  slide: {
+    body: "M24,150 C24,116 66,94 148,84 L396,60 C452,54 490,80 496,118 L502,186 C505,220 486,240 448,240 L66,242 C36,242 24,226 24,196 Z",
+    detail: '<path d="M52,242 L58,214 M118,242 L124,210 M188,243 L194,208 M258,243 L264,208 M328,242 L334,208 M398,241 L404,208" stroke="#0a0a0b" stroke-width="9" stroke-linecap="round"/><path d="M40,140 C160,108 330,88 480,102" fill="none" stroke="#d8ff3e" stroke-width="2.4" opacity="0.5"/>',
+    texture: "foam",
+  },
+};
+const coverShoeFor = (p) => {
+  const hay = (p.slug + " " + (Array.isArray(p.meta.products) ? p.meta.products.join(" ") : p.meta.products || "")).toLowerCase();
+  if (/foam|rnnr/.test(hay)) return "foam";
+  if (/slide/.test(hay)) return "slide";
+  return "350";
+};
+const coverWrap = (title, max = 15) => {
+  const words = String(title || "").toUpperCase().replace(/[—–]/g, "-").split(/\s+/);
+  const lines = [];
+  let cur = "";
+  for (const w of words) {
+    if ((cur + " " + w).trim().length > max && cur) { lines.push(cur.trim()); cur = w; }
+    else cur = (cur + " " + w).trim();
+    if (lines.length === 3) break;
+  }
+  if (lines.length < 3 && cur) lines.push(cur.trim());
+  if (lines.length === 3 && words.join(" ").length > lines.join(" ").length + cur.length) lines[2] = lines[2].replace(/\W*$/, "") + "…";
+  return lines.slice(0, 3);
+};
+
 function blogCover(p) {
   const slug = p.slug || "post";
   let s = 2166136261; for (let i = 0; i < slug.length; i++) { s ^= slug.charCodeAt(i); s = Math.imul(s, 16777619) >>> 0; }
   const rand = () => { s = (Math.imul(s, 1103515245) + 12345) >>> 0; return s / 4294967296; };
-  const W = 1200, H = 750, volt = "#d8ff3e", bg = "#0a0a0b";
-  const gx = Math.round(180 + rand() * 840), gy = Math.round(120 + rand() * 380);
-  const variant = Math.floor(rand() * 3);
+  const W = 1200, H = 750, volt = "#d8ff3e", bg = "#0a0a0b", body = "#16161a", ink = "#f4f4f1", muted = "#9a9aa0";
   const tag = String(p.meta.tag || "Journal").toUpperCase();
-  let geo = "";
-  if (variant === 0) {
-    geo = Array.from({ length: 7 }, (_, i) => `<circle cx="${gx}" cy="${gy}" r="${90 + i * 95}" fill="none" stroke="${volt}" stroke-width="1.2" opacity="${(0.22 - i * 0.025).toFixed(3)}"/>`).join("");
-  } else if (variant === 1) {
-    geo = Array.from({ length: 6 }, (_, i) => { const x = (i + 0.5) / 6 * W; return `<line x1="${Math.round(x - 180)}" y1="0" x2="${Math.round(x + 180)}" y2="${H}" stroke="${volt}" stroke-width="${(1 + rand() * 2).toFixed(1)}" opacity="${(0.05 + rand() * 0.1).toFixed(3)}"/>`; }).join("");
-  } else {
-    let d = "";
-    for (let y = 60; y < H; y += 46) for (let x = 60; x < W; x += 46) {
-      const dist = Math.hypot(x - gx, y - gy), op = Math.max(0, 0.5 - dist / 900);
-      if (op > 0.02) d += `<circle cx="${x}" cy="${y}" r="${(1 + op * 2.5).toFixed(1)}" fill="${volt}" opacity="${op.toFixed(3)}"/>`;
-    }
-    geo = d;
-  }
+  const shoe = COVER_SHOES[coverShoeFor(p)];
+  const lines = coverWrap(p.meta.title);
+  const fsz = lines.some((l) => l.length > 13) ? 58 : 68;
+  const titleY = 300;
+
+  // Pillar-coded backdrop geometry (deterministic accent placement per slug).
+  const MOTIFS = {
+    GUIDES: () => Array.from({ length: 5 }, (_, i) => `<circle cx="${W - 210}" cy="${190}" r="${120 + i * 110}" fill="none" stroke="${volt}" stroke-width="1.1" opacity="${(0.16 - i * 0.025).toFixed(3)}"/>`).join(""),
+    SIZING: () => { let d = ""; for (let y = 70; y < H - 60; y += 52) for (let x = 660; x < W - 40; x += 52) { const op = 0.05 + rand() * 0.12; d += `<circle cx="${x}" cy="${y}" r="1.6" fill="${volt}" opacity="${op.toFixed(3)}"/>`; } return d; },
+    STYLING: () => Array.from({ length: 6 }, (_, i) => `<path d="M620,${90 + i * 110} C 800,${60 + i * 110} 1000,${130 + i * 110} 1240,${80 + i * 110}" fill="none" stroke="${volt}" stroke-width="1.2" opacity="${(0.14 - i * 0.015).toFixed(3)}"/>`).join(""),
+    CULTURE: () => `<g stroke="${volt}" stroke-width="1" opacity="0.12">${Array.from({ length: 7 }, (_, i) => `<line x1="${640 + i * 90}" y1="40" x2="${640 + i * 90}" y2="${H - 40}"/>`).join("")}${Array.from({ length: 6 }, (_, i) => `<line x1="620" y1="${90 + i * 110}" x2="${W - 40}" y2="${90 + i * 110}"/>`).join("")}</g><circle cx="${840 + Math.round(rand() * 200)}" cy="${170 + Math.round(rand() * 160)}" r="7" fill="${volt}" opacity="0.7"/>`,
+    DEFAULT: () => Array.from({ length: 5 }, (_, i) => `<line x1="${540 + i * 140}" y1="-40" x2="${340 + i * 140}" y2="${H + 40}" stroke="${volt}" stroke-width="${(1 + rand()).toFixed(1)}" opacity="${(0.05 + rand() * 0.08).toFixed(3)}"/>`).join(""),
+  };
+  const motif = (MOTIFS[tag] || MOTIFS[tag === "EXPLAINERS" || tag === "LISTS" ? "DEFAULT" : "DEFAULT"] || MOTIFS.DEFAULT)();
+
+  // Texture clipped inside the silhouette body.
+  let tex = "";
+  if (shoe.texture === "knit") tex = Array.from({ length: 11 }, (_, i) => `<path d="M0,${70 + i * 18} C 140,${58 + i * 18} 380,${84 + i * 18} 540,${64 + i * 18}" fill="none" stroke="${volt}" stroke-width="1.1" opacity="0.16"/>`).join("");
+  else if (shoe.texture === "foam") tex = Array.from({ length: 14 }, (_, i) => `<circle cx="${60 + rand() * 420}" cy="${80 + rand() * 140}" r="${(2 + rand() * 4).toFixed(1)}" fill="${volt}" opacity="0.14"/>`).join("");
+
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(p.meta.title || "Kicks on Deck")}">
 <defs>
-<radialGradient id="glow" cx="${(gx / W * 100).toFixed(1)}%" cy="${(gy / H * 100).toFixed(1)}%" r="60%"><stop offset="0%" stop-color="${volt}" stop-opacity="0.30"/><stop offset="45%" stop-color="${volt}" stop-opacity="0.05"/><stop offset="100%" stop-color="${volt}" stop-opacity="0"/></radialGradient>
 <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
-<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></linearGradient>
+<radialGradient id="floor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="${volt}" stop-opacity="0.28"/><stop offset="100%" stop-color="${volt}" stop-opacity="0"/></radialGradient>
+<radialGradient id="wash" cx="78%" cy="30%" r="70%"><stop offset="0%" stop-color="${volt}" stop-opacity="0.10"/><stop offset="100%" stop-color="${volt}" stop-opacity="0"/></radialGradient>
+<clipPath id="shoeclip"><path d="${shoe.body}"/></clipPath>
 </defs>
 <rect width="${W}" height="${H}" fill="${bg}"/>
-<rect width="${W}" height="${H}" fill="url(#glow)"/>
-${geo}
-<rect width="${W}" height="${H}" fill="url(#vig)"/>
-<rect width="${W}" height="${H}" filter="url(#grain)" opacity="0.6"/>
-<g font-family="ui-monospace, monospace">
-<text x="64" y="88" fill="${volt}" font-size="26" letter-spacing="6" font-weight="700">${esc(tag)}</text>
-<text x="64" y="${H - 108}" fill="#f4f4f1" font-size="66" font-weight="800" letter-spacing="-1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
-<text x="64" y="${H - 62}" fill="#9a9aa0" font-size="22" letter-spacing="4">kicksondeck.store</text>
+<rect width="${W}" height="${H}" fill="url(#wash)"/>
+${motif}
+<g transform="translate(620,330) rotate(-8)">
+  <ellipse cx="270" cy="268" rx="290" ry="42" fill="url(#floor)"/>
+  <path d="${shoe.body}" fill="${body}" stroke="${volt}" stroke-width="3"/>
+  <g clip-path="url(#shoeclip)">${tex}</g>
+  ${shoe.detail}
 </g>
+<g font-family="ui-monospace, monospace">
+  <rect x="60" y="64" rx="17" height="34" width="${34 + tag.length * 16}" fill="${volt}"/>
+  <text x="${60 + 17 + tag.length * 8}" y="87" fill="${bg}" font-size="19" letter-spacing="4" font-weight="700" text-anchor="middle">${esc(tag)}</text>
+</g>
+<g font-family="system-ui, sans-serif" font-weight="800" fill="${ink}" letter-spacing="-1">
+${lines.map((l, i) => `  <text x="62" y="${titleY + i * (fsz + 12)}" font-size="${fsz}">${esc(l)}</text>`).join("\n")}
+</g>
+<line x1="62" y1="${H - 118}" x2="342" y2="${H - 118}" stroke="${volt}" stroke-width="3"/>
+<g font-family="ui-monospace, monospace">
+  <text x="62" y="${H - 74}" fill="${ink}" font-size="30" font-weight="800" letter-spacing="1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
+  <text x="62" y="${H - 42}" fill="${muted}" font-size="19" letter-spacing="4">KICKSONDECK.STORE</text>
+</g>
+<rect width="${W}" height="${H}" filter="url(#grain)" opacity="0.55"/>
 </svg>`;
 }
 
@@ -711,9 +774,7 @@ for (const p of products) { write(`product/${p.slug}/index.html`, productPage(p)
 
 // blog + quiz
 for (const p of posts) {
-  const webpRel = `assets/blog/${p.slug}.webp`;
   if (p.meta.image) p.cover = p.meta.image;
-  else if (fs.existsSync(path.join(ROOT, webpRel))) p.cover = `/${webpRel}`;
   else { p.cover = `/assets/blog/${p.slug}.svg`; write(`assets/blog/${p.slug}.svg`, blogCover(p)); }
 }
 write("blog/index.html", blogIndexPage()); n++;

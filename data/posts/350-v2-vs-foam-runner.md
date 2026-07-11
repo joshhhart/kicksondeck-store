@@ -2,7 +2,6 @@
 title: 350 V2 vs Foam Runner — Which Should You Cop?
 description: 350 V2 vs Foam Runner sizing, comfort, style, pros and cons — honest advice on which Yeezy silhouette fits your rotation.
 date: 2026-06-28
-image: /assets/blog/350-v2-vs-foam-runner.webp
 tag: Guide
 read: 4 min read
 products: [zebra-yz-boost-350-v2, cream-yz-boost-350-v2, onyx-yz-foam-rnnr]
