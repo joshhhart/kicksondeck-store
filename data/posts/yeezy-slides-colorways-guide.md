@@ -47,3 +47,7 @@ Still deciding between the Slide and the [Foam Runner](/blog/foam-runner-vs-slid
 Browse the full lineup in the [Slides collection](/collection/slides/) — we restock colorways based on what the community votes for (here's [how restocks actually work](/blog/yeezy-350-v2-restock-guide/)).
 
 *Not sure the Slide is your silhouette? Take the [60-second quiz](/quiz/) and we'll match you — or [vote the next drop](/#vote) and we'll stock the winner.*
+
+## What are all the Yeezy Slide colors?
+
+The full lineup covers three groups: everyday neutrals (Onyx, Pure, Bone), the tonal earth run (Desert Sand, Earth Brown, Flax, Granite), and the color-forward pairs (Enflame Orange, Azure, Glow Green, Ochre), plus the marbled Resin and Soot finishes. Start with a neutral, then add a color-forward pair once you know your rotation.
