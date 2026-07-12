@@ -52,7 +52,7 @@ Same rule we give for every Yeezy colorway question: your **first** Slide should
 
 Still deciding between the Slide and the [Foam Runner](/blog/foam-runner-vs-slides/)? That comparison breaks down the fit and feel differences. And before you check out, run the [Slides sizing guide](/blog/yeezy-slides-sizing/) — slides fit differently than a molded shoe, and it's a two-minute read that saves a return.
 
-Browse the full lineup in the [Slides collection](/collection/slides/) — we restock colorways based on what the community votes for (here's [how restocks actually work](/blog/yeezy-350-v2-restock-guide/)).
+Browse the full lineup in the [Slides collection](/collection/slides/) — we restock colorways based on what the community votes for (here's [how restocks actually work](/blog/yeezy-350-v2-restock-guide/)). Cross-shopping colorways across every silhouette? [Every Yeezy colorway, in one place](/blog/all-yeezy-colorways-guide/).
 
 *Not sure the Slide is your silhouette? Take the [60-second quiz](/quiz/) and we'll match you — or [vote the next drop](/#vote) and we'll stock the winner.*
 

@@ -57,6 +57,6 @@ The same rule that works for the [350 V2 colorways](/blog/yeezy-350-v2-colorways
 
 If you're still deciding between the clog and the strap-and-foam slide, the [Foam Runner vs Slides breakdown](/blog/foam-runner-vs-slides/) settles it, and if you're cross-shopping the Foam Runner against the sneaker, read [350 V2 vs Foam Runner](/blog/350-v2-vs-foam-runner/). Either way, nail the fit first — the [Foam Runner sizing guide](/blog/yeezy-foam-runner-sizing/) keeps you from the classic "too big and floppy" mistake.
 
-Browse the full lineup in the [Foam Runner collection](/collection/foam-rnnr/) — we rotate colorways based on what you tell us to stock (here's [how restocks actually work](/blog/yeezy-350-v2-restock-guide/)).
+Browse the full lineup in the [Foam Runner collection](/collection/foam-rnnr/) — we rotate colorways based on what you tell us to stock (here's [how restocks actually work](/blog/yeezy-350-v2-restock-guide/)). Cross-shopping colorways across every silhouette? [Every Yeezy colorway, in one place](/blog/all-yeezy-colorways-guide/).
 
 *Not sure the Foam Runner is even your silhouette? Take the [60-second quiz](/quiz/) and we'll match you — or [vote the next drop](/#vote) and we'll stock the winner.*
