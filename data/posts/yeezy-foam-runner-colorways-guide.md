@@ -5,7 +5,7 @@ tag: Guides
 read: 6 min read
 excerpt: From Onyx to Mineral Blue to the marbled MX run — the full map of Foam Runner colorways and which one actually earns a summer rotation spot.
 description: A complete, plain-English guide to every major Yeezy Foam Runner colorway — Onyx, Sand, Ararat, Mineral Blue, Vermilion and the marbled MX run — with styling notes for each.
-products: [onyx-yz-foam-rnnr, sand-yz-foam-rnnr, mineral-blue-yz-foam-rnnr, mx-cream-clay-yz-foam-rnnr]
+products: [onyx-yz-foam-rnnr, mineral-blue-yz-foam-rnnr, mx-cream-clay-yz-foam-rnnr, stone-sage-yz-foam-rnnr]
 ---
 
 The Foam Runner is the easiest shoe in the Yeezy lineup to throw on and the hardest one to name. It's a single molded clog, so the "colorway" *is* the whole shoe — there's no stripe, no knit, no panels to break it up. That makes picking one weirdly high-stakes. This is the map, built for the season the Foam Runner actually lives in: summer.
@@ -13,6 +13,8 @@ The Foam Runner is the easiest shoe in the Yeezy lineup to throw on and the hard
 ## First, the one fact that explains the whole lineup
 
 The Foam Runner is molded from a foam that's part algae-based EVA — that's why the colors read soft and slightly matte instead of plasticky, and why the neutrals look like natural stone rather than painted rubber. Keep that in mind as you scroll: the muted tones are the point of the shoe, not a compromise.
+
+![the all-black Onyx Yeezy Foam RNNR, the most-worn Foam Runner colorway](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957735)
 
 ## The neutrals that go with everything
 
@@ -30,6 +32,8 @@ The neutrals get worn the most, but the bold pairs are the ones that photograph.
 - **[Vermilion](/product/vermilion-yz-foam-rnnr/)** — red-orange, unapologetic. A one-color statement that does all the work in an otherwise plain fit.
 - **Sulfur and Ochre** — the yellow corner. Sulfur is a neon-leaning yellow-green; Ochre is the muted mustard for people who want warmth without the highlighter energy.
 
+![the bright chalky-blue Mineral Blue Yeezy Foam RNNR](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Mineral-Blue-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957766)
+
 ## The marbled MX run
 
 The **MX** pairs are the collector's corner — each one is a swirled, marbled mix of dyes, so no two are printed exactly alike. They look more expensive than a flat color and lean artsy.
@@ -37,9 +41,13 @@ The **MX** pairs are the collector's corner — each one is a swirled, marbled m
 - **[MX Cream Clay](/product/mx-cream-clay-yz-foam-rnnr/)** — cream and clay marbled together, the most versatile of the MX run and an easy neutral-plus.
 - **MXT Moon Gray, MX Carbon** — greyscale marbling, from soft moon-grey to a near-black carbon. The stealth way to wear the swirl.
 
+![the marbled cream-and-clay swirl of the MX Cream Clay Yeezy Foam RNNR](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-MX-Cream-Clay-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957822)
+
 ## Stone Sage — the sleeper
 
 Worth calling out on its own: **[Stone Sage](/product/stone-sage-yz-foam-rnnr/)** is a soft muted green that behaves like a neutral but reads more interesting than one. It's the pair that gets the "what are those?" without being loud about it — probably the best value pick if you want one Foam Runner that isn't obvious.
+
+![the soft muted-green Stone Sage Yeezy Foam RNNR](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Stone-Sage-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957879)
 
 ## So which one should you get?
 
