@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Best Yeezy Slides to Buy in 2026 (Every Colorway Ranked)">
+<defs>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter>
+<radialGradient id="floor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.28"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<radialGradient id="wash" cx="78%" cy="30%" r="70%"><stop offset="0%" stop-color="#d8ff3e" stop-opacity="0.10"/><stop offset="100%" stop-color="#d8ff3e" stop-opacity="0"/></radialGradient>
+<clipPath id="shoeclip"><path d="M24,150 C24,116 66,94 148,84 L396,60 C452,54 490,80 496,118 L502,186 C505,220 486,240 448,240 L66,242 C36,242 24,226 24,196 Z"/></clipPath>
+</defs>
+<rect width="1200" height="750" fill="#0a0a0b"/>
+<rect width="1200" height="750" fill="url(#wash)"/>
+<line x1="540" y1="-40" x2="340" y2="790" stroke="#d8ff3e" stroke-width="1.5" opacity="0.115"/><line x1="680" y1="-40" x2="480" y2="790" stroke="#d8ff3e" stroke-width="2.0" opacity="0.087"/><line x1="820" y1="-40" x2="620" y2="790" stroke="#d8ff3e" stroke-width="1.4" opacity="0.071"/><line x1="960" y1="-40" x2="760" y2="790" stroke="#d8ff3e" stroke-width="1.4" opacity="0.073"/><line x1="1100" y1="-40" x2="900" y2="790" stroke="#d8ff3e" stroke-width="1.9" opacity="0.077"/>
+<g transform="translate(620,330) rotate(-8)">
+  <ellipse cx="270" cy="268" rx="290" ry="42" fill="url(#floor)"/>
+  <path d="M24,150 C24,116 66,94 148,84 L396,60 C452,54 490,80 496,118 L502,186 C505,220 486,240 448,240 L66,242 C36,242 24,226 24,196 Z" fill="#16161a" stroke="#d8ff3e" stroke-width="3"/>
+  <g clip-path="url(#shoeclip)"><circle cx="325.96241551917046" cy="134.14346765726805" r="4.8" fill="#d8ff3e" opacity="0.14"/><circle cx="110.27536793611944" cy="215.16439743805677" r="3.0" fill="#d8ff3e" opacity="0.14"/><circle cx="260.89332432020456" cy="182.0253987517208" r="5.4" fill="#d8ff3e" opacity="0.14"/><circle cx="332.446708381176" cy="122.89939619135112" r="4.8" fill="#d8ff3e" opacity="0.14"/><circle cx="77.10478787776083" cy="181.86715895310044" r="5.7" fill="#d8ff3e" opacity="0.14"/><circle cx="221.50321134366095" cy="138.06266678962857" r="5.6" fill="#d8ff3e" opacity="0.14"/><circle cx="339.9750793213025" cy="217.04758000560105" r="3.3" fill="#d8ff3e" opacity="0.14"/><circle cx="289.91805056110024" cy="98.28537700232118" r="5.5" fill="#d8ff3e" opacity="0.14"/><circle cx="475.3120972914621" cy="158.0176229029894" r="4.6" fill="#d8ff3e" opacity="0.14"/><circle cx="277.1307188551873" cy="111.5031122090295" r="3.4" fill="#d8ff3e" opacity="0.14"/><circle cx="190.76987747568637" cy="200.40107826702297" r="5.5" fill="#d8ff3e" opacity="0.14"/><circle cx="402.30280358344316" cy="200.19045639317483" r="3.0" fill="#d8ff3e" opacity="0.14"/><circle cx="267.10488685872406" cy="120.86778869852424" r="6.0" fill="#d8ff3e" opacity="0.14"/><circle cx="127.13693347759545" cy="98.3595501864329" r="4.3" fill="#d8ff3e" opacity="0.14"/></g>
+  <path d="M52,242 L58,214 M118,242 L124,210 M188,243 L194,208 M258,243 L264,208 M328,242 L334,208 M398,241 L404,208" stroke="#0a0a0b" stroke-width="9" stroke-linecap="round"/><path d="M40,140 C160,108 330,88 480,102" fill="none" stroke="#d8ff3e" stroke-width="2.4" opacity="0.5"/>
+</g>
+<g font-family="ui-monospace, monospace">
+  <rect x="60" y="64" rx="17" height="34" width="114" fill="#d8ff3e"/>
+  <text x="117" y="87" fill="#0a0a0b" font-size="19" letter-spacing="4" font-weight="700" text-anchor="middle">LISTS</text>
+</g>
+<g font-family="system-ui, sans-serif" font-weight="800" fill="#f4f4f1" letter-spacing="-1">
+  <text x="62" y="300" font-size="58">BEST YEEZY</text>
+  <text x="62" y="370" font-size="58">SLIDES TO BUY</text>
+  <text x="62" y="440" font-size="58">IN 2026 (EVERY…</text>
+</g>
+<line x1="62" y1="632" x2="342" y2="632" stroke="#d8ff3e" stroke-width="3"/>
+<g font-family="ui-monospace, monospace">
+  <text x="62" y="676" fill="#f4f4f1" font-size="30" font-weight="800" letter-spacing="1" font-family="system-ui, sans-serif">KICKS ON DECK</text>
+  <text x="62" y="708" fill="#9a9aa0" font-size="19" letter-spacing="4">KICKSONDECK.STORE</text>
+</g>
+<rect width="1200" height="750" filter="url(#grain)" opacity="0.55"/>
+</svg>

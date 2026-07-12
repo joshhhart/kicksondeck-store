@@ -45,3 +45,7 @@ Once they fit right, keep them looking new with the [Foam Runner cleaning guide]
 ## Are Foam Runners men's sizing or unisex?
 
 They're made on a unisex last with no separate men's/women's numbering — just pick your usual US shoe size (or size down per the rule above) rather than converting between men's and women's charts.
+
+## Do Yeezy Foam Runners run small?
+
+No — Foam Runners run **big**, not small. The confusion comes from the whole-size-only sizing: if you're used to ordering a half size, the jump to the nearest whole size can *feel* like sizing down, but that's the correct fit, not a small-running shoe.

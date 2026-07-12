@@ -18,6 +18,10 @@ If you're buying your first Slide, it's one of these three. They go under sweatp
 - **[Pure (Restock)](/product/pure-restock-yz-slide/)** — an off-white, bone-adjacent neutral with a soft matte finish. Reads clean without the maintenance headache of true white.
 - **[Bone](/product/bone-yz-slide/)** — a warmer, sandier neutral than Pure. The one that photographs best against tanned skin and summer denim.
 
+![the all-black Onyx Yeezy Slide, a single-strap molded-foam slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Slide-Shoes.webp?v=1697957713)
+
+![the off-white, bone-adjacent Pure Yeezy Slide with a soft matte finish](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Pure-Restock-Yeezy-Slide-Running-Shoes.webp?v=1697958007)
+
 ## The tonal earth run
 
 A step past basic neutral, these lean warm and pair with almost every "quiet luxury" fit in a summer wardrobe.
@@ -34,6 +38,10 @@ These are bought on purpose, not as a backup. Summer is when they make the most 
 - **[Azure](/product/azure-yz-slide/)** and **[Glow Green](/product/glow-green-yz-slide/)** — the two brightest coolers. Azure is a clean sky blue, Glow Green a chartreuse-leaning neon. Both are 2022/2023 restock-era colors, so check the [restock version](/product/glow-green-2022-2023-restock-yz-slide/) if you want the updated foam batch.
 - **[Ochre](/product/ochre-yz-slide/)** — mustard-gold, warmer and less neon than Glow Green. The bridge color between the earth tones and the brights.
 
+![the saturated red-orange Enflame Orange Yeezy Slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Enflame-Orange-Yeezy-Slide-Shoes.webp?v=1697958051)
+
+![the mustard-gold Ochre Yeezy Slide](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Ochre-Yeezy-Slide-Running-Shoes.webp?v=1697957946)
+
 ## The textured/marbled pick
 
 - **[Resin](/product/resin-yz-slide/)** and **[Soot](/product/soot-yz-slide/)** — both sit in a marbled, semi-translucent finish rather than a flat color, similar in spirit to the Foam Runner's MX run. Resin leans amber, Soot leans smoky charcoal. Neither photographs quite like the flat colorways above, which is exactly why collectors reach for them.
@@ -47,3 +55,7 @@ Still deciding between the Slide and the [Foam Runner](/blog/foam-runner-vs-slid
 Browse the full lineup in the [Slides collection](/collection/slides/) — we restock colorways based on what the community votes for (here's [how restocks actually work](/blog/yeezy-350-v2-restock-guide/)). Cross-shopping colorways across every silhouette? [Every Yeezy colorway, in one place](/blog/all-yeezy-colorways-guide/).
 
 *Not sure the Slide is your silhouette? Take the [60-second quiz](/quiz/) and we'll match you — or [vote the next drop](/#vote) and we'll stock the winner.*
+
+## What are all the Yeezy Slide colors?
+
+The full lineup covers three groups: everyday neutrals (Onyx, Pure, Bone), the tonal earth run (Desert Sand, Earth Brown, Flax, Granite), and the color-forward pairs (Enflame Orange, Azure, Glow Green, Ochre), plus the marbled Resin and Soot finishes. Start with a neutral, then add a color-forward pair once you know your rotation.
