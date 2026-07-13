@@ -12,6 +12,12 @@ posting on the brand's behalf. These are hard constraints, not suggestions.
   (`GET /social-media-posting/{locationId}/accounts`) — they change on reconnect.
 - GMB posts need `gmbPostDetails: { gmbEventType: "STANDARD" }`. Media: JPEG/PNG.
 - If a post is rejected, read `approverNote`, revise, resubmit as `in_review`.
+- Credentials (`GHL_PIT`, `GHL_USER_ID`, `GHL_LOCATION_ID`) are written by the environment's
+  maintenance script to `~/.config/kod/ghl.env` at setup time — they are **not** live process
+  environment variables, so `process.env`/`$GHL_PIT` will be empty at task runtime. Before any
+  GHL API call, `source ~/.config/kod/ghl.env` (or read the file directly) to load them. If
+  that file is missing, the environment's maintenance script hasn't been updated yet — stop and
+  flag it in the Linear issue rather than guessing at credentials or skipping approval.
 
 ## Privacy & content guardrails
 - NEVER include the owner's personal name or street address anywhere — content,
