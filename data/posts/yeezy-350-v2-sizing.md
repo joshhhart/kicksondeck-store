@@ -27,6 +27,10 @@ For most people, **yes — true to size (TTS)**. The Primeknit upper hugs the fo
 - **Wide feet:** go **up a half size**. The knit is forgiving but the midfoot is narrow; the extra half gives the [350 V2](/collection/350-v2/) room without sloppiness.
 - **Between two pairs and unsure:** the [Cream/Triple White](/product/cream-yz-boost-350-v2/) and [Zebra](/product/zebra-yz-boost-350-v2/) both fit dead-on TTS and are the safest first pairs.
 
+## Do Yeezy 350 V2s run small?
+
+No — the 350 V2 doesn't run small for most feet, it's **true to size**. The "runs small" impression usually comes from the snug Primeknit collar on a brand-new pair; that eases up within the first week of wear and the fit opens up to normal. The only foot type that should actually size up is wide feet (see below) — everyone else should stick with their regular size.
+
 ## Width matters at the midfoot
 
 The 350 V2 is **narrow through the middle** before it breaks in. Narrow and medium feet love it out of the box; wide feet feel the pinch for the first few wears, then the knit relaxes. If you know you run wide, the half-size-up move beats white-knuckling the break-in.

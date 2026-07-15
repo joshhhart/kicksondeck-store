@@ -807,6 +807,23 @@ const REDIRECTS = {
   "blogs/news/discover-the-iconic-yeezy-boost-350-a-must-have-for-sneaker-collectors-at-kicksondeck": "/collection/350-v2/",
   "blogs/news/discover-the-iconic-yeezy-boost-350-elevate-your-sneaker-game-with-kicksondeck": "/collection/350-v2/",
   "blogs/news/discover-the-iconic-yeezy-boost-350-uniting-high-fashion-hip-hop-and-cutting-edge-footwear-technology": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/kanye-west-s-yeezy-in-2025-redefining-sneakers-amid-personal-and-legal-storms": "/blog/",
+  "blogs/news/unleashing-style-and-comfort-the-ultimate-guide-to-adidas-yeezy-boost-350-by-kanye-west": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/discover-the-hype-the-ultimate-guide-to-adidas-yeezy-boost-350-sneakers-for-sneakerheads": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/discover-why-adidas-yeezy-boost-350-sneakers-are-a-must-have-for-every-sneakerhead-shop-now-at-kicksondeck": "/collection/350-v2/",
+  "blogs/news/ultimate-guide-to-adidas-yeezy-boost-350-design-comfort-and-streetwear-legacy": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/unlock-sneaker-prestige-why-adidas-yeezy-boost-350s-and-kicksondeck-are-a-must-for-sneakerheads": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/unveiling-the-legacy-of-adidas-yeezy-boost-350-the-ultimate-sneaker-game-changer": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/why-the-adidas-yeezy-boost-350-dominates-sneaker-culture-the-ultimate-guide-to-copping-the-hottest-drops": "/blog/yeezy-350-v2-restock-guide/",
+  "blogs/news/discover-the-iconic-adidas-yeezy-boost-350-style-comfort-and-exclusivity-on-kicksondeck": "/collection/350-v2/",
+  "blogs/news/embrace-the-ultimate-sneaker-revolution-understanding-the-unmatched-allure-of-the-adidas-yeezy-boost-350": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/unlock-the-hype-how-adidas-yeezy-boost-350-redefines-street-style-for-sneaker-enthusiasts-on-kicksondeck": "/blog/how-to-style-yeezy-350-v2/",
+  "blogs/news/unlock-the-style-comfort-exclusivity-of-kanyes-adidas-yeezy-boost-350-your-gateway-to-ultimate-sneaker-experience": "/blog/how-to-style-yeezy-350-v2/",
+  "blogs/news/6-must-have-adidas-sneakers-under-100-in-the-end-of-year-new-year-sale": "/shop/",
+  "blogs/news/adidas-and-kanye-west-yeezy-boost-350-the-ultimate-sneaker-collaboration-redefining-style-and-comfort": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/discover-the-ultimate-sneaker-experience-the-iconic-yeezy-boost-350-at-kicksondeck": "/collection/350-v2/",
+  "blogs/news/the-ultimate-guide-to-yeezy-boost-350-adidas-x-kanye-wests-streetwear-revolution": "/blog/best-yeezy-350-v2-2026/",
+  "products/automatic-liquid-discharge-shoe-brush": "/product/shoe-brush-with-automatic-liquid-dispenser/",
 };
 for (const [from, to] of Object.entries(REDIRECTS)) {
   write(`${from}/index.html`, `<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<title>Redirecting… — Kicks on Deck</title>\n<link rel="canonical" href="${ORIGIN}${to}">\n<meta http-equiv="refresh" content="0; url=${to}">\n<meta name="robots" content="noindex,follow">\n</head>\n<body style="background:#0a0a0b;color:#f5f5f5;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0">\n<p>Moved to <a href="${to}" style="color:#c6ff2e">${to}</a>&hellip;</p>\n<script>location.replace(${JSON.stringify(to)});</script>\n</body></html>`);
