@@ -12,12 +12,26 @@ posting on the brand's behalf. These are hard constraints, not suggestions.
   (`GET /social-media-posting/{locationId}/accounts`) — they change on reconnect.
 - GMB posts need `gmbPostDetails: { gmbEventType: "STANDARD" }`. Media: JPEG/PNG.
 - If a post is rejected, read `approverNote`, revise, resubmit as `in_review`.
+- API gotchas (confirmed against the live GHL API): `postApprovalDetails.approver` must be a
+  **plain string**, not an array. `scheduleDate` is **required** on the request even when
+  `status: "in_review"`.
 - Credentials (`GHL_PIT`, `GHL_USER_ID`, `GHL_LOCATION_ID`) are written by the environment's
   maintenance script to `~/.config/kod/ghl.env` at setup time — they are **not** live process
   environment variables, so `process.env`/`$GHL_PIT` will be empty at task runtime. Before any
   GHL API call, `source ~/.config/kod/ghl.env` (or read the file directly) to load them. If
   that file is missing, the environment's maintenance script hasn't been updated yet — stop and
   flag it in the Linear issue rather than guessing at credentials or skipping approval.
+- **Network egress to `services.leadconnectorhq.com` is unreliable from an agent's own sandbox**
+  (confirmed blocked, `403`/`CONNECT tunnel failed`, in both a Codex environment and a Claude
+  routine's local network policy). Don't burn retries fighting a sandbox's network policy:
+  - **Claude sessions with Composio connected:** route the actual GHL REST call through
+    Composio's remote sandbox (`COMPOSIO_REMOTE_BASH_TOOL` / `COMPOSIO_REMOTE_WORKBENCH`) rather
+    than `curl` from your own local network — that remote egress has reliably reached GHL's API
+    when local egress was blocked.
+  - **Codex or any agent without Composio access:** if a direct API call and the GHL
+    plugin/connector are both unavailable or network-blocked, don't guess or loop — prepare the
+    content (caption, media, target platform) and comment it on the Linear issue so a Claude
+    session can execute the actual GHL post via the Composio path above.
 
 ## Privacy & content guardrails
 - NEVER include the owner's personal name or street address anywhere — content,
