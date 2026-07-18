@@ -15,23 +15,25 @@ posting on the brand's behalf. These are hard constraints, not suggestions.
 - API gotchas (confirmed against the live GHL API): `postApprovalDetails.approver` must be a
   **plain string**, not an array. `scheduleDate` is **required** on the request even when
   `status: "in_review"`.
-- Credentials (`GHL_PIT`, `GHL_USER_ID`, `GHL_LOCATION_ID`) are written by the environment's
-  maintenance script to `~/.config/kod/ghl.env` at setup time — they are **not** live process
-  environment variables, so `process.env`/`$GHL_PIT` will be empty at task runtime. Before any
-  GHL API call, `source ~/.config/kod/ghl.env` (or read the file directly) to load them. If
-  that file is missing, the environment's maintenance script hasn't been updated yet — stop and
-  flag it in the Linear issue rather than guessing at credentials or skipping approval.
-- **Network egress to `services.leadconnectorhq.com` is unreliable from an agent's own sandbox**
-  (confirmed blocked, `403`/`CONNECT tunnel failed`, in both a Codex environment and a Claude
-  routine's local network policy). Don't burn retries fighting a sandbox's network policy:
-  - **Claude sessions with Composio connected:** route the actual GHL REST call through
-    Composio's remote sandbox (`COMPOSIO_REMOTE_BASH_TOOL` / `COMPOSIO_REMOTE_WORKBENCH`) rather
-    than `curl` from your own local network — that remote egress has reliably reached GHL's API
-    when local egress was blocked.
-  - **Codex or any agent without Composio access:** if a direct API call and the GHL
-    plugin/connector are both unavailable or network-blocked, don't guess or loop — prepare the
-    content (caption, media, target platform) and comment it on the Linear issue so a Claude
-    session can execute the actual GHL post via the Composio path above.
+
+### Who does what — Codex creates, Claude posts
+- **Codex: creative production ONLY — never touches GHL.** Deliver finished social images by
+  **attaching them to the Linear issue** (Linear attachment upload, or a stable public image
+  URL that serves the raw file), plus a comment with the final caption, target platforms
+  (IG / FB / GMB), and alt text. Do NOT call any GHL API/plugin and do NOT open PRs for
+  creative deliverables. Attaching the image + comment closes out Codex's part of the task.
+- **Claude routines: posting.** The Claude session picks up Codex's Linear deliverable
+  (image links + caption) and creates the post via the **GoHighLevel MCP**
+  (`search_operations` → `describe_operation` → `execute_operation`; post with `create-post`,
+  fetch current account IDs with `get-account`) — verified working from Claude sessions.
+  Always `in_review` per the rules above; comment the resulting post ID/status back on the
+  Linear issue so the thread shows the full chain.
+- Fallback only if the GHL MCP is unavailable: route the raw REST call through Composio's
+  remote sandbox (`COMPOSIO_REMOTE_BASH_TOOL`) — direct egress to
+  `services.leadconnectorhq.com` is blocked (`403`/`CONNECT tunnel failed`) from agent
+  sandboxes, and for the raw path credentials live in `~/.config/kod/ghl.env` (written by the
+  environment's maintenance script; they are NOT live env vars). If neither path works, stop
+  and flag on the Linear issue — never guess credentials or skip approval.
 
 ## Privacy & content guardrails
 - NEVER include the owner's personal name or street address anywhere — content,
@@ -57,8 +59,9 @@ posting on the brand's behalf. These are hard constraints, not suggestions.
 - Code work: branch `codex/<slug>` (or `claude/<slug>`), then **open a PR**. If PR
   creation fails, push the branch anyway — an agent sweep opens PRs for orphaned
   `codex/*` branches. Never commit secrets.
-- Image/creative deliverables: attach to the Linear issue or upload to the GHL
-  media library. Do NOT open PRs for image-only deliverables.
+- Image/creative deliverables: attach to the Linear issue (see "Who does what" above —
+  the Claude poster handles any GHL media-library upload). Do NOT open PRs for
+  image-only deliverables.
 - Blog post images: own catalog photos (hotlink from `data/products.json`) or
   free-license Unsplash/Pexels CDN links only. Verify every image visually and
   confirm the URL serves an image before committing. Descriptive alt text.
