@@ -823,6 +823,11 @@ const REDIRECTS = {
   "blogs/news/adidas-and-kanye-west-yeezy-boost-350-the-ultimate-sneaker-collaboration-redefining-style-and-comfort": "/blog/yeezy-350-v2-colorways-guide/",
   "blogs/news/discover-the-ultimate-sneaker-experience-the-iconic-yeezy-boost-350-at-kicksondeck": "/collection/350-v2/",
   "blogs/news/the-ultimate-guide-to-yeezy-boost-350-adidas-x-kanye-wests-streetwear-revolution": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/kanye-wests-yeezy-brand-a-2025-independent-journey": "/blog/",
+  "blogs/news/unlock-the-hype-why-yeezy-boost-350s-dominate-sneaker-culture-your-guide-to-comfort-style-and-exclusivity-on-kicksondeck": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/unraveling-the-iconic-magic-why-adidas-yeezy-boost-350s-are-a-must-have-for-sneaker-enthusiasts": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/unveiling-the-yeezy-boost-350-a-revolution-in-sneaker-fashion-with-kanye-west-adidas-shop-now-at-kicksondeck-store": "/blog/yeezy-350-v2-colorways-guide/",
+  "blogs/news/discover-why-adidas-yeezy-boost-350-by-kanye-west-revolutionized-sneaker-culture-available-at-kicksondeck-store": "/collection/350-v2/",
   "products/automatic-liquid-discharge-shoe-brush": "/product/shoe-brush-with-automatic-liquid-dispenser/",
 };
 for (const [from, to] of Object.entries(REDIRECTS)) {
