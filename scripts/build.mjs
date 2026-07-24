@@ -209,7 +209,7 @@ function footer() {
     </div>
     <div class="footer-col"><h5>Shop</h5>${collections.map((c) => `<a href="/collection/${c.slug}/">${c.title}</a>`).join("")}<a href="/shop/">All Styles</a></div>
     <div class="footer-col"><h5>Support</h5><a href="mailto:${CFG.brand.email}">Contact</a><a href="/shop/">Sizing</a><a href="mailto:${CFG.brand.email}?subject=Order%20status">Track Order</a><a href="mailto:${CFG.brand.email}?subject=Returns">Returns</a></div>
-    <div class="footer-col"><h5>Connect</h5>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}<a href="/quiz/">Find your pair</a><a href="mailto:${CFG.brand.email}">Email</a></div>
+    <div class="footer-col"><h5>Connect</h5>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}${socialLink(SOCIAL.facebook, "Facebook")}<a href="/quiz/">Find your pair</a><a href="mailto:${CFG.brand.email}">Email</a></div>
   </div>
   <div class="footer-bottom">
     <p>© ${new Date().getFullYear()} Kicks on Deck · ${esc(CFG.brand.city)}</p>
@@ -314,7 +314,7 @@ ${quizCTA()}
 ${voteWidget()}
 ${captureBand()}`;
 
-  const socials = [SOCIAL.instagram, SOCIAL.tiktok].filter(Boolean).map((u) => (/^https?:\/\//.test(u) ? u : `https://${u}`));
+  const socials = [SOCIAL.instagram, SOCIAL.tiktok, SOCIAL.facebook].filter(Boolean).map((u) => (/^https?:\/\//.test(u) ? u : `https://${u}`));
   const homeLd = [
     { "@context": "https://schema.org", "@type": "Organization", "@id": `${ORIGIN}/#org`, name: "Kicks on Deck", url: `${ORIGIN}/`, logo: `${ORIGIN}/assets/favicon.svg`, email: CFG.brand.email, description: "Independent footwear — 1:1 rep Yeezy 350 V2, Foam Runners and Slides. Honest pricing, free U.S. shipping.", ...(socials.length ? { sameAs: socials } : {}) },
     { "@context": "https://schema.org", "@type": "WebSite", "@id": `${ORIGIN}/#website`, name: "Kicks on Deck", url: `${ORIGIN}/`, publisher: { "@id": `${ORIGIN}/#org` } },
@@ -454,8 +454,8 @@ function captureBand() {
 <section class="section container">
   <div class="cta-band reveal" id="capture">
     <span class="eyebrow">Get on the list</span>
-    <h2>Early access</h2>
-    <p>Restocks sell out. Join for first dibs on new arrivals, member pricing, and the drops you voted for.</p>
+    <h2>10% off your first pair</h2>
+    <p>Join the list and use code <strong class="mono">FIRSTPAIR</strong> at checkout — plus first dibs on new arrivals and the drops you voted for.</p>
     <form class="news-form" id="news-form">
       <input type="email" name="email" required placeholder="you@email.com" aria-label="Email">
       <button class="btn btn-volt" type="submit">Join</button>
