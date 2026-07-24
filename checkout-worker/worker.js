@@ -91,11 +91,18 @@ export default {
     form.set("mode", "payment");
     form.set("success_url", SUCCESS_URL);
     form.set("cancel_url", CANCEL_URL);
-    form.append("payment_method_types[]", "card");
+    // No payment_method_types restriction: Stripe's dynamic payment methods
+    // surface Apple Pay / Google Pay / Link / BNPL per the Dashboard config.
+    form.set("allow_promotion_codes", "true");
     form.set("phone_number_collection[enabled]", "true");
     form.set("billing_address_collection", "auto");
     form.append("shipping_address_collection[allowed_countries][]", "US");
     form.append("shipping_address_collection[allowed_countries][]", "CA");
+    // Show shipping explicitly as $0 so the total is never a surprise.
+    form.set("shipping_options[0][shipping_rate_data][display_name]", "Free shipping (US & Canada)");
+    form.set("shipping_options[0][shipping_rate_data][type]", "fixed_amount");
+    form.set("shipping_options[0][shipping_rate_data][fixed_amount][amount]", "0");
+    form.set("shipping_options[0][shipping_rate_data][fixed_amount][currency]", "usd");
 
     let i = 0;
     for (const it of items) {

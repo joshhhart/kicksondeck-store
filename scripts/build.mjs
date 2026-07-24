@@ -7,6 +7,12 @@ const ROOT = process.cwd();
 const data = JSON.parse(fs.readFileSync("data/products.json", "utf8"));
 const CFG = JSON.parse(fs.readFileSync("site.config.json", "utf8"));
 const products = data.products;
+// Supplier feed prefixes its copy with "REP VERSION:" — shouty scraped text
+// that was leaking into meta descriptions, og tags and Product JSON-LD.
+for (const p of products) {
+  if (p.descText) p.descText = p.descText.replace(/REP VERSION:?\s*/gi, "").trim();
+  if (p.descHtml) p.descHtml = p.descHtml.replace(/REP VERSION:?\s*/gi, "");
+}
 const collections = data.collections;
 const DOMAIN = CFG.brand.domain;
 const ORIGIN = `https://${DOMAIN}`;
@@ -140,7 +146,9 @@ ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>\n` : "
 function analyticsTags() {
   let s = "";
   if (AN.gscVerification) s += `\n<meta name="google-site-verification" content="${esc(AN.gscVerification)}">`;
-  if (AN.ga4Id) s += `\n<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(AN.ga4Id)}"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${esc(AN.ga4Id)}');</script>`;
+  // navigator.webdriver gate keeps headless/automation traffic (our own build
+  // verifiers included) out of GA4 — it was drowning real-shopper data.
+  if (AN.ga4Id) s += `\n<script>if(!navigator.webdriver){var kge=document.createElement('script');kge.async=true;kge.src='https://www.googletagmanager.com/gtag/js?id=${esc(AN.ga4Id)}';document.head.appendChild(kge);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','${esc(AN.ga4Id)}');}</script>`;
   return s;
 }
 
@@ -158,7 +166,7 @@ function header(active = "") {
 }
 
 function marquee() {
-  const items = ["Free U.S. shipping over $150", "1:1 craftsmanship", "Every pair inspected", "Worldwide delivery", "7-day buyer protection", "New drops weekly"];
+  const items = ["Free U.S. shipping on every order", "1:1 craftsmanship", "Every pair inspected", "Ships US & Canada", "7-day buyer protection", "New drops weekly"];
   const span = items.map((t) => `<span>${t}</span>`).join("");
   return `<div class="marquee" aria-hidden="true"><div class="marquee-track">${span}${span}</div></div>`;
 }
@@ -171,7 +179,7 @@ function drawerAndSearch() {
   <div class="drawer-body" id="cart-body"></div>
   <div class="drawer-foot" id="cart-foot" style="display:none">
     <div class="cart-row"><span>Subtotal</span><span class="mono" id="cart-subtotal">$0</span></div>
-    <div class="cart-row"><span>Shipping</span><span class="mono">Calculated at checkout</span></div>
+    <div class="cart-row"><span>Shipping</span><span class="mono">Free (US &amp; CA)</span></div>
     <div class="cart-row total"><span>Total</span><span class="mono" id="cart-subtotal-2"></span></div>
     <button class="btn btn-volt btn-block btn-lg" id="checkout-btn">Checkout ${I.arrow}</button>
     <p class="cart-note">Secure checkout powered by Stripe.<br>Questions? <a href="mailto:${CFG.brand.email}">${CFG.brand.email}</a></p>
@@ -197,11 +205,11 @@ function footer() {
   <div class="footer-top">
     <div>
       <a class="brand" href="/"><span class="wordmark">Kicks on Deck</span></a>
-      <p class="footer-blurb">Independent footwear for people who chase the silhouette, not the markup. Curated drops, 1:1 craftsmanship, shipped worldwide.</p>
+      <p class="footer-blurb">Independent footwear for people who chase the silhouette, not the markup. Curated drops, 1:1 craftsmanship, free U.S. shipping.</p>
     </div>
     <div class="footer-col"><h5>Shop</h5>${collections.map((c) => `<a href="/collection/${c.slug}/">${c.title}</a>`).join("")}<a href="/shop/">All Styles</a></div>
     <div class="footer-col"><h5>Support</h5><a href="mailto:${CFG.brand.email}">Contact</a><a href="/shop/">Sizing</a><a href="mailto:${CFG.brand.email}?subject=Order%20status">Track Order</a><a href="mailto:${CFG.brand.email}?subject=Returns">Returns</a></div>
-    <div class="footer-col"><h5>Connect</h5>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}<a href="/quiz/">Find your pair</a><a href="mailto:${CFG.brand.email}">Email</a></div>
+    <div class="footer-col"><h5>Connect</h5>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}${socialLink(SOCIAL.facebook, "Facebook")}<a href="/quiz/">Find your pair</a><a href="mailto:${CFG.brand.email}">Email</a></div>
   </div>
   <div class="footer-bottom">
     <p>© ${new Date().getFullYear()} Kicks on Deck · ${esc(CFG.brand.city)}</p>
@@ -306,14 +314,14 @@ ${quizCTA()}
 ${voteWidget()}
 ${captureBand()}`;
 
-  const socials = [SOCIAL.instagram, SOCIAL.tiktok].filter(Boolean).map((u) => (/^https?:\/\//.test(u) ? u : `https://${u}`));
+  const socials = [SOCIAL.instagram, SOCIAL.tiktok, SOCIAL.facebook].filter(Boolean).map((u) => (/^https?:\/\//.test(u) ? u : `https://${u}`));
   const homeLd = [
-    { "@context": "https://schema.org", "@type": "Organization", "@id": `${ORIGIN}/#org`, name: "Kicks on Deck", url: `${ORIGIN}/`, logo: `${ORIGIN}/assets/favicon.svg`, email: CFG.brand.email, description: "Independent footwear — 1:1 rep Yeezy 350 V2, Foam Runners and Slides. Honest pricing, worldwide shipping.", ...(socials.length ? { sameAs: socials } : {}) },
+    { "@context": "https://schema.org", "@type": "Organization", "@id": `${ORIGIN}/#org`, name: "Kicks on Deck", url: `${ORIGIN}/`, logo: `${ORIGIN}/assets/favicon.svg`, email: CFG.brand.email, description: "Independent footwear — 1:1 rep Yeezy 350 V2, Foam Runners and Slides. Honest pricing, free U.S. shipping.", ...(socials.length ? { sameAs: socials } : {}) },
     { "@context": "https://schema.org", "@type": "WebSite", "@id": `${ORIGIN}/#website`, name: "Kicks on Deck", url: `${ORIGIN}/`, publisher: { "@id": `${ORIGIN}/#org` } },
     { "@context": "https://schema.org", "@type": "Store", "@id": `${ORIGIN}/#store`, name: "Kicks on Deck", url: `${ORIGIN}/`, image: hero.image, email: CFG.brand.email, telephone: CFG.brand.phone, priceRange: "$$", parentOrganization: { "@id": `${ORIGIN}/#org` }, address: { "@type": "PostalAddress", addressRegion: "FL", addressCountry: "US" }, areaServed: [{ "@type": "AdministrativeArea", name: "South Florida" }, { "@type": "AdministrativeArea", name: "Treasure Coast" }, { "@type": "Country", name: "United States" }] },
   ];
   return layout({
-    headOpts: { title: "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides", desc: `Shop ${products.length} grail silhouettes — 350 V2, Foam Runners and Slides. 1:1 craftsmanship, honest prices, worldwide shipping.`, canonical: `${ORIGIN}/`, ogImg: hero.image, ld: homeLd },
+    headOpts: { title: "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides", desc: `Shop ${products.length} grail silhouettes — 350 V2, Foam Runners and Slides. 1:1 craftsmanship, honest prices, free U.S. shipping.`, canonical: `${ORIGIN}/`, ogImg: hero.image, ld: homeLd },
     active: "/",
     body,
   });
@@ -398,7 +406,7 @@ function productPage(p) {
       <div class="trust-row">
         <div class="trust">${I.shield} Buyer protection</div>
         <div class="trust">${I.truck} Ships in 48h</div>
-        <div class="trust">${I.globe} Worldwide</div>
+        <div class="trust">${I.globe} Free U.S. shipping</div>
       </div>
       <div class="pdp-details">
         <h2 class="pdp-details-h">The details</h2>
@@ -418,7 +426,7 @@ function productPage(p) {
 ]))}</script>`;
 
   return layout({
-    headOpts: { title: `${p.name} — Kicks on Deck`, desc: trimDesc(descPlain) || `${p.name} — ${priceLabel(p)}. 1:1 craftsmanship, worldwide shipping.`, canonical: `${ORIGIN}/product/${p.slug}/`, ogImg: p.image },
+    headOpts: { title: `${p.name} — Kicks on Deck`, desc: trimDesc(descPlain) || `${p.name} — ${priceLabel(p)}. 1:1 craftsmanship, free U.S. shipping.`, canonical: `${ORIGIN}/product/${p.slug}/`, ogImg: p.image },
     active: "",
     body,
   });
@@ -446,8 +454,8 @@ function captureBand() {
 <section class="section container">
   <div class="cta-band reveal" id="capture">
     <span class="eyebrow">Get on the list</span>
-    <h2>Early access</h2>
-    <p>Restocks sell out. Join for first dibs on new arrivals, member pricing, and the drops you voted for.</p>
+    <h2>10% off your first pair</h2>
+    <p>Join the list and use code <strong class="mono">FIRSTPAIR</strong> at checkout — plus first dibs on new arrivals and the drops you voted for.</p>
     <form class="news-form" id="news-form">
       <input type="email" name="email" required placeholder="you@email.com" aria-label="Email">
       <button class="btn btn-volt" type="submit">Join</button>
