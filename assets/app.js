@@ -265,8 +265,8 @@
     track("email_signup", { interest: payload.interest, size: payload.size });
     const r = await postData("/subscribe", payload);
     form.reset();
-    if (msg) msg.textContent = r.skipped ? "You're on the list." : "You're on the list — watch your inbox.";
-    else toast("You're on the list");
+    if (msg) msg.textContent = "You're on the list — use code FIRSTPAIR at checkout for 10% off your first pair.";
+    else toast("On the list — code FIRSTPAIR = 10% off");
   });
 
   /* ---------- vote the next drop ---------- */
