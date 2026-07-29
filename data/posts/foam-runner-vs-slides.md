@@ -56,3 +56,5 @@ Cop the **Slides** if you want max comfort with zero ceremony — pool, recovery
 Still torn? Take the [60-second fit quiz](/quiz/) and let it decide for you. Or skip the debate and browse the [full rotation](/shop/) — Foam Runners and Slides are both in stock, because summer is long and one slip-on is never really enough.
 
 Whichever you cop, EVA foam needs different upkeep than a knit upper — the [Foam Runner & Slides cleaning guide](/blog/how-to-clean-yeezy-foam-runner-and-slides/) covers the safe method and what actually stains it.
+
+Curious how the 350 V2 stacks up against both slip-ons? The [full three-way breakdown](/blog/which-yeezy-silhouette-should-you-buy/) puts all three silhouettes side by side.

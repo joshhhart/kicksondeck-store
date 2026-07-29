@@ -54,3 +54,5 @@ Cop the 350 V2 if you want the everyday flex: a sneaker you can wear often, styl
 Cop the Foam Runner if you want max comfort and casual energy. Size down if you are between sizes, stay true if your feet are wide, and use it for the days when laces feel like a personal attack. It is the better second pair, lounge pair, travel pair, and “I said what I said” pair.
 
 Still torn? Take the [60-second fit quiz](/quiz/) and let it judge you politely. Or skip the therapy and browse the [shop](/shop/) — the rotation has both, because picking sides is fun until you realize you want the pair too.
+
+Want Slides in the mix too? The [full three-way breakdown](/blog/which-yeezy-silhouette-should-you-buy/) compares all three silhouettes side by side.
