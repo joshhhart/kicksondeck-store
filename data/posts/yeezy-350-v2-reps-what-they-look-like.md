@@ -49,3 +49,5 @@ We say it on every page: these are replicas, not retail pairs. "1:1" is shorthan
 ## Which one's next
 
 New colorways rotate in based on what the community actually wants — see the current lineup and [cast your vote](/#vote) on what we restock next, or run the [2-minute quiz](/quiz/) if you're not sure which silhouette fits your rotation.
+
+*Foam Runner instead of 350 V2? The rep tells are completely different on molded EVA — see [what Foam Runner reps actually look like](/blog/yeezy-foam-runner-reps-what-they-look-like/).*

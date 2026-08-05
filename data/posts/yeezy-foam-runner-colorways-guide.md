@@ -55,7 +55,7 @@ The same rule that works for the [350 V2 colorways](/blog/yeezy-350-v2-colorways
 
 > Your **first** Foam Runner should be a neutral (Onyx or Sand). Your **second** should be the loud summer one you actually wanted (Mineral Blue or Vermilion).
 
-If you're still deciding between the clog and the strap-and-foam slide, the [Foam Runner vs Slides breakdown](/blog/foam-runner-vs-slides/) settles it, and if you're cross-shopping the Foam Runner against the sneaker, read [350 V2 vs Foam Runner](/blog/350-v2-vs-foam-runner/). Either way, nail the fit first — the [Foam Runner sizing guide](/blog/yeezy-foam-runner-sizing/) keeps you from the classic "too big and floppy" mistake.
+If you're still deciding between the clog and the strap-and-foam slide, the [Foam Runner vs Slides breakdown](/blog/foam-runner-vs-slides/) settles it, and if you're cross-shopping the Foam Runner against the sneaker, read [350 V2 vs Foam Runner](/blog/350-v2-vs-foam-runner/). Either way, nail the fit first — the [Foam Runner sizing guide](/blog/yeezy-foam-runner-sizing/) keeps you from the classic "too big and floppy" mistake. Want to see the QC tells before you buy? [What Foam Runner reps actually look like](/blog/yeezy-foam-runner-reps-what-they-look-like/) breaks it down colorway by colorway.
 
 Browse the full lineup in the [Foam Runner collection](/collection/foam-rnnr/) — we rotate colorways based on what you tell us to stock (here's [how restocks actually work](/blog/yeezy-350-v2-restock-guide/)). Cross-shopping colorways across every silhouette? [Every Yeezy colorway, in one place](/blog/all-yeezy-colorways-guide/).
 
