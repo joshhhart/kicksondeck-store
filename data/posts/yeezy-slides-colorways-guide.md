@@ -1,10 +1,10 @@
 ---
-title: Every Yeezy Slide Colorway, Explained (2026 Guide)
+title: All 16 Yeezy Slide Colorways, Ranked (2026 Guide)
 date: 2026-07-05
 tag: Guides
 read: 5 min read
-excerpt: From Onyx to Enflame Orange to the restocked Glow Green — the full map of Yeezy Slide colorways and which one earns a spot in your daily rotation.
-description: A complete, plain-English guide to every major Yeezy Slide colorway — Onyx, Pure, Ochre, Enflame Orange, Resin and the restocked runs — with styling notes for each.
+excerpt: From Onyx to Enflame Orange to the restocked Glow Green — all 16 Yeezy Slide colorways ranked and explained, sorted by which one earns a spot in your daily rotation.
+description: All 16 Yeezy Slide colorways ranked and explained — Onyx, Pure, Ochre, Enflame Orange, Resin and the restocked runs — with styling notes for each.
 products: [onyx-yz-slide, pure-restock-yz-slide, ochre-yz-slide, enflame-orange-yz-slide]
 ---
 
