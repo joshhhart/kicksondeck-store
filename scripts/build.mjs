@@ -832,6 +832,10 @@ const REDIRECTS = {
   "blogs/news/discover-the-ultimate-sneaker-experience-the-iconic-yeezy-boost-350-at-kicksondeck": "/collection/350-v2/",
   "blogs/news/the-ultimate-guide-to-yeezy-boost-350-adidas-x-kanye-wests-streetwear-revolution": "/blog/best-yeezy-350-v2-2026/",
   "products/automatic-liquid-discharge-shoe-brush": "/product/shoe-brush-with-automatic-liquid-dispenser/",
+  "blogs/news/kanye-wests-yeezy-brand-a-2025-independent-journey": "/blog/",
+  "blogs/news/unveiling-the-yeezy-boost-350-a-revolution-in-sneaker-fashion-with-kanye-west-adidas-shop-now-at-kicksondeck-store": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/unlock-the-hype-why-yeezy-boost-350s-dominate-sneaker-culture-your-guide-to-comfort-style-and-exclusivity-on-kicksondeck": "/blog/best-yeezy-350-v2-2026/",
+  "blogs/news/unraveling-the-iconic-magic-why-adidas-yeezy-boost-350s-are-a-must-have-for-sneaker-enthusiasts": "/blog/best-yeezy-350-v2-2026/",
 };
 for (const [from, to] of Object.entries(REDIRECTS)) {
   write(`${from}/index.html`, `<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<title>Redirecting… — Kicks on Deck</title>\n<link rel="canonical" href="${ORIGIN}${to}">\n<meta http-equiv="refresh" content="0; url=${to}">\n<meta name="robots" content="noindex,follow">\n</head>\n<body style="background:#0a0a0b;color:#f5f5f5;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0">\n<p>Moved to <a href="${to}" style="color:#c6ff2e">${to}</a>&hellip;</p>\n<script>location.replace(${JSON.stringify(to)});</script>\n</body></html>`);
