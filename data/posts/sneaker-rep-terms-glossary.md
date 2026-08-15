@@ -1,5 +1,6 @@
 ---
 title: Sneaker Rep Terms Glossary — What "1:1", "OG", and "Batch" Actually Mean
+seoTitle: Rep Sneaker Terms Glossary — 1:1, OG, Batch, PK, UA
 date: 2026-07-05
 tag: Explainers
 read: 5 min read

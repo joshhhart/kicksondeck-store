@@ -12,8 +12,24 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const money = (n) => "$" + Number(n || 0).toLocaleString("en-US");
 
-  /* ---------- analytics (GA4) + first-party data endpoint ---------- */
+  /* ---------- analytics (GA4) + first-party data endpoint ----------
+     GA4's ecommerce reports only populate from the standard event shape:
+     { currency, value, items: [{ item_id, item_name, price, quantity, ... }] }.
+     These events previously sent flat item_id/item_name params, so add_to_cart
+     and begin_checkout fired but produced no funnel — which is exactly the
+     data you need to tell "nobody visits" apart from "everyone bounces at the
+     size grid". gaItem() normalises a cart line into that shape. */
   const track = (name, params) => { try { if (window.gtag) window.gtag("event", name, params || {}); } catch {} };
+  const gaItem = (c, i) => ({
+    item_id: c.variantId || c.id,
+    item_name: c.name,
+    item_variant: c.size || undefined,
+    item_category: c.collection || undefined,
+    price: Number(c.price) || 0,
+    quantity: c.qty || 1,
+    index: i,
+  });
+  const gaCart = () => cart.map(gaItem);
   async function postData(path, payload) {
     if (!DATA_EP) return { ok: false, skipped: true };
     try {
@@ -33,7 +49,7 @@
     if (found) found.qty += item.qty || 1;
     else cart.push({ ...item, qty: item.qty || 1 });
     saveCart();
-    track("add_to_cart", { currency: "USD", value: item.price, item_id: key, item_name: item.name });
+    track("add_to_cart", { currency: "USD", value: (item.price || 0) * (item.qty || 1), items: [gaItem(item, 0)] });
     toast("Added to bag", item.name);
     openCart();
   }
@@ -41,10 +57,15 @@
     const it = cart.find((c) => (c.variantId || c.id) === key);
     if (!it) return;
     it.qty += delta;
-    if (it.qty <= 0) cart = cart.filter((c) => (c.variantId || c.id) !== key);
+    if (it.qty <= 0) { const gone = { ...it, qty: 1 }; cart = cart.filter((c) => (c.variantId || c.id) !== key); track("remove_from_cart", { currency: "USD", value: gone.price, items: [gaItem(gone, 0)] }); }
     saveCart();
   }
-  function removeItem(key) { cart = cart.filter((c) => (c.variantId || c.id) !== key); saveCart(); }
+  function removeItem(key) {
+    const it = cart.find((c) => (c.variantId || c.id) === key);
+    if (it) track("remove_from_cart", { currency: "USD", value: it.price * it.qty, items: [gaItem(it, 0)] });
+    cart = cart.filter((c) => (c.variantId || c.id) !== key);
+    saveCart();
+  }
   const subtotal = () => cart.reduce((s, c) => s + c.price * c.qty, 0);
   const count = () => cart.reduce((s, c) => s + c.qty, 0);
 
@@ -86,7 +107,10 @@
 
   /* ---------- drawer / overlay ---------- */
   const overlay = $("#overlay"), drawer = $("#cart-drawer");
-  function openCart() { overlay?.classList.add("open"); drawer?.classList.add("open"); document.body.style.overflow = "hidden"; }
+  function openCart() {
+    overlay?.classList.add("open"); drawer?.classList.add("open"); document.body.style.overflow = "hidden";
+    if (cart.length) track("view_cart", { currency: "USD", value: subtotal(), items: gaCart() });
+  }
   function closeCart() { overlay?.classList.remove("open"); drawer?.classList.remove("open"); if (!searchOpen) document.body.style.overflow = ""; }
   $("#cart-open")?.addEventListener("click", openCart);
   $("#cart-close")?.addEventListener("click", closeCart);
@@ -104,7 +128,7 @@
     if (!cart.length) return;
     const co = CFG.checkout || {};
     localStorage.setItem("kod_pending_order", JSON.stringify({ items: cart, subtotal: subtotal(), at: Date.now() }));
-    track("begin_checkout", { currency: "USD", value: subtotal(), items: count() });
+    track("begin_checkout", { currency: "USD", value: subtotal(), items: gaCart() });
 
     // Stripe via serverless endpoint — builds a real Checkout Session from the bag.
     if (co.mode === "stripe" && co.endpoint) {
@@ -122,6 +146,10 @@
         if (res.ok && data.url) { window.location.href = data.url; return; }
         throw new Error(data.error || ("HTTP " + res.status));
       } catch (err) {
+        // A silent checkout failure is indistinguishable from "nobody wanted
+        // to buy" in the analytics. Report it so a broken Worker, a CORS
+        // change or an expired Stripe key surfaces as an event, not a mystery.
+        track("checkout_error", { message: String(err && err.message || err).slice(0, 120), value: subtotal() });
         console.error("Checkout error:", err);
         btn.disabled = false; btn.innerHTML = orig;
         toast("Checkout unavailable — opening email order");
@@ -147,24 +175,60 @@
     history.replaceState(null, "", location.pathname + (qs ? "?" + qs : ""));
   })();
 
+  /* ---------- delivery estimate ----------
+     "7–14 business days" is an abstraction people have to do arithmetic on.
+     A dated window ("arrives Aug 26 – Sep 4") is the single line that answers
+     the question every shopper actually has, so it's computed live from the
+     policy numbers baked into the markup rather than frozen at build time. */
+  (() => {
+    const el = $(".pdp-eta"); if (!el) return;
+    const addBiz = (from, days) => {
+      const d = new Date(from);
+      let left = days;
+      while (left > 0) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 6) left--; }
+      return d;
+    };
+    const n = (k, f) => { const v = parseInt(el.dataset[k], 10); return Number.isFinite(v) ? v : f; };
+    const dispatch = n("etaDispatch", 2), lo = n("etaMin", 7), hi = n("etaMax", 14);
+    const fmt = (d) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    const now = new Date();
+    const from = addBiz(now, dispatch + lo), to = addBiz(now, dispatch + hi);
+    const svg = el.querySelector("svg");
+    el.innerHTML = (svg ? svg.outerHTML : "") +
+      ` <span>Order today — <strong>arrives ${fmt(from)} – ${fmt(to)}</strong> to most US addresses. Dispatched within ${dispatch * 24}h with tracking. <a href="/shipping/">Shipping details</a></span>`;
+  })();
+
   /* ---------- PDP size + add ---------- */
   const pdp = $("#pdp-data");
   if (pdp) {
     const data = JSON.parse(pdp.textContent);
-    track("view_item", { currency: "USD", value: data.price, item_id: data.id, item_name: data.name });
+    track("view_item", { currency: "USD", value: data.price, items: [gaItem({ id: data.id, name: data.name, price: data.price, collection: data.collection, qty: 1 }, 0)] });
     let selected = null;
     const warn = $("#size-warn");
+    const addBtn = $("#add-btn");
     $$(".size-btn").forEach((btn) => btn.addEventListener("click", () => {
       $$(".size-btn").forEach((b) => b.classList.remove("selected"));
       btn.classList.add("selected");
       selected = { variantId: btn.dataset.vid, size: btn.dataset.size, price: Number(btn.dataset.price) };
       warn?.classList.remove("show");
+      // Picking a size is the strongest pre-purchase intent signal on the site.
+      // Tracking it separates "never got interested" from "got all the way to
+      // choosing a size and still left" — two completely different problems.
+      track("select_size", { item_id: data.id, item_name: data.name, size: selected.size });
+      if (addBtn) addBtn.textContent = `Add to bag — ${selected.size} · ${money(selected.price)}`;
     }));
-    $("#add-btn")?.addEventListener("click", () => {
+    addBtn?.addEventListener("click", () => {
       const variants = data.variants || [];
-      if (variants.length > 1 && !selected) { warn?.classList.add("show"); return; }
+      if (variants.length > 1 && !selected) {
+        warn?.classList.add("show");
+        track("size_required", { item_id: data.id, item_name: data.name });
+        // Take them to the grid rather than leaving the warning off-screen —
+        // on mobile the sticky button sits well below the sizes.
+        document.querySelector(".size-grid")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
       const v = selected || { variantId: variants[0]?.id, size: variants[0]?.size || "", price: data.price };
-      addToCart({ id: data.id, variantId: v.variantId, slug: data.slug, name: data.name, size: v.size, price: v.price, image: data.image });
+      addToCart({ id: data.id, variantId: v.variantId, slug: data.slug, name: data.name, size: v.size, price: v.price, image: data.image, collection: data.collection });
     });
   }
 
@@ -236,9 +300,14 @@
   $$("#mobile-nav a").forEach((a) => a.addEventListener("click", () => { mnav?.classList.remove("open"); document.body.style.overflow = ""; }));
 
   /* ---------- reveal on scroll ---------- */
+  // threshold 0 + a small negative bottom margin, NOT a percentage threshold:
+  // a ratio threshold silently fails on tall containers (the PDP info column is
+  // ~2200px, so 12% of it is 264px and it stayed invisible while clearly on
+  // screen, leaving a black void under the product image). Triggering on first
+  // intersection reveals correctly at any element height.
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  }, { threshold: 0, rootMargin: "0px 0px -60px 0px" });
   $$(".reveal").forEach((el) => io.observe(el));
 
   /* ---------- keyboard ---------- */
@@ -452,6 +521,23 @@
     });
   }
 
+  /* ---------- returning-visitor cart nudge ----------
+     The bag survives in localStorage, but a shopper who comes back a day later
+     gets no signal that it's still there — the badge is a small number in the
+     corner. One quiet toast recovers carts that would otherwise just sit. */
+  (() => {
+    if (!cart.length) return;
+    const KEY = "kod_cart_nudged";
+    const last = Number(localStorage.getItem(KEY) || 0);
+    if (Date.now() - last < 6 * 3600e3) return; // at most once every 6 hours
+    if (document.querySelector("#pdp-data") && count() === 1) return; // mid-shop, not returning
+    localStorage.setItem(KEY, String(Date.now()));
+    setTimeout(() => {
+      toast(`Still in your bag: ${count()} item${count() > 1 ? "s" : ""} · ${money(subtotal())}`);
+      track("cart_reminder_shown", { value: subtotal(), items: count() });
+    }, 2500);
+  })();
+
   renderCart();
 })();
 
@@ -465,11 +551,21 @@
   // showcase is a fixed blur/fade, no scroll-driven motion).
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   if (navigator.connection && navigator.connection.saveData) return;
+  // Skip the 3D showcase entirely on slow connections — model-viewer plus the
+  // GLB is several hundred KB of third-party payload competing with the hero
+  // image for the LCP, and the static hero it falls back to is already good.
+  var conn = navigator.connection;
+  if (conn && /(^|-)2g$/.test(conn.effectiveType || "")) return;
 
-  var script = document.createElement("script");
-  script.type = "module";
-  script.src = "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
-  document.head.appendChild(script);
+  // Load the viewer once the browser is idle so it never delays first paint.
+  var boot = function () {
+    var script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
+    document.head.appendChild(script);
+  };
+  if (window.requestIdleCallback) requestIdleCallback(boot, { timeout: 2500 });
+  else setTimeout(boot, 1200);
 
   var shoe = hero.querySelector(".hero-shoe");
   var stage = hero.querySelector(".hero-stage");

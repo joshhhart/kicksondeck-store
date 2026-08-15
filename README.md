@@ -17,6 +17,10 @@ collection/<slug>/          per-collection grids (350-v2, foam-rnnr, slides, acc
 product/<slug>/             one static page per product (SEO + JSON-LD)
 assets/styles.css           design system
 assets/app.js               cart (localStorage), drawer, search, size select, checkout
+faq/ shipping/ returns/     trust + policy pages, authored in data/pages/*.md
+size-guide/ about/ contact/
+privacy/ terms/
+data/pages/*.md             markdown source for the pages above ({{TOKENS}} -> site.config.json)
 data/products.json          full synced catalog (source of truth for the build)
 data/catalog.json           slim index for instant search
 scripts/sync-ghl.mjs        GHL -> data/products.json
@@ -49,6 +53,31 @@ card checkout:**
 3. Put that URL in `site.config.json` → `checkout.ghlStoreUrl`, keep `mode: "ghl"`, rebuild.
 
 Orders, customers, fulfillment, and shipping then all flow back into GHL.
+
+## Shipping & returns claims — edit in ONE place
+
+Every shipping/returns promise on the site (the policy pages, the PDP delivery
+estimate, the marquee, the cart drawer, and the `shippingDetails` +
+`hasMerchantReturnPolicy` in Product JSON-LD that Google reads) resolves from
+`site.config.json` → `policy`:
+
+```json
+"policy": {
+  "dispatchHours": 48,       // order -> label out the door
+  "transitMinDays": 7,       // business days in transit AFTER dispatch
+  "transitMaxDays": 14,
+  "returnDays": 7,           // returns window from delivery
+  "shipCountries": "United States & Canada"
+}
+```
+
+Change a number, run `node scripts/build.mjs`, and every surface agrees. Do not
+hard-code a delivery time or returns window anywhere else — that is how the site
+ended up promising "free shipping over $150" in a blog post while the header
+said free on every order.
+
+**These are published promises and Google ingests them as merchant data — keep
+them true to what actually happens.**
 
 ## Custom domain (Namecheap)
 

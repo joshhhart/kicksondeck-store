@@ -1,5 +1,6 @@
 ---
 title: How to Clean Yeezy Foam Runners & Slides (Without Wrecking the Foam)
+seoTitle: How to Clean Yeezy Foam Runners & Slides
 date: 2026-07-04
 tag: Care
 read: 3 min read
