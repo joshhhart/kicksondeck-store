@@ -24,5 +24,14 @@
     "instagram": "https://www.instagram.com/kcksondeck",
     "tiktok": "",
     "facebook": "https://www.facebook.com/110211235322460"
+  },
+  "policy": {
+    "dispatchHours": 48,
+    "transitMinDays": 7,
+    "transitMaxDays": 14,
+    "returnDays": 7,
+    "shipCountries": "United States & Canada",
+    "freeShippingLine": "Free shipping on every order (US & Canada)",
+    "_note": "SINGLE SOURCE OF TRUTH for every shipping/returns claim on the site — the shipping and returns pages, the PDP delivery estimate, Product JSON-LD shippingDetails + hasMerchantReturnPolicy, the marquee and the cart drawer all read from here. Change a number once, rebuild, and every surface agrees. transitMin/MaxDays = business days in transit AFTER dispatch. OWNER: confirm these four numbers match what you actually do — they are published promises and Google reads them as merchant data."
   }
 }

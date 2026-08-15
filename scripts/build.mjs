@@ -18,6 +18,16 @@ const DOMAIN = CFG.brand.domain;
 const ORIGIN = `https://${DOMAIN}`;
 const AN = CFG.analytics || {};
 const SOCIAL = CFG.social || {};
+// Every shipping/returns promise on the site resolves from here (see
+// site.config.json -> policy). One edit updates the policy pages, the PDP
+// delivery estimate, the marquee, the cart drawer and the Product JSON-LD
+// together, so the site can never contradict itself the way it used to
+// ("free shipping over $150" in a blog post vs "free on every order" sitewide).
+const POLICY = Object.assign({
+  dispatchHours: 48, transitMinDays: 7, transitMaxDays: 14, returnDays: 7,
+  shipCountries: "United States & Canada",
+  freeShippingLine: "Free shipping on every order (US & Canada)",
+}, CFG.policy || {});
 const HERO_IMG = "/assets/hero-350.webp";
 const HERO_GLB = "/assets/3d/zebra-350.glb";
 
@@ -33,6 +43,15 @@ const isReflective = (s = "") => /reflective/i.test(s) && !/non[\s-]?reflective/
 const money = (n) => "$" + Number(n || 0).toLocaleString("en-US");
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const priceLabel = (p) => (p.minPrice === p.maxPrice ? money(p.minPrice) : `From ${money(p.minPrice)}`);
+// Google truncates the SERP title around 60–65 characters. Half the blog
+// titles were being pushed past that purely by the " | Kicks on Deck" suffix,
+// which cost the brand name AND the end of the headline. Append the suffix
+// only when it fits; posts whose own headline is already too long carry a
+// shorter `seoTitle` in their frontmatter.
+const brandedTitle = (t = "") => {
+  const full = `${t} | Kicks on Deck`;
+  return full.length <= 62 ? full : t;
+};
 const trimDesc = (s = "", max = 155) => {
   if (s.length <= max) return s;
   const cut = s.slice(0, max);
@@ -69,6 +88,139 @@ function pdpDesc(html) {
   return s.trim();
 }
 
+/* ---------------- product copy normalisation ----------------
+   The GHL catalogue is a supplier feed: shouty scraped ad copy in ALL CAPS with
+   emoji, e.g. "EXPERIENCE THE CAPTIVATING ADIDAS YEEZY BOOST 350 V2 ANTLIA".
+   That text was being used verbatim as the on-page description AND as the meta
+   description on 82 of 94 PDPs, which made every SERP snippet look like spam
+   and read as scraped, duplicate content to Google. We keep the factual bullets
+   (materials, what's in the box, release history) and generate a clean, unique
+   lead paragraph per product from real attributes. */
+
+const KEEP_CAPS = new Set(["US", "EU", "UK", "CM", "V2", "V1", "YZ", "RNNR", "QC", "TPU", "EVA", "SPLY", "SPLY-350", "3D", "1:1", "&", "DIY", "MX", "UV"]);
+const stripEmoji = (s = "") => s.replace(/[\u{1F000}-\u{1FAFF}\u{2190}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{2122}\u{00AE}]/gu, "").replace(/\s{2,}/g, " ").trim();
+// Sentence-case any run of two or more shouted words, leaving genuine acronyms
+// and model designations alone.
+function deShout(s = "") {
+  return s.replace(/[A-Z][A-Z0-9''’.\-/&]*(?:\s+[A-Z][A-Z0-9''’.\-/&]*)+/g, (run) => {
+    const words = run.split(/\s+/);
+    if (words.every((w) => KEEP_CAPS.has(w))) return run;
+    return words.map((w, i) => {
+      if (KEEP_CAPS.has(w)) return w;
+      if (/^\d/.test(w)) return w;
+      const lower = w.charAt(0) + w.slice(1).toLowerCase();
+      return i === 0 ? lower : lower.toLowerCase();
+    }).join(" ").replace(/^./, (c) => c.toUpperCase());
+  });
+}
+const cleanSentence = (s = "") => stripEmoji(deShout(String(s).replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ")))
+  .replace(/\s+([.,;:!?])/g, "$1")
+  // stripping inline tags leaves gaps inside quotes: `" SPLY-350 "` -> `"SPLY-350"`
+  .replace(/"\s+([^"]*?)\s+"/g, '"$1"')
+  .replace(/\s{2,}/g, " ")
+  .trim();
+
+// Colourway = the product name with the silhouette suffix removed
+// ("Ash Blue YZ Boost 350 V2" -> "Ash Blue").
+const colorway = (p) => (p.name || "")
+  .replace(/\s*YZ\s+(Boost\s*350\s*V2|Foam\s*RNNR|Slide)s?\b.*$/i, "")
+  .replace(/\((?:non[\s-]?)?reflective\)/gi, "")
+  .replace(/\s{2,}/g, " ").trim() || p.name;
+
+const SILHOUETTE = { "350-v2": "350 V2", "foam-rnnr": "Foam Runner", "slides": "Slide", accessories: "care essential" };
+
+// Factual bullets salvaged from the supplier HTML (materials, what's included,
+// release history), de-shouted and de-emoji'd.
+// Bullets like "Meticulously crafted with attention to detail" or "Unmatched
+// comfort and support prioritized" are pure ad copy: they say nothing, they
+// repeat across dozens of products, and to a quality classifier they read as
+// boilerplate. Keeping a bullet requires a concrete anchor — a material, a
+// component, a colour, a construction detail or a date — which is an allowlist
+// rather than an endless game of blocking new adjectives.
+const CONCRETE = /(primeknit|knit|mesh|textile|suede|leather|monofilament|upper|midsole|outsole|insole|footbed|sole|boost|eva|foam|rubber|cage|stripe|lace|laces|heel|toe|collar|vent|strap|tpu|translucent|reflective|semi[- ]?translucent|gum|colou?r|tonal|debut|unveil|releas|restock|retail|\b(19|20)\d{2}\b|\$\d)/i;
+const HYPE = /(must[- ]have|masterpiece|coveted|by storm|sneaker enthusiast|unparalleled|ultimate comfort|turn heads|elevate your|game[- ]chang|iconic status|statement piece|unleash|captivating|mesmeriz|meticulous|attention to detail|effortlessly|unmatched|prioritized|throughout the day|eye[- ]catching)/i;
+// The supplier feed writes as if it were the trademark holder ("Step into the
+// world of the adidas Yeezy Boost 350 V2", "Adidas' three-stripes trademark").
+// On a store that is explicitly and deliberately replica-labelled, that copy
+// implies an affiliation we don't have and must never suggest. Bullets that
+// assert brand ownership are dropped outright; incidental brand mentions in
+// otherwise factual bullets are rewritten to the silhouette name.
+const BRAND_CLAIM = /(three[- ]stripe|trademark|adidas['’]|by adidas|official|authentic|licensed|collaboration with)/i;
+const deBrand = (s = "") => s
+  .replace(/\badidas\s+yeezy\s+boost\s*350\s*v?2?\b/gi, "350 V2")
+  .replace(/\byeezy\s+boost\s*350\s*v?2?\b/gi, "350 V2")
+  .replace(/\byeezy\s+foam\s+(rnnr|runner)\b/gi, "Foam Runner")
+  .replace(/\byeezy\s+slides?\b/gi, "Slide")
+  .replace(/\b(adidas|yeezy)\b\s*/gi, "")
+  .replace(/\s{2,}/g, " ").trim();
+
+function specBullets(p) {
+  const out = [];
+  const seen = new Set();
+  for (const m of String(p.descHtml || "").matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)) {
+    const raw = cleanSentence(m[1]);
+    if (BRAND_CLAIM.test(raw)) continue;
+    const t = deBrand(raw);
+    const key = t.toLowerCase();
+    if (t.length < 12 || t.length > 190 || seen.has(key)) continue;
+    if (HYPE.test(t) || !CONCRETE.test(t)) continue;
+    seen.add(key);
+    out.push(t);
+    if (out.length >= 6) break;
+  }
+  return out;
+}
+
+// Deterministic per-slug variation so 82 generated leads don't read as one
+// template stamped 82 times (which is what thin/duplicate content detection
+// looks for), while every sentence stays factually derived from the product.
+const slugSeed = (slug = "") => { let s = 2166136261; for (let i = 0; i < slug.length; i++) { s ^= slug.charCodeAt(i); s = Math.imul(s, 16777619) >>> 0; } return s; };
+const pick = (arr, seed) => arr[seed % arr.length];
+
+function generatedLead(p) {
+  const cw = colorway(p);
+  const sil = SILHOUETTE[p.collection] || "silhouette";
+  const refl = isReflective(p.name);
+  const seed = slugSeed(p.slug);
+  if (p.collection === "accessories") {
+    return `${cw} — the unglamorous half of owning good sneakers. Keeps knit, foam and rubber looking like the day they arrived, which matters more on a pair you actually wear than on one that lives in the box.`;
+  }
+  const openers = [
+    `The ${cw} ${sil}, built 1:1 and priced like a shoe instead of an asset.`,
+    `${cw} — one of the ${sil} colourways people actually wear, not just collect.`,
+    `Our 1:1 take on the ${cw} ${sil}: same proportions, same palette, none of the resale tax.`,
+    `${cw} on the ${sil} last — a colourway that earns its place in a rotation.`,
+  ];
+  const middles = {
+    "350-v2": [
+      "Primeknit-style upper over a boost-grade midsole, with the cage and stripe placement matched to the original last.",
+      "Knit upper with the SPLY-350 stripe sitting where it should, on a translucent boost-grade sole that keeps its shape.",
+      "The weave, the cage and the sole geometry are matched stitch for stitch — the details that separate a top-tier build from a cheap one.",
+    ],
+    "foam-rnnr": [
+      "One-piece moulded EVA-blend foam — no laces, no seams, nothing to break in beyond a day or two of wear.",
+      "Sculpted foam shell with the full lattice of vents, light enough that you forget you put them on.",
+      "Moulded in a single piece, so there's no stitching to fail and no upper to crease.",
+    ],
+    slides: [
+      "Soft moulded foam footbed with the contoured arch that makes these the default indoor shoe for half the people who own them.",
+      "One-piece foam with a grippy sole and a footbed that softens to your step within a week.",
+      "Lightweight moulded foam — the pair that lives by the door and gets worn more than anything else you own.",
+    ],
+  };
+  const closers = [
+    `Every pair is inspected before dispatch, ships free to ${POLICY.shipCountries}, and comes with a ${POLICY.returnDays}-day window if the fit isn't right.`,
+    `Inspected by hand, dispatched within ${POLICY.dispatchHours} hours, free shipping and ${POLICY.returnDays} days to change your mind.`,
+    `Checked over before it leaves, shipped free, and returnable for ${POLICY.returnDays} days if you size it wrong.`,
+  ];
+  const parts = [
+    pick(openers, seed),
+    pick(middles[p.collection] || middles["350-v2"], seed >> 3),
+    refl ? "The reflective yarn stays invisible in daylight and lights up the whole upper under a flash or headlights." : "",
+  ].filter(Boolean).join(" ");
+  return `${parts}\n\n${pick(closers, seed >> 6)}`;
+}
+
 // Women's-fit guidance per collection — every shoe is unisex, but only the 350s
 // carry explicit W labels; Foam Runners and Slides are sized on the men's US scale.
 const FIT_NOTES = {
@@ -103,7 +255,15 @@ const I = {
   shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/></svg>',
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>',
   globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 0115-6.7L21 8M21 12a9 9 0 01-15 6.7L3 16"/><path d="M21 4v4h-4M3 20v-4h4"/></svg>',
 };
+
+// Card-network + wallet marks for the checkout trust row. Drawn as neutral
+// monochrome shapes (no third-party logo files to host or hotlink) — the point
+// is "cards and wallets are accepted", not brand reproduction.
+const PAY_BADGES = ["Visa", "Mastercard", "Amex", "Discover", "Apple&nbsp;Pay", "Google&nbsp;Pay", "Link"]
+  .map((n) => `<span class="pay-badge">${n}</span>`).join("");
 
 /* ---------------- chrome ---------------- */
 const navLinks = [
@@ -113,8 +273,24 @@ const navLinks = [
   { href: "/collection/accessories/", label: "Care" },
 ];
 
+// Trust surface. Every one of these used to be a dead link to /shop/ or a
+// bare mailto — the two things a first-time buyer checks before spending $149.
+const PAGE_NAV = [
+  { href: "/faq/", label: "FAQ" },
+  { href: "/shipping/", label: "Shipping" },
+  { href: "/returns/", label: "Returns" },
+  { href: "/size-guide/", label: "Size guide" },
+  { href: "/about/", label: "About" },
+  { href: "/contact/", label: "Contact" },
+];
+
 function head(opts) {
-  const { title, desc, canonical, ogImg = OG_DEFAULT, extraCss = "", ld = null } = opts;
+  const { title, desc, canonical, ogImg = OG_DEFAULT, extraCss = "", ld = null, ogType = "website", extraMeta = "", preloadImg = "" } = opts;
+  const FONT_HREF = "https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap";
+  // Google Fonts is render-blocking on the critical path and was the single
+  // biggest LCP cost on mobile. Load it async (print -> all on load) with a
+  // <noscript> fallback; --font-* already list system fallbacks so first paint
+  // is readable rather than invisible.
   return `<!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -123,7 +299,7 @@ function head(opts) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${canonical}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="${ogType}">
 <meta property="og:site_name" content="Kicks on Deck">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
@@ -131,11 +307,13 @@ function head(opts) {
 <meta property="og:url" content="${canonical}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0a0a0b">
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+${extraMeta}<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.shopify.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+${preloadImg ? `<link rel="preload" as="image" href="${preloadImg}" fetchpriority="high">\n` : ""}<link rel="preload" as="style" href="${FONT_HREF}">
+<link rel="stylesheet" href="${FONT_HREF}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="${FONT_HREF}"></noscript>
 <link rel="stylesheet" href="/assets/styles.css">
 ${extraCss}${analyticsTags()}
 <script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand, analytics: { ga4Id: AN.ga4Id || "", dataEndpoint: AN.dataEndpoint || "" } })};document.documentElement.classList.remove('no-js');</script>
@@ -162,11 +340,11 @@ function header(active = "") {
     <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Menu">${I.menu}</button>
   </div>
 </div></div></header>
-<div class="mobile-nav" id="mobile-nav">${navLinks.map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}<a href="/shop/">Search</a></div>`;
+<div class="mobile-nav" id="mobile-nav">${navLinks.map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}<a href="/quiz/">Find your pair</a><div class="mobile-nav-sub">${PAGE_NAV.map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}</div></div>`;
 }
 
 function marquee() {
-  const items = ["Free U.S. shipping on every order", "1:1 craftsmanship", "Every pair inspected", "Ships US & Canada", "7-day buyer protection", "New drops weekly"];
+  const items = [POLICY.freeShippingLine, "1:1 craftsmanship", "Every pair inspected", `Dispatched in ${POLICY.dispatchHours}h`, `${POLICY.returnDays}-day returns`, "Secure Stripe checkout"];
   const span = items.map((t) => `<span>${t}</span>`).join("");
   return `<div class="marquee" aria-hidden="true"><div class="marquee-track">${span}${span}</div></div>`;
 }
@@ -178,11 +356,18 @@ function drawerAndSearch() {
   <div class="drawer-head"><h3>Your Bag <span class="count" id="cart-head-count"></span></h3><button class="icon-btn" id="cart-close" aria-label="Close">${I.close}</button></div>
   <div class="drawer-body" id="cart-body"></div>
   <div class="drawer-foot" id="cart-foot" style="display:none">
+    <div class="cart-reassure">
+      <span>${I.truck} ${esc(POLICY.freeShippingLine)}</span>
+      <span>${I.refresh} ${esc(POLICY.returnDays)}-day returns if the fit is wrong</span>
+      <span>${I.lock} Card details go straight to Stripe — never to us</span>
+    </div>
     <div class="cart-row"><span>Subtotal</span><span class="mono" id="cart-subtotal">$0</span></div>
-    <div class="cart-row"><span>Shipping</span><span class="mono">Free (US &amp; CA)</span></div>
+    <div class="cart-row"><span>Shipping</span><span class="mono">Free</span></div>
     <div class="cart-row total"><span>Total</span><span class="mono" id="cart-subtotal-2"></span></div>
     <button class="btn btn-volt btn-block btn-lg" id="checkout-btn">Checkout ${I.arrow}</button>
-    <p class="cart-note">Secure checkout powered by Stripe.<br>Questions? <a href="mailto:${CFG.brand.email}">${CFG.brand.email}</a></p>
+    <p class="cart-promo">First order? Enter <strong class="mono">FIRSTPAIR</strong> at checkout for 10% off.</p>
+    <div class="pay-row" aria-label="Accepted payment methods">${PAY_BADGES}</div>
+    <p class="cart-note">Questions before you buy? <a href="/faq/">FAQ</a> · <a href="/size-guide/">Size guide</a> · <a href="mailto:${CFG.brand.email}">${CFG.brand.email}</a></p>
   </div>
 </aside>
 <div class="search-panel" id="search-panel" aria-label="Search">
@@ -208,12 +393,18 @@ function footer() {
       <p class="footer-blurb">Independent footwear for people who chase the silhouette, not the markup. Curated drops, 1:1 craftsmanship, free U.S. shipping.</p>
     </div>
     <div class="footer-col"><h5>Shop</h5>${collections.map((c) => `<a href="/collection/${c.slug}/">${c.title}</a>`).join("")}<a href="/shop/">All Styles</a></div>
-    <div class="footer-col"><h5>Support</h5><a href="mailto:${CFG.brand.email}">Contact</a><a href="/shop/">Sizing</a><a href="mailto:${CFG.brand.email}?subject=Order%20status">Track Order</a><a href="mailto:${CFG.brand.email}?subject=Returns">Returns</a></div>
-    <div class="footer-col"><h5>Connect</h5>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}${socialLink(SOCIAL.facebook, "Facebook")}<a href="/quiz/">Find your pair</a><a href="mailto:${CFG.brand.email}">Email</a></div>
+    <div class="footer-col"><h5>Help</h5><a href="/faq/">FAQ</a><a href="/size-guide/">Size guide</a><a href="/shipping/">Shipping</a><a href="/returns/">Returns &amp; exchanges</a><a href="mailto:${CFG.brand.email}?subject=Order%20status">Track order</a></div>
+    <div class="footer-col"><h5>Connect</h5><a href="/about/">About us</a><a href="/contact/">Contact</a>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}${socialLink(SOCIAL.facebook, "Facebook")}<a href="/quiz/">Find your pair</a></div>
+  </div>
+  <div class="footer-trust">
+    <span>${I.shield} ${esc(POLICY.returnDays)}-day returns</span>
+    <span>${I.truck} ${esc(POLICY.freeShippingLine)}</span>
+    <span>${I.lock} Secure checkout by Stripe</span>
+    <span>${I.spark} Every pair inspected before dispatch</span>
   </div>
   <div class="footer-bottom">
     <p>© ${new Date().getFullYear()} Kicks on Deck · ${esc(CFG.brand.city)}</p>
-    <div style="display:flex;gap:18px"><a href="/shop/">Privacy</a><a href="/shop/">Terms</a></div>
+    <div style="display:flex;gap:18px"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a></div>
   </div>
   <p class="footer-disclaimer">Kicks on Deck sells independently produced footwear inspired by iconic silhouettes. We are not affiliated with, authorized by, or endorsed by adidas, Yeezy, Nike, or any trademark holder; all such marks belong to their respective owners. Products are marketed as replica ("rep") versions.</p>
   <div class="footer-giant" aria-hidden="true">ON DECK</div>
@@ -272,8 +463,8 @@ function homePage() {
 <section class="stats">
   <div class="stat reveal"><div class="num"><span class="volt" data-countup="${products.length}">0</span></div><div class="lbl">Styles in stock</div></div>
   <div class="stat reveal" data-d="1"><div class="num">1:1</div><div class="lbl">Craftsmanship</div></div>
-  <div class="stat reveal" data-d="2"><div class="num"><span data-countup="48">0</span><span class="volt">h</span></div><div class="lbl">Dispatch window</div></div>
-  <div class="stat reveal" data-d="3"><div class="num"><span data-countup="7">0</span>d</div><div class="lbl">Buyer protection</div></div>
+  <div class="stat reveal" data-d="2"><div class="num"><span data-countup="${POLICY.dispatchHours}">0</span><span class="volt">h</span></div><div class="lbl">Dispatch window</div></div>
+  <div class="stat reveal" data-d="3"><div class="num"><span data-countup="${POLICY.returnDays}">0</span>d</div><div class="lbl">Returns window</div></div>
 </section>
 
 <section class="section container">
@@ -310,6 +501,7 @@ function homePage() {
   </div>
 </section>
 
+${trustBand()}
 ${quizCTA()}
 ${voteWidget()}
 ${captureBand()}`;
@@ -349,25 +541,39 @@ function gridPage({ title, h1, eyebrow, list, canonical, active, intro, showFilt
   <div class="empty-state" id="empty-state" style="display:none">No styles in this collection yet.</div>
 </section>`;
   const crumb = title.split(/[—|]/)[0].trim();
-  const gridLd = {
-    "@context": "https://schema.org", "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${ORIGIN}/` },
-      { "@type": "ListItem", position: 2, name: crumb, item: canonical },
-    ],
-  };
-  return layout({ headOpts: { title, desc: intro || h1, canonical, ld: gridLd }, active, body });
+  // ItemList lets Google read the full grid as a product listing rather than
+  // as an anonymous page of links, and CollectionPage names the page type.
+  const gridLd = [
+    crumbLd([{ name: "Home", url: `${ORIGIN}/` }, { name: crumb, url: canonical }]),
+    {
+      "@context": "https://schema.org", "@type": "CollectionPage",
+      name: crumb, url: canonical, description: intro || h1.replace(/<br>/g, " "),
+      isPartOf: { "@id": `${ORIGIN}/#website` },
+      mainEntity: {
+        "@type": "ItemList", numberOfItems: list.length,
+        itemListElement: list.slice(0, 60).map((p, i) => ({
+          "@type": "ListItem", position: i + 1, url: `${ORIGIN}/product/${p.slug}/`, name: p.name,
+        })),
+      },
+    },
+  ];
+  return layout({ headOpts: { title, desc: trimDesc(intro || h1.replace(/<br>/g, " ")), canonical, ld: gridLd, preloadImg: list[0]?.image || "" }, active, body });
 }
 
 function productPage(p) {
   const vs = variantList(p);
   const refl = isReflective(p.name);
   const acc = p.collection === "accessories";
-  const copyOverride = productCopy[p.slug];
-  const descPlain = copyOverride ? copyOverride.replace(/\s+/g, " ").trim() : p.descText;
-  const desc = copyOverride ? copyOverride.split(/\n\n+/).map((t) => `<p>${esc(t.trim())}</p>`).join("") : (pdpDesc(p.descHtml) || `<p>${esc(p.descText)}</p>`);
+  // Hand-written copy wins; otherwise generate a clean lead from attributes.
+  // Either way the shouty supplier paragraph never reaches the page or the
+  // meta description again — only its factual bullets survive, de-shouted.
+  const leadText = productCopy[p.slug] || generatedLead(p);
+  const bullets = specBullets(p);
+  const descPlain = trimDesc(cleanSentence(`${leadText} ${bullets.join(". ")}`), 600).replace(/…$/, "");
+  const desc = leadText.split(/\n\n+/).map((t) => `<p>${esc(t.trim())}</p>`).join("")
+    + (bullets.length ? `<h3>Spec</h3><ul>${bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : "");
   const sectionLabel = acc ? "Select option" : "Select size";
-  const pdata = { id: p.id, slug: p.slug, name: p.name, image: p.image, price: p.minPrice, variants: vs.map((v) => ({ id: v.id, size: v.size })) };
+  const pdata = { id: p.id, slug: p.slug, name: p.name, image: p.image, price: p.minPrice, collection: colTitle(p.collection), variants: vs.map((v) => ({ id: v.id, size: v.size })) };
   const related = products.filter((x) => x.collection === p.collection && x.id !== p.id).slice(0, 4);
   const single = vs.length <= 1;
   const GUIDES_BY_COLLECTION = {
@@ -377,17 +583,74 @@ function productPage(p) {
   };
   const guides = (GUIDES_BY_COLLECTION[p.collection] || []).map((s) => posts.find((post) => post.slug === s)).filter(Boolean);
 
-  const ld = {
-    "@context": "https://schema.org", "@type": "Product", name: p.name, image: [p.image], description: descPlain,
-    brand: { "@type": "Brand", name: "Kicks on Deck" }, category: colTitle(p.collection),
-    offers: { "@type": "Offer", priceCurrency: p.currency || "USD", price: p.minPrice, availability: p.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock", url: `${ORIGIN}/product/${p.slug}/` },
+  /* Product JSON-LD, built for Google's free merchant listings rather than the
+     bare minimum. Previously this carried name/image/description/brand and a
+     price-only Offer, which is not enough to be eligible: Google wants an
+     identifier, condition, shipping cost + delivery time, and a return policy,
+     and it will show shipping/returns annotations in the SERP once they're
+     present. No aggregateRating — the store has no reviews yet, and inventing
+     them is both a manual-action risk and a lie. */
+  const ccy = p.currency || "USD";
+  const validUntil = new Date(Date.now() + 330 * 864e5).toISOString().slice(0, 10);
+  const shipRegion = [{ "@type": "DefinedRegion", addressCountry: "US" }, { "@type": "DefinedRegion", addressCountry: "CA" }];
+  const offerBase = {
+    priceCurrency: ccy,
+    availability: p.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    itemCondition: "https://schema.org/NewCondition",
+    url: `${ORIGIN}/product/${p.slug}/`,
+    priceValidUntil: validUntil,
+    // Inlined rather than an @id reference — the #org node only exists on the
+    // homepage, and merchant parsers read each product page standalone.
+    seller: { "@type": "Organization", name: "Kicks on Deck", url: `${ORIGIN}/` },
+    shippingDetails: {
+      "@type": "OfferShippingDetails",
+      shippingRate: { "@type": "MonetaryAmount", value: 0, currency: ccy },
+      shippingDestination: shipRegion,
+      deliveryTime: {
+        "@type": "ShippingDeliveryTime",
+        handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: Math.ceil(POLICY.dispatchHours / 24), unitCode: "DAY" },
+        transitTime: { "@type": "QuantitativeValue", minValue: POLICY.transitMinDays, maxValue: POLICY.transitMaxDays, unitCode: "DAY" },
+      },
+    },
+    hasMerchantReturnPolicy: {
+      "@type": "MerchantReturnPolicy",
+      applicableCountry: ["US", "CA"],
+      returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+      merchantReturnDays: POLICY.returnDays,
+      returnMethod: "https://schema.org/ReturnByMail",
+      returnFees: "https://schema.org/ReturnShippingFees",
+      merchantReturnLink: `${ORIGIN}/returns/`,
+    },
   };
+  const offers = p.minPrice === p.maxPrice
+    ? { "@type": "Offer", price: p.minPrice, ...offerBase }
+    : { "@type": "AggregateOffer", lowPrice: p.minPrice, highPrice: p.maxPrice, offerCount: vs.length, ...offerBase };
+  const ld = {
+    "@context": "https://schema.org", "@type": "Product",
+    "@id": `${ORIGIN}/product/${p.slug}/#product`,
+    name: p.name, image: [p.image], description: descPlain,
+    sku: p.id, mpn: p.slug,
+    brand: { "@type": "Brand", name: "Kicks on Deck" },
+    category: colTitle(p.collection),
+    color: colorway(p),
+    ...(acc ? {} : { audience: { "@type": "PeopleAudience", suggestedGender: "unisex" }, material: p.collection === "350-v2" ? "Knit textile upper, EVA-blend midsole" : "Moulded EVA-blend foam" }),
+    ...(vs.length > 1 ? { size: vs.map((v) => v.main) } : {}),
+    offers,
+  };
+  // Objection-handling FAQ, mirrored into FAQPage markup. These are the exact
+  // four questions that stop a first-time replica buyer at the size grid.
+  const pdpFaq = acc ? [] : [
+    { q: `Are these authentic ${colTitle(p.collection)}s?`, a: `No. This is an independently produced 1:1 replica and we say so on every page — Kicks on Deck is not affiliated with, authorized by or endorsed by adidas, Yeezy or any trademark holder. You are buying the silhouette and the build quality, at ${money(p.minPrice)} instead of resale.` },
+    { q: `What size should I order in the ${SILHOUETTE[p.collection] || "this style"}?`, a: p.collection === "350-v2" ? "The 350 V2 fits close to true to size — take your normal US size, and go up a half if you have wide feet. Women's sizes are labelled W." : "This style runs big and only comes in whole sizes — size down one from your normal US size. If you're between sizes, take the smaller one." },
+    { q: "How long will delivery take?", a: `Dispatched within ${POLICY.dispatchHours} hours with tracking emailed at dispatch, then ${POLICY.transitMinDays}–${POLICY.transitMaxDays} business days in transit. Shipping is free to ${POLICY.shipCountries}.` },
+    { q: "What if they don't fit?", a: `You have ${POLICY.returnDays} days from delivery to return an unworn pair or swap it for another size. Email ${CFG.brand.email} with your order number and we send the return address the same day.` },
+  ];
 
   const body = `
 <section class="container pdp">
   <div class="breadcrumb"><a href="/">Home</a> / <a href="/collection/${p.collection}/">${colTitle(p.collection)}</a> / <span>${esc(p.name)}</span></div>
   <div class="pdp-grid">
-    <div class="pdp-media reveal">${refl ? `<span class="badge volt floatbadge">Reflective ✦</span>` : ""}<img src="${p.image}" alt="${esc(p.name)}" width="900" height="900"></div>
+    <div class="pdp-media reveal">${refl ? `<span class="badge volt floatbadge">Reflective ✦</span>` : ""}<img src="${p.image}" alt="${esc(p.name)} — ${esc(colTitle(p.collection))} in ${esc(colorway(p))}, side profile" width="900" height="900" fetchpriority="high" decoding="async"></div>
     <div class="pdp-info reveal" data-d="1">
       <span class="eyebrow">${colTitle(p.collection)}${refl ? " · Reflective" : ""}</span>
       <h1>${esc(p.name)}</h1>
@@ -403,16 +666,36 @@ function productPage(p) {
         <div class="size-warn" id="size-warn">Please select a ${acc ? "option" : "size"} first</div>
         <button class="btn btn-volt btn-block btn-lg" id="add-btn">Add to bag — ${money(p.minPrice)}</button>
       </div>
+      <p class="pdp-eta" data-eta-dispatch="${Math.ceil(POLICY.dispatchHours / 24)}" data-eta-min="${POLICY.transitMinDays}" data-eta-max="${POLICY.transitMaxDays}">
+        ${I.truck} Order today — dispatched within ${POLICY.dispatchHours}h, then ${POLICY.transitMinDays}–${POLICY.transitMaxDays} business days in transit.
+      </p>
       <div class="trust-row">
-        <div class="trust">${I.shield} Buyer protection</div>
-        <div class="trust">${I.truck} Ships in 48h</div>
-        <div class="trust">${I.globe} Free U.S. shipping</div>
+        <div class="trust">${I.globe} ${esc(POLICY.freeShippingLine)}</div>
+        <div class="trust">${I.refresh} ${esc(POLICY.returnDays)}-day returns</div>
+        <div class="trust">${I.shield} Inspected before dispatch</div>
+        <div class="trust">${I.lock} Secure Stripe checkout</div>
       </div>
+      <div class="pay-row" aria-label="Accepted payment methods">${PAY_BADGES}</div>
+      ${acc ? "" : `<details class="pdp-acc">
+        <summary>Size chart &amp; how these fit</summary>
+        <div class="pdp-acc-body">
+          <p>${p.collection === "350-v2" ? "The 350 V2 fits close to true to size. Take your normal US size; go up a half if you're wide-footed. Women's sizes are labelled <strong>W</strong>." : "This style runs big and comes in whole sizes only — <strong>size down one</strong> from your normal US. Between sizes, take the smaller one."}</p>
+          <div class="table-wrap"><table><thead><tr><th>US</th><th>UK</th><th>EU</th><th>CM</th></tr></thead><tbody>${
+            [[6, 5.5, 38.7, 24], [7, 6.5, 40, 25], [8, 7.5, 41.3, 26], [9, 8.5, 42.7, 27], [10, 9.5, 44, 28], [11, 10.5, 45.3, 29], [12, 11.5, 46.7, 30], [13, 12.5, 48, 31]]
+              .map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+          <p><a class="link-arrow" href="/size-guide/">Full size guide <span>${I.arrow}</span></a></p>
+        </div>
+      </details>`}
       <div class="pdp-details">
         <h2 class="pdp-details-h">The details</h2>
         <div class="pdp-desc">${desc}</div>
         ${guides.length ? `<div class="pdp-guides" style="margin-top:20px;font-family:var(--font-mono);font-size:.8rem"><span style="color:var(--muted)">Guides:</span> ${guides.map((g) => `<a class="link-arrow" href="/blog/${g.slug}/" style="margin-right:14px">${esc(g.meta.title || g.slug)}</a>`).join("")}</div>` : ""}
       </div>
+      ${pdpFaq.length ? `<div class="pdp-faq">
+        <h2 class="pdp-details-h">Before you buy</h2>
+        ${pdpFaq.map((f) => `<details class="pdp-acc"><summary>${esc(f.q)}</summary><div class="pdp-acc-body"><p>${esc(f.a)}</p></div></details>`).join("")}
+        <p class="pdp-faq-more">More answers on the <a href="/faq/">FAQ</a>, <a href="/shipping/">shipping</a> and <a href="/returns/">returns</a> pages.</p>
+      </div>` : ""}
     </div>
   </div>
   ${related.length ? `<div class="section" style="padding-bottom:40px"><div class="section-head"><h2 style="font-size:clamp(1.6rem,4vw,2.8rem)">More ${colTitle(p.collection)}</h2><a class="link-arrow" href="/collection/${p.collection}/">View all <span>${I.arrow}</span></a></div><div class="product-grid">${related.map((r, i) => card(r, i)).join("")}</div></div>` : ""}
@@ -423,10 +706,31 @@ function productPage(p) {
   { name: "Home", url: `${ORIGIN}/` },
   { name: colTitle(p.collection), url: `${ORIGIN}/collection/${p.collection}/` },
   { name: p.name, url: `${ORIGIN}/product/${p.slug}/` },
-]))}</script>`;
+]))}</script>
+${pdpFaq.length ? `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: pdpFaq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>\n` : ""}`;
+
+  // Title carries the searched terms (colourway + silhouette + "rep") and the
+  // price, so the SERP entry answers "how much" before the click. Meta
+  // description is written for CTR — benefit, price, shipping, returns — rather
+  // than being the first 155 characters of scraped supplier copy.
+  // Don't repeat "Reflective" when the colourway name already carries it
+  // (e.g. "Static Black Reflective"), which pushed those titles past the SERP
+  // truncation point for no added keyword.
+  const reflSuffix = refl && !/reflective/i.test(colorway(p)) ? " · Reflective" : "";
+  const title = brandedTitle(acc
+    ? `${p.name} — ${money(p.minPrice)}`
+    : `${colorway(p)} ${SILHOUETTE[p.collection] || ""} Rep — ${money(p.minPrice)}${reflSuffix}`.replace(/\s+/g, " "));
+  const metaDesc = acc
+    ? trimDesc(`${p.name} — ${money(p.minPrice)}. ${POLICY.freeShippingLine}, dispatched in ${POLICY.dispatchHours}h.`)
+    : trimDesc(`1:1 rep ${colorway(p)} ${SILHOUETTE[p.collection] || ""} at ${money(p.minPrice)} — no resale markup. ${vs.length > 1 ? `Sizes ${vs[0].main}–${vs[vs.length - 1].main}. ` : ""}Free shipping, ${POLICY.returnDays}-day returns. Shop now.`.replace(/\s+/g, " "));
 
   return layout({
-    headOpts: { title: `${p.name} — Kicks on Deck`, desc: trimDesc(descPlain) || `${p.name} — ${priceLabel(p)}. 1:1 craftsmanship, free U.S. shipping.`, canonical: `${ORIGIN}/product/${p.slug}/`, ogImg: p.image },
+    headOpts: {
+      title, desc: metaDesc,
+      canonical: `${ORIGIN}/product/${p.slug}/`,
+      ogImg: p.image, ogType: "product", preloadImg: p.image,
+      extraMeta: `<meta property="product:price:amount" content="${p.minPrice}">\n<meta property="product:price:currency" content="${ccy}">\n<meta property="product:availability" content="${p.inStock ? "in stock" : "out of stock"}">\n<meta property="og:image:alt" content="${esc(p.name)}">\n`,
+    },
     active: "",
     body,
   });
@@ -470,6 +774,31 @@ function captureBand() {
 </section>`;
 }
 
+// Homepage trust band. A first-time visitor to a replica store is running one
+// question — "am I going to get scammed" — and the answer used to live only in
+// a footer disclaimer. This answers it on the page they land on, and routes
+// them to the policy that covers their specific worry.
+function trustBand() {
+  const items = [
+    { i: I.globe, h: "Free shipping, no threshold", p: `Every order ships free to ${POLICY.shipCountries}, tracked, with the label out the door in ${POLICY.dispatchHours} hours.`, href: "/shipping/", cta: "Shipping details" },
+    { i: I.refresh, h: `${POLICY.returnDays} days to change your mind`, p: "Sizing is the reason almost every pair comes back. Send it back unworn and we refund or swap it, no argument.", href: "/returns/", cta: "Returns policy" },
+    { i: I.lock, h: "Checkout you can verify", p: "Card details go to Stripe's own hosted page — never to this site. Apple Pay, Google Pay and Link all work.", href: "/faq/", cta: "Read the FAQ" },
+    { i: I.shield, h: "We say it's a rep", p: "Openly replica-labelled, never sold as authentic. Compare ours against a retail pair yourself before you decide.", href: "/blog/rep-vs-real-yeezy-350-v2/", cta: "Rep vs real" },
+  ];
+  return `
+<section class="section container" style="padding-top:0">
+  <div class="section-head"><div><span class="eyebrow">No surprises</span><h2>How buying<br>here works</h2></div><a class="link-arrow" href="/faq/">All questions <span>${I.arrow}</span></a></div>
+  <div class="trust-band">
+    ${items.map((t, i) => `<a class="tb-card reveal" data-d="${i + 1}" href="${t.href}">
+      <span class="tb-ico">${t.i}</span>
+      <h3>${t.h}</h3>
+      <p>${t.p}</p>
+      <span class="tb-cta">${t.cta} ${I.arrow}</span>
+    </a>`).join("")}
+  </div>
+</section>`;
+}
+
 function quizCTA() {
   return `
 <section class="section container">
@@ -504,6 +833,18 @@ function mdToHtml(md) {
     if (/^[-*]\s+/.test(line)) { flush(); const it = []; while (i < lines.length && /^[-*]\s+/.test(lines[i])) { it.push(`<li>${mdInline(lines[i].replace(/^[-*]\s+/, ""))}</li>`); i++; } out.push(`<ul>${it.join("")}</ul>`); continue; }
     if (/^\d+\.\s+/.test(line)) { flush(); const it = []; while (i < lines.length && /^\d+\.\s+/.test(lines[i])) { it.push(`<li>${mdInline(lines[i].replace(/^\d+\.\s+/, ""))}</li>`); i++; } out.push(`<ol>${it.join("")}</ol>`); continue; }
     if (/^!\[[^\]]*\]\([^)]+\)\s*$/.test(line)) { flush(); out.push(`<figure>${mdInline(line)}</figure>`); i++; continue; }
+    // GFM pipe tables — size charts and policy timelines read far better as a
+    // table than as prose, and Google parses them for structured answers.
+    if (/^\s*\|.*\|\s*$/.test(line) && /^\s*\|[\s:|-]+\|\s*$/.test(lines[i + 1] || "")) {
+      flush();
+      const cells = (ln) => ln.trim().replace(/^\||\|$/g, "").split("|").map((c) => mdInline(c.trim()));
+      const head = cells(line);
+      i += 2;
+      const rows = [];
+      while (i < lines.length && /^\s*\|.*\|\s*$/.test(lines[i])) { rows.push(cells(lines[i])); i++; }
+      out.push(`<div class="table-wrap"><table><thead><tr>${head.map((c) => `<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
+      continue;
+    }
     para.push(line); i++;
   }
   flush();
@@ -739,7 +1080,72 @@ ${captureBand()}
   { name: p.meta.title || p.slug, url: `${ORIGIN}/blog/${p.slug}/` },
 ]))}</script>
 ${faqLd ? `<script type="application/ld+json">${JSON.stringify(faqLd)}</script>\n` : ""}`;
-  return layout({ headOpts: { title: `${p.meta.title} | Kicks on Deck`, desc: trimDesc(p.meta.description || p.excerpt), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p) }, active: "/blog/", body });
+  return layout({ headOpts: { title: brandedTitle(p.meta.seoTitle || p.meta.title), desc: trimDesc(p.meta.description || p.excerpt), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p) }, active: "/blog/", body });
+}
+
+/* ---------------- static trust / policy pages ----------------
+   data/pages/*.md -> /<slug>/. These exist because the store had no shipping,
+   returns, privacy, terms, FAQ, about or contact page at all — the footer's
+   "Privacy" and "Terms" links both pointed at /shop/. For a store that is
+   openly selling replicas, "where are the policies" is the first thing a
+   cautious buyer checks and the fastest way to lose them. Content is authored
+   in markdown with {{TOKENS}} so every number stays tied to site.config.json. */
+
+const PAGE_TOKENS = {
+  EMAIL: CFG.brand.email,
+  EMAILLINK: `mailto:${CFG.brand.email}`,
+  PHONE: CFG.brand.phone,
+  CITY: CFG.brand.city,
+  COUNT: String(products.length),
+  DISPATCH: String(POLICY.dispatchHours),
+  TRANSITMIN: String(POLICY.transitMinDays),
+  TRANSITMAX: String(POLICY.transitMaxDays),
+  RETURNDAYS: String(POLICY.returnDays),
+  COUNTRIES: POLICY.shipCountries,
+  FREESHIPLINE: POLICY.freeShippingLine,
+};
+const fillTokens = (s = "") => String(s).replace(/\{\{(\w+)\}\}/g, (m, k) => (k in PAGE_TOKENS ? PAGE_TOKENS[k] : m));
+
+const PAGES_DIR = path.join(ROOT, "data/pages");
+const pages = fs.existsSync(PAGES_DIR)
+  ? fs.readdirSync(PAGES_DIR).filter((f) => f.endsWith(".md"))
+      .map((f) => {
+        const raw = fillTokens(fs.readFileSync(path.join(PAGES_DIR, f), "utf8"));
+        const p = parsePost(raw, f.replace(/\.md$/, ""));
+        p.meta.updated = p.meta.updated || new Date().toISOString().slice(0, 10);
+        p.html = p.html.replace(/\{\{UPDATED\}\}/g, fmtDate(p.meta.updated));
+        return p;
+      })
+  : [];
+
+function staticPage(p) {
+  const url = `${ORIGIN}/${p.slug}/`;
+  const isFaq = p.slug === "faq";
+  const ld = [
+    crumbLd([{ name: "Home", url: `${ORIGIN}/` }, { name: p.meta.title || p.slug, url }]),
+    {
+      "@context": "https://schema.org",
+      "@type": isFaq ? "FAQPage" : p.slug === "contact" ? "ContactPage" : p.slug === "about" ? "AboutPage" : "WebPage",
+      name: p.meta.title, url, description: p.meta.description,
+      dateModified: p.meta.updated,
+      isPartOf: { "@id": `${ORIGIN}/#website` },
+      publisher: { "@id": `${ORIGIN}/#org` },
+      ...(isFaq && p.faq.length ? { mainEntity: p.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) } : {}),
+    },
+  ];
+  const body = `
+<section class="container shop-head">
+  <div class="breadcrumb"><a href="/">Home</a> / <span>${esc(p.meta.title || p.slug)}</span></div>
+  <span class="eyebrow">${esc(p.meta.eyebrow || "Info")}</span>
+  <h1>${p.meta.h1 || esc(p.meta.title || p.slug)}</h1>
+  <p class="page-updated">Last updated ${fmtDate(p.meta.updated)}</p>
+</section>
+<section class="container" style="padding-bottom:110px">
+  <div class="post-body doc-body">${p.html}</div>
+  <div class="doc-nav">${PAGE_NAV.filter((l) => l.href !== `/${p.slug}/`).map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}</div>
+</section>
+${captureBand()}`;
+  return layout({ headOpts: { title: brandedTitle(p.meta.seoTitle || p.meta.title), desc: trimDesc(p.meta.description || p.excerpt), canonical: url, ld }, active: "", body });
 }
 
 /* ---------------- quiz ---------------- */
@@ -770,12 +1176,29 @@ function write(rel, content) {
   fs.writeFileSync(full, content);
 }
 
+// Category-page intros carry the buying-guide language people actually search
+// ("do they run big", "how much", "which colourway") instead of a tagline and a
+// count, which is all these pages used to say above 62 product tiles.
+const COLLECTION_INTRO = {
+  "350-v2": `Every 350 V2 colourway we stock, built 1:1 and priced from ${money(Math.min(...products.filter((p) => p.collection === "350-v2").map((p) => p.minPrice)))} instead of resale. Knit uppers, boost-grade midsoles, matched cage and stripe placement. Fits close to true to size — women's sizes are labelled W, and the sizing guide settles the half-size question in two minutes. Free shipping to ${POLICY.shipCountries}, ${POLICY.returnDays}-day returns.`,
+  "foam-rnnr": `The full Foam Runner rotation — one-piece moulded EVA-blend clogs with the lattice vents, in every colourway we can get. They run big and come in whole sizes only, so size down one from your usual US. Free shipping to ${POLICY.shipCountries}, ${POLICY.returnDays}-day returns if you get the fit wrong.`,
+  slides: `Yeezy-silhouette slides in every colourway we stock — moulded foam, contoured arch, the pair that ends up getting worn more than anything else you own. They run big and only come in whole sizes: size down one, or two if you like them snug. Free shipping, ${POLICY.returnDays}-day returns.`,
+  accessories: `Cleaning and care gear for knit, foam and rubber. The cheapest way to make a pair last twice as long, and the only thing here that isn't footwear.`,
+};
+
 let n = 0;
 write("index.html", homePage()); n++;
-write("shop/index.html", gridPage({ title: `Shop All — ${products.length} Styles | Kicks on Deck`, h1: "Shop<br>All", eyebrow: `The full rotation · ${products.length} styles`, list: products, canonical: `${ORIGIN}/shop/`, active: "/shop/", intro: "Every silhouette in stock — 350 V2, Foam Runners, Slides and care. Filter, sort, and find your size.", showFilters: true })); n++;
+write("shop/index.html", gridPage({ title: `Shop All Rep Sneakers — ${products.length} Styles from ${money(Math.min(...products.map((p) => p.minPrice)))} | Kicks on Deck`, h1: "Shop<br>All", eyebrow: `The full rotation · ${products.length} styles`, list: products, canonical: `${ORIGIN}/shop/`, active: "/shop/", intro: `All ${products.length} styles in stock — 350 V2, Foam Runners, Slides and care gear, built 1:1 and priced without the resale markup. Filter by silhouette, sort by price, and check the size guide before you pick. Free shipping to ${POLICY.shipCountries}, ${POLICY.returnDays}-day returns.`, showFilters: true })); n++;
 for (const c of collections) {
   const list = products.filter((p) => p.collection === c.slug);
-  write(`collection/${c.slug}/index.html`, gridPage({ title: `${c.title} — Kicks on Deck`, h1: c.title.replace(/ /g, "<br>"), eyebrow: c.tagline, list, canonical: `${ORIGIN}/collection/${c.slug}/`, active: `/collection/${c.slug}/`, intro: `${c.count} ${c.title} styles in rotation. ${c.tagline}.${FIT_NOTES[c.slug] ? " Unisex sizing for men and women." : ""}`, showFilters: false }));
+  const lo = list.length ? money(Math.min(...list.map((p) => p.minPrice))) : "";
+  write(`collection/${c.slug}/index.html`, gridPage({
+    title: `${c.title} Reps — ${c.count} Colourways${lo ? ` from ${lo}` : ""} | Kicks on Deck`,
+    h1: c.title.replace(/ /g, "<br>"), eyebrow: c.tagline, list,
+    canonical: `${ORIGIN}/collection/${c.slug}/`, active: `/collection/${c.slug}/`,
+    intro: COLLECTION_INTRO[c.slug] || `${c.count} ${c.title} styles in rotation. ${c.tagline}.`,
+    showFilters: false,
+  }));
   n++;
 }
 for (const p of products) { write(`product/${p.slug}/index.html`, productPage(p)); n++; }
@@ -789,8 +1212,13 @@ write("blog/index.html", blogIndexPage()); n++;
 for (const p of posts) { write(`blog/${p.slug}/index.html`, blogPostPage(p)); n++; }
 write("quiz/index.html", quizPage()); n++;
 
+// trust / policy pages
+for (const p of pages) { write(`${p.slug}/index.html`, staticPage(p)); n++; }
+
 // 404
-write("404.html", layout({ headOpts: { title: "404 — Kicks on Deck", desc: "Page not found", canonical: `${ORIGIN}/404` }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center"><div><div class="footer-giant" style="-webkit-text-stroke:1px var(--volt)">404</div><p class="eyebrow" style="margin:20px 0">This pair walked off</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a></div></section>` }));
+// A 404 is a live shopper who followed a stale link — give them the routes
+// back into the catalogue rather than one button and a dead end.
+write("404.html", layout({ headOpts: { title: "Page Not Found — Kicks on Deck", desc: `That page has moved or never existed. Jump back into the rotation — ${products.length} styles in stock, free shipping and ${POLICY.returnDays}-day returns.`, canonical: `${ORIGIN}/404` }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center;padding-top:120px"><div><div class="footer-giant" style="-webkit-text-stroke:1px var(--volt)">404</div><p class="eyebrow" style="margin:20px 0">This pair walked off</p><p style="color:var(--ink-dim);max-width:46ch;margin:0 auto 26px">The link is stale, but the rotation isn't — ${products.length} styles are in stock right now.</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a><div class="doc-nav" style="justify-content:center;border:0;margin-top:34px">${[...navLinks.slice(0, 4), ...PAGE_NAV.slice(0, 4)].map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}</div></div></section>` }));
 
 // legacy URL redirects (pre-restructure paths still receiving search traffic)
 // data-driven so new legacy-URL leaks found in GA4 landing-page reports can be added
@@ -843,10 +1271,33 @@ const catalog = products.map((p) => ({ slug: p.slug, name: p.name, collection: c
 write("data/catalog.json", JSON.stringify(catalog));
 
 // sitemap + robots + CNAME
-const urls = [`${ORIGIN}/`, `${ORIGIN}/shop/`, `${ORIGIN}/blog/`, `${ORIGIN}/quiz/`, ...collections.map((c) => `${ORIGIN}/collection/${c.slug}/`), ...posts.map((p) => `${ORIGIN}/blog/${p.slug}/`), ...products.map((p) => `${ORIGIN}/product/${p.slug}/`)];
-write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n")}\n</urlset>`);
-write("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${ORIGIN}/sitemap.xml\n`);
+// lastmod/changefreq/priority + <image:image> on product and post URLs: image
+// entries are how a store's photography becomes eligible for Google Images and
+// Shopping surfaces, and lastmod is what gets a changed page recrawled.
+const TODAY = new Date().toISOString().slice(0, 10);
+const smUrl = (loc, { lastmod = TODAY, priority, changefreq, image, imageTitle } = {}) =>
+  `  <url><loc>${loc}</loc><lastmod>${lastmod}</lastmod>` +
+  (changefreq ? `<changefreq>${changefreq}</changefreq>` : "") +
+  (priority ? `<priority>${priority}</priority>` : "") +
+  (image ? `<image:image><image:loc>${esc(image)}</image:loc><image:title>${esc(imageTitle || "")}</image:title></image:image>` : "") +
+  `</url>`;
+const sitemapEntries = [
+  smUrl(`${ORIGIN}/`, { priority: "1.0", changefreq: "daily" }),
+  smUrl(`${ORIGIN}/shop/`, { priority: "0.9", changefreq: "daily" }),
+  ...collections.map((c) => smUrl(`${ORIGIN}/collection/${c.slug}/`, { priority: "0.9", changefreq: "daily", image: firstImg(c.slug), imageTitle: c.title })),
+  ...products.map((p) => smUrl(`${ORIGIN}/product/${p.slug}/`, { priority: "0.8", changefreq: "weekly", image: p.image, imageTitle: p.name })),
+  smUrl(`${ORIGIN}/blog/`, { priority: "0.7", changefreq: "weekly" }),
+  ...posts.map((p) => smUrl(`${ORIGIN}/blog/${p.slug}/`, { lastmod: p.meta.date || TODAY, priority: "0.7", changefreq: "monthly" })),
+  ...pages.map((p) => smUrl(`${ORIGIN}/${p.slug}/`, { lastmod: p.meta.updated, priority: p.slug === "faq" || p.slug === "size-guide" ? "0.7" : "0.5", changefreq: "monthly" })),
+  smUrl(`${ORIGIN}/quiz/`, { priority: "0.6", changefreq: "monthly" }),
+];
+write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${sitemapEntries.join("\n")}\n</urlset>`);
+// The legacy /blogs//collections//products/ stubs stay crawlable on purpose —
+// they are noindex,follow redirects, and Google has to fetch them to move the
+// old Shopify URLs' equity onto the new ones. Only the raw catalog JSON is
+// blocked, since it has no business ranking for anything.
+write("robots.txt", `User-agent: *\nAllow: /\nDisallow: /data/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 write("CNAME", DOMAIN + "\n");
 
 console.log(`Built ${n} HTML pages + ${products.length} catalog entries.`);
-console.log(`Pages: index, shop, blog (${posts.length} posts), quiz, ${collections.length} collections, ${products.length} products, 404.`);
+console.log(`Pages: index, shop, blog (${posts.length} posts), quiz, ${collections.length} collections, ${products.length} products, ${pages.length} info pages (${pages.map((p) => p.slug).join(", ")}), 404.`);

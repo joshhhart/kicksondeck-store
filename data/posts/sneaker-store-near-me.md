@@ -1,5 +1,6 @@
 ---
 title: Searching "Sneaker Store Near Me"? Here's What to Actually Look For
+seoTitle: Sneaker Store Near Me — What to Actually Look For
 date: 2026-07-08
 tag: Culture
 read: 4 min read
@@ -26,7 +27,7 @@ Retail resale markets have turned grail colorways into a markup game. The altern
 
 ## Why South Florida shoppers are skipping the drive
 
-We're based in South Florida / the Treasure Coast, but we ship nationwide — most of our customers never set foot in a store. If your "near me" search is really just "somewhere that has my size in stock, priced fairly, shipped fast," that's the whole reason we build the site the way we do: full rotation always visible, sizes shown up front, [free shipping over $150](/shop/).
+We're based in South Florida / the Treasure Coast, but we ship nationwide — most of our customers never set foot in a store. If your "near me" search is really just "somewhere that has my size in stock, priced fairly, shipped fast," that's the whole reason we build the site the way we do: full rotation always visible, sizes shown up front, [free shipping on every order](/shipping/) and [7 days to return](/returns/) anything that doesn't fit.
 
 ![the all-black Onyx Yeezy Foam RNNR, part of the always-visible online rotation](https://cdn.shopify.com/s/files/1/0557/4570/8145/products/REP-VERSION-Onyx-Yeezy-Foam-RNNR-Running-Shoes.webp?v=1697957735)
 

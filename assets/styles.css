@@ -279,9 +279,69 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 .pdp-actions { margin-top: 30px; display: flex; flex-direction: column; gap: 12px; }
 .size-warn { color: var(--danger); font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; height: 0; overflow: hidden; transition: height 0.3s; }
 .size-warn.show { height: 18px; }
-.trust-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 26px; padding-top: 26px; border-top: 1px solid var(--line); }
+.trust-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 22px; margin-top: 22px; padding-top: 24px; border-top: 1px solid var(--line); }
 .trust { display: flex; align-items: center; gap: 9px; font-size: 0.78rem; color: var(--muted); }
 .trust svg { width: 17px; height: 17px; color: var(--volt); flex-shrink: 0; }
+
+/* delivery estimate — the answer to "when does it get here", stated before
+   the shopper has to go looking for a shipping page */
+.pdp-eta { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; padding: 13px 15px; border: 1px solid var(--line); border-left: 2px solid var(--volt); border-radius: var(--radius); background: var(--elev); color: var(--ink-dim); font-size: 0.83rem; line-height: 1.45; }
+.pdp-eta svg { width: 18px; height: 18px; color: var(--volt); flex-shrink: 0; margin-top: 1px; }
+.pdp-eta strong { color: var(--ink); }
+.pdp-eta a { color: var(--volt); text-decoration: underline; text-underline-offset: 3px; }
+
+/* payment marks — “cards and wallets accepted”, no third-party logo files */
+.pay-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.pay-badge { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 5px 8px; white-space: nowrap; }
+
+/* disclosure blocks: size chart + objection FAQ, inline so the shopper never
+   has to leave the page to get an answer */
+.pdp-acc { border-top: 1px solid var(--line); }
+.pdp-acc:last-of-type { border-bottom: 1px solid var(--line); }
+.pdp-acc > summary { list-style: none; cursor: pointer; padding: 16px 28px 16px 0; position: relative; font-size: 0.92rem; color: var(--ink); font-weight: 600; }
+.pdp-acc > summary::-webkit-details-marker { display: none; }
+.pdp-acc > summary::after { content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: 1.1rem; color: var(--volt); transition: transform 0.25s; }
+.pdp-acc[open] > summary::after { content: "–"; }
+.pdp-acc > summary:hover { color: var(--volt); }
+.pdp-acc-body { padding: 0 0 18px; color: var(--ink-dim); font-size: 0.9rem; line-height: 1.6; }
+.pdp-acc-body p { margin: 0 0 12px; }
+.pdp-acc-body strong { color: var(--ink); }
+.pdp-faq { margin-top: 34px; }
+.pdp-faq-more { margin-top: 14px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+.pdp-faq-more a { color: var(--volt); text-decoration: underline; text-underline-offset: 3px; }
+details.pdp-acc { margin: 0; }
+.pdp-info > .pdp-acc { margin-top: 24px; }
+
+/* tables — size charts, policy timelines. Scroll inside their own box so a
+   wide table never makes the page scroll sideways on a phone. */
+.table-wrap { overflow-x: auto; margin: 0 0 20px; border: 1px solid var(--line); border-radius: var(--radius); -webkit-overflow-scrolling: touch; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.8rem; }
+/* Prose cells wrap so a guidance column stays readable; headers and the
+   first (label/number) column stay on one line so charts read as charts. */
+.table-wrap th, .table-wrap td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); white-space: normal; }
+.table-wrap th, .table-wrap td:first-child { white-space: nowrap; }
+.table-wrap th { color: var(--volt); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: var(--elev); }
+.table-wrap td { color: var(--ink-dim); }
+.table-wrap tr:last-child td { border-bottom: 0; }
+
+/* homepage trust band */
+.trust-band { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+.tb-card { border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--elev); padding: 26px 24px 22px; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.35s, transform 0.35s var(--ease); }
+.tb-card:hover { border-color: var(--volt); transform: translateY(-4px); }
+.tb-ico { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line-2); color: var(--volt); margin-bottom: 4px; }
+.tb-ico svg { width: 19px; height: 19px; }
+.tb-card h3 { font-family: var(--font-body); font-size: 1.02rem; font-weight: 700; line-height: 1.25; text-transform: none; letter-spacing: 0; }
+.tb-card p { color: var(--muted); font-size: 0.87rem; line-height: 1.55; flex: 1; }
+.tb-cta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--volt); display: inline-flex; align-items: center; gap: 7px; margin-top: 4px; }
+.tb-card:hover .tb-cta svg { transform: translateX(4px); transition: transform 0.3s; }
+
+/* policy / info pages */
+.page-updated { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); margin-top: 18px; }
+.doc-body { max-width: 74ch; }
+.doc-body .table-wrap { max-width: 100%; }
+.doc-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 56px; padding-top: 26px; border-top: 1px solid var(--line); }
+.doc-nav a { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 100px; padding: 9px 16px; transition: 0.25s; }
+.doc-nav a:hover { color: var(--volt-ink); background: var(--volt); border-color: var(--volt); }
 
 /* ---------- cart drawer ---------- */
 .overlay { position: fixed; inset: 0; z-index: 200; background: rgba(5,5,6,0.6); backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: 0.4s; }
@@ -314,6 +374,15 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 .cart-row.total .mono { font-size: 1.2rem; }
 .cart-note { font-family: var(--font-mono); font-size: 0.64rem; color: var(--muted-2); text-align: center; margin-top: 14px; letter-spacing: 0.06em; line-height: 1.6; }
 .cart-note a { color: var(--volt); }
+/* The last thing a shopper reads before the Checkout button. Shipping cost,
+   the returns window and who handles the card are the three unknowns that
+   stall a cart on a store people have never bought from before. */
+.cart-reassure { display: grid; gap: 8px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.cart-reassure span { display: flex; align-items: center; gap: 9px; font-size: 0.74rem; color: var(--muted); line-height: 1.35; }
+.cart-reassure svg { width: 15px; height: 15px; color: var(--volt); flex-shrink: 0; }
+.cart-promo { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); text-align: center; margin-top: 12px; letter-spacing: 0.04em; }
+.cart-promo strong { color: var(--volt); }
+.drawer-foot .pay-row { justify-content: center; margin-top: 12px; }
 
 /* ---------- search overlay ---------- */
 .search-panel { position: fixed; inset: 0; z-index: 210; background: rgba(10,10,11,0.94); backdrop-filter: blur(20px); opacity: 0; visibility: hidden; transition: 0.35s; padding-top: 12vh; }
@@ -363,6 +432,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 .footer-col a { display: block; color: var(--muted); padding: 6px 0; font-size: 0.9rem; transition: color 0.2s; }
 .footer-col a:hover { color: var(--volt); }
 .footer-blurb { color: var(--muted); max-width: 34ch; font-size: 0.9rem; }
+.footer-trust { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px 26px; margin: 34px 0 30px; padding: 22px 0; border-block: 1px solid var(--line); }
+.footer-trust span { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--muted); line-height: 1.35; }
+.footer-trust svg { width: 17px; height: 17px; color: var(--volt); flex-shrink: 0; }
 .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid var(--line); flex-wrap: wrap; gap: 14px; }
 .footer-bottom p, .footer-bottom a { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-2); }
 .footer-disclaimer { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted-2); line-height: 1.7; margin-top: 22px; max-width: 80ch; opacity: 0.8; }
@@ -406,6 +478,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform:
 .mobile-nav.open { transform: translateY(0); }
 .mobile-nav a { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 2.4rem; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .mobile-nav a:hover { color: var(--volt); }
+.mobile-nav { overflow-y: auto; }
+/* Help links live in the burger too — on mobile the footer is 6 screens of
+   scrolling away, which is where the shipping and returns answers were hiding. */
+.mobile-nav-sub { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.mobile-nav-sub a { font-family: var(--font-mono); font-weight: 500; font-size: 0.7rem; letter-spacing: 0.12em; padding: 9px 15px; border: 1px solid var(--line); border-radius: 100px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.05s !important; }
