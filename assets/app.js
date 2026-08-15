@@ -334,8 +334,14 @@
     track("email_signup", { interest: payload.interest, size: payload.size });
     const r = await postData("/subscribe", payload);
     form.reset();
-    if (msg) msg.textContent = "You're on the list — use code FIRSTPAIR at checkout for 10% off your first pair.";
-    else toast("On the list — code FIRSTPAIR = 10% off");
+    // Only promise a discount code when one is actually live in the Stripe
+    // account the checkout Worker talks to (site.config.json -> promo).
+    const promo = CFG.promo;
+    const line = promo && promo.code
+      ? `You're on the list — use code ${promo.code} at checkout for ${promo.value} off your first pair.`
+      : "You're on the list — we'll email you the moment a drop lands in your size.";
+    if (msg) msg.textContent = line;
+    else toast(promo && promo.code ? `On the list — code ${promo.code} = ${promo.value} off` : "You're on the list");
   });
 
   /* ---------- vote the next drop ---------- */
