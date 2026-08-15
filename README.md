@@ -54,6 +54,26 @@ card checkout:**
 
 Orders, customers, fulfillment, and shipping then all flow back into GHL.
 
+## First-order discount code
+
+`site.config.json` → `promo` is the master switch for the discount prompt. It
+controls the email capture band, that form's confirmation message, and the cart
+drawer together — there is no other place the code is written.
+
+```json
+"promo": { "enabled": false, "code": "FIRSTPAIR", "value": "10%" }
+```
+
+**Currently disabled.** The `kod-checkout` Worker's Stripe secret key resolves to
+a different Stripe account than the one holding the `FIRSTPAIR` promotion code —
+a Checkout Session created by the Worker is not retrievable in the account that
+has the code — so a shopper entering it would fail at the payment step.
+
+Before flipping `enabled: true`: open the Stripe dashboard **for the account
+whose secret key is in the Worker**, confirm an active promotion code matching
+`code` exists there, then rebuild. With `enabled: false` the capture band still
+runs and still collects emails; it just sells early access instead of a discount.
+
 ## Shipping & returns claims — edit in ONE place
 
 Every shipping/returns promise on the site (the policy pages, the PDP delivery

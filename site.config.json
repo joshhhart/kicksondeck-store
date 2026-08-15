@@ -25,6 +25,12 @@
     "tiktok": "",
     "facebook": "https://www.facebook.com/110211235322460"
   },
+  "promo": {
+    "enabled": false,
+    "code": "FIRSTPAIR",
+    "value": "10%",
+    "_note": "Master switch for the first-order discount prompt (email capture band, its confirmation message, and the cart drawer). DISABLED 2026-08-15: the live checkout Worker's Stripe key resolves to a different Stripe account than the one holding the FIRSTPAIR promotion code — a session created by the Worker is not retrievable in the account that has the code — so entering it would fail at the payment step. Before setting enabled:true, open the Stripe dashboard for the account whose secret key is in the kod-checkout Worker and confirm a promotion code matching `code` exists and is active there. With enabled:false the capture band still runs, it just sells early access instead of a discount."
+  },
   "policy": {
     "dispatchHours": 48,
     "transitMinDays": 7,

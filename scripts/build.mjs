@@ -28,6 +28,11 @@ const POLICY = Object.assign({
   shipCountries: "United States & Canada",
   freeShippingLine: "Free shipping on every order (US & Canada)",
 }, CFG.policy || {});
+// First-order discount prompt. Gated because advertising a code that errors at
+// the payment step is worse than advertising no code at all — see the _note in
+// site.config.json for why it is currently off.
+const PROMO = Object.assign({ enabled: false, code: "FIRSTPAIR", value: "10%" }, CFG.promo || {});
+const promoOn = () => Boolean(PROMO.enabled && PROMO.code);
 const HERO_IMG = "/assets/hero-350.webp";
 const HERO_GLB = "/assets/3d/zebra-350.glb";
 
@@ -316,7 +321,7 @@ ${preloadImg ? `<link rel="preload" as="image" href="${preloadImg}" fetchpriorit
 <noscript><link rel="stylesheet" href="${FONT_HREF}"></noscript>
 <link rel="stylesheet" href="/assets/styles.css">
 ${extraCss}${analyticsTags()}
-<script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand, analytics: { ga4Id: AN.ga4Id || "", dataEndpoint: AN.dataEndpoint || "" } })};document.documentElement.classList.remove('no-js');</script>
+<script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand, analytics: { ga4Id: AN.ga4Id || "", dataEndpoint: AN.dataEndpoint || "" }, promo: promoOn() ? { code: PROMO.code, value: PROMO.value } : null })};document.documentElement.classList.remove('no-js');</script>
 ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>\n` : ""}</head>`;
 }
 
@@ -365,7 +370,7 @@ function drawerAndSearch() {
     <div class="cart-row"><span>Shipping</span><span class="mono">Free</span></div>
     <div class="cart-row total"><span>Total</span><span class="mono" id="cart-subtotal-2"></span></div>
     <button class="btn btn-volt btn-block btn-lg" id="checkout-btn">Checkout ${I.arrow}</button>
-    <p class="cart-promo">First order? Enter <strong class="mono">FIRSTPAIR</strong> at checkout for 10% off.</p>
+    ${promoOn() ? `<p class="cart-promo">First order? Enter <strong class="mono">${esc(PROMO.code)}</strong> at checkout for ${esc(PROMO.value)} off.</p>` : ""}
     <div class="pay-row" aria-label="Accepted payment methods">${PAY_BADGES}</div>
     <p class="cart-note">Questions before you buy? <a href="/faq/">FAQ</a> · <a href="/size-guide/">Size guide</a> · <a href="mailto:${CFG.brand.email}">${CFG.brand.email}</a></p>
   </div>
@@ -758,8 +763,11 @@ function captureBand() {
 <section class="section container">
   <div class="cta-band reveal" id="capture">
     <span class="eyebrow">Get on the list</span>
-    <h2>10% off your first pair</h2>
-    <p>Join the list and use code <strong class="mono">FIRSTPAIR</strong> at checkout — plus first dibs on new arrivals and the drops you voted for.</p>
+    ${promoOn()
+      ? `<h2>${esc(PROMO.value)} off your first pair</h2>
+    <p>Join the list and use code <strong class="mono">${esc(PROMO.code)}</strong> at checkout — plus first dibs on new arrivals and the drops you voted for.</p>`
+      : `<h2>First dibs on every drop</h2>
+    <p>Restocks sell out in your size before most people hear about them. Join the list and you'll know the day a pair lands — plus the results of the drops you voted for.</p>`}
     <form class="news-form" id="news-form">
       <input type="email" name="email" required placeholder="you@email.com" aria-label="Email">
       <button class="btn btn-volt" type="submit">Join</button>
