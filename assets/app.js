@@ -38,6 +38,56 @@
     } catch (e) { return { ok: false, error: String(e) }; }
   }
 
+  /* ---------- attribution (who sent this shopper) ----------
+     GA4 knows the source of a session but never the source of an ORDER — the
+     purchase happens on Stripe's domain, so the sale and the click that caused
+     it live in two systems that can't be joined. Fix: remember the first click
+     that ever brought this browser here (first touch) and the click that
+     started this visit (last touch), then ship both to the checkout Worker,
+     which stamps them on the Stripe payment as metadata. Every paid order then
+     carries its own "how did they find us" answer. */
+  const ATTR_KEY = "kod_attr_v1";
+  const attribution = (() => {
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(ATTR_KEY)) || {}; } catch {}
+    const sp = new URLSearchParams(location.search);
+    const q = (k, max = 200) => (sp.get(k) || "").trim().slice(0, max);
+    let refHost = "";
+    try { refHost = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch {}
+    const external = !!refHost && refHost !== location.hostname.replace(/^www\./, "");
+    const touch = {
+      source: q("utm_source"), medium: q("utm_medium"), campaign: q("utm_campaign"),
+      term: q("utm_term"), content: q("utm_content"), ref: q("ref", 60),
+      gclid: q("gclid"), srsltid: q("srsltid"), fbclid: q("fbclid"), ttclid: q("ttclid"),
+      referrer: external ? document.referrer.slice(0, 300) : "",
+      landing: (location.pathname + location.search).slice(0, 300),
+      at: new Date().toISOString(),
+    };
+    // Infer channel when there are no UTMs: click ids identify the network
+    // (srsltid = Google Merchant Center auto-tagging, gclid = Google Ads,
+    // fbclid = Meta, ttclid = TikTok), else fall back to the referrer host.
+    if (!touch.source) {
+      if (touch.gclid) { touch.source = "google"; touch.medium = touch.medium || "cpc"; }
+      else if (touch.srsltid) { touch.source = "google"; touch.medium = touch.medium || "merchant-center"; }
+      else if (touch.fbclid) { touch.source = "facebook"; touch.medium = touch.medium || "social"; }
+      else if (touch.ttclid) { touch.source = "tiktok"; touch.medium = touch.medium || "social"; }
+      else if (external) { touch.source = refHost; touch.medium = touch.medium || (/google\.|bing\.|duckduckgo|yahoo\.|ecosia/.test(refHost) ? "organic" : /chatgpt|openai|perplexity|claude\.ai|gemini\.google|copilot/.test(refHost) ? "ai-assistant" : "referral"); }
+    }
+    const hasSignal = !!(touch.source || touch.referrer);
+    // An entry = arriving from outside (or the very first visit ever). Internal
+    // navigation keeps the touches as they are.
+    const isEntry = hasSignal || !saved.first;
+    if (isEntry) {
+      if (!touch.source) { touch.source = "(direct)"; touch.medium = "(none)"; }
+      saved.last = touch;
+      if (!saved.first) saved.first = touch;
+      saved.visits = (saved.visits || 0) + 1;
+      try { localStorage.setItem(ATTR_KEY, JSON.stringify(saved)); } catch {}
+    }
+    const snapshot = () => ({ first: saved.first || null, last: saved.last || null, visits: saved.visits || 0, page: location.pathname.slice(0, 200) });
+    return { snapshot };
+  })();
+
   /* ---------- cart store ---------- */
   const readCart = () => { try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch { return []; } };
   let cart = readCart();
@@ -116,6 +166,11 @@
   $("#cart-close")?.addEventListener("click", closeCart);
   overlay?.addEventListener("click", () => { closeCart(); closeSearch(); });
 
+  // Declared ahead of the checkout-return block below: `let` further down
+  // left toast() in the temporal dead zone on the Stripe success page, which
+  // threw before the URL could be cleaned up.
+  let toastT;
+
   /* ---------- checkout handoff ---------- */
   function emailFallback(co) {
     const lines = cart.map((c) => `• ${c.qty}× ${c.name}${c.size ? " — " + c.size : ""} (${money(c.price)})`).join("\n");
@@ -127,7 +182,11 @@
   $("#checkout-btn")?.addEventListener("click", async () => {
     if (!cart.length) return;
     const co = CFG.checkout || {};
-    localStorage.setItem("kod_pending_order", JSON.stringify({ items: cart, subtotal: subtotal(), at: Date.now() }));
+    // Short human-readable ref that follows the order into Stripe (client_reference_id)
+    // and back to the success page, so a receipt, a GA4 purchase and a Stripe
+    // payment can all be matched by eye.
+    const orderRef = "kod-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 6);
+    localStorage.setItem("kod_pending_order", JSON.stringify({ ref: orderRef, items: cart, subtotal: subtotal(), at: Date.now() }));
     track("begin_checkout", { currency: "USD", value: subtotal(), items: gaCart() });
 
     // Stripe via serverless endpoint — builds a real Checkout Session from the bag.
@@ -139,7 +198,9 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            items: cart.map((c) => ({ variantId: c.variantId || c.id, id: c.id, qty: c.qty, name: c.name, size: c.size || "", image: c.image })),
+            items: cart.map((c) => ({ variantId: c.variantId || c.id, id: c.id, qty: c.qty, name: c.name, size: c.size || "", image: c.image, slug: c.slug || "" })),
+            ref: orderRef,
+            attribution: attribution.snapshot(),
           }),
         });
         const data = await res.json().catch(() => ({}));
@@ -168,6 +229,19 @@
   (() => {
     const sp = new URLSearchParams(location.search);
     if (sp.get("checkout") !== "success") return;
+    // Close the loop in GA4: begin_checkout fired on the way out, so without
+    // this the funnel ends at "went to Stripe" and every source looks like it
+    // converts at 0%. The pending bag saved before redirect is the receipt.
+    let pending = null;
+    try { pending = JSON.parse(localStorage.getItem("kod_pending_order")); } catch {}
+    if (pending && Array.isArray(pending.items) && pending.items.length) {
+      track("purchase", {
+        transaction_id: sp.get("session_id") || pending.ref || ("kod-" + Date.now()),
+        currency: "USD", value: Number(pending.subtotal) || 0, shipping: 0,
+        items: pending.items.map(gaItem),
+      });
+    }
+    localStorage.removeItem("kod_pending_order");
     cart = []; saveCart();
     toast("Order confirmed — thank you!");
     sp.delete("checkout"); sp.delete("session_id");
@@ -317,7 +391,6 @@
   });
 
   /* ---------- toast ---------- */
-  let toastT;
   function toast(msg) {
     let t = $("#toast");
     if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; document.body.appendChild(t); }

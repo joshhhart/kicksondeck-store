@@ -12,3 +12,12 @@ compatibility_date = "2024-11-01"
 # After deploy, wrangler prints the URL, e.g.
 #   https://kod-checkout.<your-subdomain>.workers.dev
 # Paste that into site.config.json -> checkout.endpoint, then rebuild the site.
+
+# ---- Paid-order webhook + fulfillment hand-off (all optional, all secrets) ----
+#   wrangler secret put STRIPE_WEBHOOK_SECRET   # whsec_… from Stripe → Developers → Webhooks
+#   wrangler secret put GHL_PIT                 # GoHighLevel Private Integration Token
+#   wrangler secret put GHL_LOCATION_ID         # YP10UczRbxhYQCBQK6uE
+#   wrangler secret put GHL_USER_ID             # (optional) owner user id, stamps the order note
+#   wrangler secret put GHL_ORDER_TAG           # (optional) extra tag that starts your GHL workflow
+#   wrangler secret put ORDER_WEBHOOK_URL       # (optional) any JSON endpoint that should get each paid order
+# See README.md → "Paid-order webhook".
