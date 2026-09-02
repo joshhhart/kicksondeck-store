@@ -437,7 +437,7 @@ details.pdp-acc { margin: 0; }
 .footer-trust svg { width: 17px; height: 17px; color: var(--volt); flex-shrink: 0; }
 .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid var(--line); flex-wrap: wrap; gap: 14px; }
 .footer-bottom p, .footer-bottom a { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-2); }
-.footer-disclaimer { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted-2); line-height: 1.7; margin-top: 22px; max-width: 80ch; opacity: 0.8; }
+.footer-disclaimer { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted-2); line-height: 1.7; margin-top: 22px; max-width: 80ch; } /* no opacity: it dropped the legal line below AA */
 .footer-giant { font-family: var(--font-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase; font-size: clamp(3rem, 19vw, 20rem); line-height: 0.8; letter-spacing: -0.02em; color: transparent; -webkit-text-stroke: 1px var(--line-2); text-align: center; margin-top: 30px; user-select: none; pointer-events: none; }
 
 /* ---------- reveal ---------- */
@@ -807,3 +807,8 @@ details.pdp-acc { margin: 0; }
 .faq-item { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 22px 20px; background: var(--surface); }
 .faq-item h3 { font-family: var(--font-body); font-stretch: normal; text-transform: none; letter-spacing: 0; font-weight: 700; font-size: 1.02rem; line-height: 1.35; margin: 0 0 10px; }
 .faq-item p { margin: 0; color: var(--ink-dim); line-height: 1.55; font-size: 0.95rem; }
+
+.hero-3d-btn[hidden] { display: none; }
+.hero-3d-btn { display: none; }
+@media (min-width: 1024px) { .hero-3d-btn:not([hidden]) { display: inline-flex; } }
+.hero--3d .hero-3d-btn { display: none !important; }

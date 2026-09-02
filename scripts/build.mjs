@@ -374,7 +374,7 @@ function header(active = "") {
   <nav class="nav pill-nav" id="pill-nav" aria-label="Primary"><span class="pill-ind" aria-hidden="true"></span>${navLinks.map((l) => `<a href="${l.href}"${active === l.href ? ' class="active"' : ""}>${l.label}</a>`).join("")}</nav>
   <div class="header-actions">
     <button class="icon-btn" id="search-open" aria-label="Search">${I.search}</button>
-    <button class="icon-btn" id="cart-open" aria-label="Open bag">${I.bag}<span class="cart-count" id="cart-count" aria-hidden="true">0</span></button>
+    <button class="icon-btn" id="cart-open" aria-label="Open bag (0)">${I.bag}<span class="cart-count" id="cart-count" aria-hidden="true">0</span></button>
     <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Menu">${I.menu}</button>
   </div>
 </div></div></header>
@@ -491,7 +491,7 @@ function homePage() {
       <h1><span class="line"><span>Kicks</span></span><span class="line"><span class="outline">on</span> <span class="volt shiny-text">Deck</span></span></h1>
       <div class="hero-sub">
         <p>Grail silhouettes, 1:1 craftsmanship, honest prices. ${products.length} styles in rotation — built to wear, not to flip.</p>
-        <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation ${I.arrow}</a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a></div>
+        <div class="hero-cta"><a class="btn btn-volt btn-lg" href="/shop/">Shop the rotation ${I.arrow}</a><a class="btn btn-ghost btn-lg" href="/collection/350-v2/">350 V2 →</a><button class="btn btn-ghost btn-lg hero-3d-btn" type="button" id="hero-3d-btn" hidden>Spin it in 3D</button></div>
       </div>
     </div>
     <div class="hero-readout" aria-hidden="true"><span class="ro-k">Now spinning</span><span class="ro-v">${esc(hero.name)}</span></div>

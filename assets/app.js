@@ -124,6 +124,7 @@
     const badge = $("#cart-count");
     const c = count();
     if (badge) { badge.textContent = c; badge.classList.toggle("show", c > 0); }
+    $("#cart-open")?.setAttribute("aria-label", `Open bag (${c})`);
     const body = $("#cart-body"), foot = $("#cart-foot"), head = $("#cart-head-count");
     if (!body) return;
     if (head) head.textContent = c ? `(${c})` : "";
@@ -640,13 +641,18 @@
     script.src = "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
     document.head.appendChild(script);
   };
-  // Desktop-class devices only: 250 KB of model-viewer plus a 1.7 MB mesh is
-  // the wrong trade on a phone, where the static hero is the LCP anyway.
+  // Opt-in, desktop only: 250 KB of model-viewer plus a 1.7 MB mesh was the
+  // single biggest main-thread cost on the site (Lighthouse: ~158 s simulated
+  // TBT on desktop) and it hid the brand statement behind a spinning shoe.
+  // The static hero is the first impression; "Spin it in 3D" loads the
+  // showcase on request for people who want to play with it.
   const bigScreen = matchMedia("(min-width: 1024px)").matches;
   const capable = (navigator.deviceMemory || 8) >= 4 && (navigator.hardwareConcurrency || 8) >= 4;
-  if (!bigScreen || !capable) return;
-  const later = () => (window.requestIdleCallback ? requestIdleCallback(boot, { timeout: 4000 }) : setTimeout(boot, 1500));
-  if (document.readyState === "complete") later(); else window.addEventListener("load", later, { once: true });
+  const btn = document.getElementById("hero-3d-btn");
+  if (!bigScreen || !capable || !btn) return;
+  btn.hidden = false;
+  let booted = false;
+  btn.addEventListener("click", function () { if (booted) return; booted = true; btn.textContent = "Loading 3D…"; btn.disabled = true; boot(); }, { once: true });
 
   var shoe = hero.querySelector(".hero-shoe");
   var stage = hero.querySelector(".hero-stage");
@@ -669,8 +675,10 @@
   mv.setAttribute("environment-image", "neutral");
   mv.setAttribute("tone-mapping", "aces");
   mv.setAttribute("aria-hidden", "true");
-  shoe.appendChild(mv);
-  hero.classList.add("hero--3d");
+  // Attach + switch layouts only once the viewer script is requested.
+  const origBoot = boot;
+  boot = function () { origBoot(); shoe.appendChild(mv); hero.classList.add("hero--3d"); startShowcase(); };
+  function startShowcase() {
 
   // Reveal the CTAs after the showcase establishes (or on first scroll).
   var revealed = false;
@@ -708,4 +716,5 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   window.addEventListener("resize", onScroll, { passive: true });
+  }
 })();
