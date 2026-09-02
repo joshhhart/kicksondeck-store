@@ -98,7 +98,7 @@ async function cutoutInBrowser(srcUri) {
   const ctx = c.getContext("2d", { willReadFrequently: true });
   ctx.drawImage(img, 0, 0);
   const id = ctx.getImageData(0, 0, w, h), d = id.data;
-  const TOL = 26;
+  const TOL = 11; // studio sweeps are 255 pure; keep cream/bone soles (~235-245) intact
   // Backdrop = near-white, or already transparent (a PNG/WebP with alpha).
   const isBg = (i) => d[i * 4 + 3] < 20 || (d[i * 4] >= 255 - TOL && d[i * 4 + 1] >= 255 - TOL && d[i * 4 + 2] >= 255 - TOL);
   const alpha = new Uint8Array(w * h).fill(255), seen = new Uint8Array(w * h);
@@ -133,7 +133,7 @@ async function cutoutInBrowser(srcUri) {
   for (let i = 0; i < w * h; i++) {
     let al = Math.min(a[i], d[i * 4 + 3]); // never re-opaque a source's own transparency
     const r = d[i * 4], g = d[i * 4 + 1], b = d[i * 4 + 2];
-    if (al < 255 && r > 225 && g > 225 && b > 225) al = Math.round(al * 0.35); // kill the white fringe
+    if (al < 255 && r > 246 && g > 246 && b > 246) al = Math.round(al * 0.35); // kill the white fringe
     d[i * 4 + 3] = al;
     if (al > 8) { const x = i % w, y = (i - x) / w; if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y; }
   }
@@ -215,11 +215,16 @@ function html(post, shots) {
   <div class="grain"></div>
 </div>
 <script>
-  // Shrink the headline until it fits 4 lines inside its column.
-  const h = document.getElementById("t");
-  let fs = 62; h.style.fontSize = fs + "px";
-  const lines = () => Math.round(h.getBoundingClientRect().height / (fs * 0.98));
-  while ((lines() > 4 || h.scrollWidth > 530) && fs > 32) { fs -= 2; h.style.fontSize = fs + "px"; }
+  // Shrink the headline until it fits 4 lines inside its column. Re-run once
+  // the web font is in, because Archivo Expanded is much wider than any fallback.
+  window.__fit = () => {
+    const h = document.getElementById("t");
+    let fs = 62; h.style.fontSize = fs + "px";
+    const lines = () => Math.round(h.getBoundingClientRect().height / (fs * 0.98));
+    while ((lines() > 4 || h.scrollWidth > 530) && fs > 32) { fs -= 2; h.style.fontSize = fs + "px"; }
+    return fs;
+  };
+  window.__fit();
 </script></body></html>`;
 }
 
@@ -247,8 +252,20 @@ async function main() {
           shots.push({ ...(await page.evaluate(cutoutInBrowser, src)), product });
         } catch (e) { console.warn(`  photo skipped for ${product.slug}: ${e.message}`); }
       }
-      await page.setContent(html(post, shots), { waitUntil: "load" });
-      await page.evaluate(() => document.fonts.ready);
+      await page.setContent(html(post, shots), { waitUntil: "networkidle" });
+      // Pull the web fonts explicitly; `load` fires before @font-face files arrive.
+      const fontsOk = await page.evaluate(async () => {
+        try {
+          await Promise.all([
+            document.fonts.load('800 62px "Archivo Expanded"'),
+            document.fonts.load('700 14px "JetBrains Mono"'),
+          ]);
+          await document.fonts.ready;
+        } catch {}
+        window.__fit();
+        return document.fonts.check('800 62px "Archivo Expanded"');
+      });
+      if (!fontsOk) console.warn(`  (Archivo Expanded not available for ${post.slug}; rendered with fallback font)`);
       await page.waitForTimeout(150);
       const png = await page.screenshot({ type: "png", clip: { x: 0, y: 0, width: W, height: H } });
       // Chromium encodes WebP natively — no sharp/imagemagick dependency.
