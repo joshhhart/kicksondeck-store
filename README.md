@@ -54,6 +54,12 @@ card checkout:**
 
 Orders, customers, fulfillment, and shipping then all flow back into GHL.
 
+**What actually runs today:** `mode: "stripe"` through the Cloudflare Worker in
+`checkout-worker/`. Every paid order carries its own attribution (first + last
+touch, landing page, click ids) as Stripe metadata, and the Worker's `/webhook`
+route pushes each paid order into GHL as a tagged contact + order note (and/or
+any JSON endpoint) for fulfillment — see `checkout-worker/README.md`.
+
 ## Shipping & returns claims — edit in ONE place
 
 Every shipping/returns promise on the site (the policy pages, the PDP delivery

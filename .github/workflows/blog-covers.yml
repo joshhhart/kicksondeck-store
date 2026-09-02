@@ -1,0 +1,64 @@
+# Renders photographic blog covers (assets/blog/<slug>.webp) whenever a post
+# changes, rebuilds the static site so pages point at them, and commits the
+# result back to the same branch. Authors (human or agent) only write markdown.
+#
+# Manual run with "force" re-renders every cover (use after a design change in
+# scripts/covers/render.mjs).
+name: Blog covers
+
+on:
+  push:
+    paths:
+      - "data/posts/**"
+      - "data/products.json"
+      - "scripts/covers/**"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Re-render every cover (not just missing ones)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: blog-covers-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install renderer
+        working-directory: scripts/covers
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Render covers
+        run: node scripts/covers/render.mjs ${{ inputs.force && '--force' || '' }}
+
+      - name: Rebuild site
+        run: node scripts/build.mjs
+
+      - name: Commit rendered covers
+        run: |
+          git config user.name "kod-covers[bot]"
+          git config user.email "kod-covers[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No cover changes."
+            exit 0
+          fi
+          git commit -m "Render blog covers [skip ci]"
+          git push

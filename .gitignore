@@ -11,3 +11,5 @@ enviroment.env.txt
 .DS_Store
 Thumbs.db
 _herotest.html
+scripts/covers/node_modules/
+scripts/covers/package-lock.json
