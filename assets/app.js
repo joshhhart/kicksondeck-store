@@ -548,7 +548,10 @@
   // Count Up — stats tick up when scrolled into view
   (() => {
     const els = $$("[data-countup]"); if (!els.length) return;
+    // The HTML carries the real numbers (crawlers and no-JS readers see "94",
+    // not "0"); zero them here so the tick-up still plays for humans.
     if (reduceMotion) { els.forEach((el) => (el.textContent = el.dataset.countup)); return; }
+    els.forEach((el) => (el.textContent = "0"));
     const run = (el) => {
       const target = parseFloat(el.dataset.countup) || 0, dur = 1100, t0 = performance.now();
       const tick = (t) => { const p = Math.min(1, (t - t0) / dur); el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };

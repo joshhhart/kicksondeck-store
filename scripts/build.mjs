@@ -488,10 +488,10 @@ function homePage() {
 </section>
 
 <section class="stats">
-  <div class="stat reveal"><div class="num"><span class="volt" data-countup="${products.length}">0</span></div><div class="lbl">Styles in stock</div></div>
+  <div class="stat reveal"><div class="num"><span class="volt" data-countup="${products.length}">${products.length}</span></div><div class="lbl">Styles in stock</div></div>
   <div class="stat reveal" data-d="1"><div class="num">1:1</div><div class="lbl">Craftsmanship</div></div>
-  <div class="stat reveal" data-d="2"><div class="num"><span data-countup="${POLICY.dispatchHours}">0</span><span class="volt">h</span></div><div class="lbl">Dispatch window</div></div>
-  <div class="stat reveal" data-d="3"><div class="num"><span data-countup="${POLICY.returnDays}">0</span>d</div><div class="lbl">Returns window</div></div>
+  <div class="stat reveal" data-d="2"><div class="num"><span data-countup="${POLICY.dispatchHours}">${POLICY.dispatchHours}</span><span class="volt">h</span></div><div class="lbl">Dispatch window</div></div>
+  <div class="stat reveal" data-d="3"><div class="num"><span data-countup="${POLICY.returnDays}">${POLICY.returnDays}</span>d</div><div class="lbl">Returns window</div></div>
 </section>
 
 <section class="section container">
