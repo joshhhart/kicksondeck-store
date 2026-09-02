@@ -41,6 +41,7 @@ const OG_DEFAULT = (products.find((p) => /zebra/i.test(p.name)) || products[0]).
 // "Reflective" but NOT "Non-Reflective" (the word reflective is a substring of non-reflective).
 const isReflective = (s = "") => /reflective/i.test(s) && !/non[\s-]?reflective/i.test(s);
 const money = (n) => "$" + Number(n || 0).toLocaleString("en-US");
+const SELF_FONTS = fs.existsSync(path.join(ROOT, "assets", "fonts", "fonts.css"));
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const priceLabel = (p) => (p.minPrice === p.maxPrice ? money(p.minPrice) : `From ${money(p.minPrice)}`);
 // Google truncates the SERP title around 60–65 characters. Half the blog
@@ -287,6 +288,11 @@ const PAGE_NAV = [
 function head(opts) {
   const { title, desc, canonical, ogImg = OG_DEFAULT, extraCss = "", ld = null, ogType = "website", extraMeta = "", preloadImg = "" } = opts;
   const FONT_HREF = "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800;125,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap";
+  // Self-hosted fonts (scripts/fonts/vendor.mjs) win when present: no third-party
+  // hop, the display face is preloaded, and CI/local renders get the real type.
+  const fontTags = () => SELF_FONTS
+    ? `<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-800-w125.woff2" crossorigin>\n<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/hanken-grotesk-400.woff2" crossorigin>\n<link rel="stylesheet" href="/assets/fonts/fonts.css">`
+    : `<link rel="preload" as="style" href="${FONT_HREF}">\n<link rel="stylesheet" href="${FONT_HREF}" media="print" onload="this.media='all'">\n<noscript><link rel="stylesheet" href="${FONT_HREF}"></noscript>`;
   // Google Fonts is render-blocking on the critical path and was the single
   // biggest LCP cost on mobile. Load it async (print -> all on load) with a
   // <noscript> fallback; --font-* already list system fallbacks so first paint
@@ -308,12 +314,8 @@ function head(opts) {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0a0a0b">
 ${extraMeta}<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-${preloadImg ? `<link rel="preload" as="image" href="${preloadImg}" fetchpriority="high">\n` : ""}<link rel="preload" as="style" href="${FONT_HREF}">
-<link rel="stylesheet" href="${FONT_HREF}" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="${FONT_HREF}"></noscript>
+${SELF_FONTS ? "" : `<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n`}<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+${preloadImg ? `<link rel="preload" as="image" href="${preloadImg}" fetchpriority="high">\n` : ""}${fontTags()}
 <link rel="stylesheet" href="/assets/styles.css">
 ${extraCss}${analyticsTags()}
 <script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand, analytics: { ga4Id: AN.ga4Id || "", dataEndpoint: AN.dataEndpoint || "" } })};document.documentElement.classList.remove('no-js');</script>
@@ -353,7 +355,7 @@ function drawerAndSearch() {
   return `
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="cart-drawer" aria-label="Shopping bag">
-  <div class="drawer-head"><h3>Your Bag <span class="count" id="cart-head-count"></span></h3><button class="icon-btn" id="cart-close" aria-label="Close">${I.close}</button></div>
+  <div class="drawer-head"><p class="drawer-title" id="cart-title">Your Bag <span class="count" id="cart-head-count"></span></p><button class="icon-btn" id="cart-close" aria-label="Close">${I.close}</button></div>
   <div class="drawer-body" id="cart-body"></div>
   <div class="drawer-foot" id="cart-foot" style="display:none">
     <div class="cart-reassure">
@@ -392,9 +394,9 @@ function footer() {
       <a class="brand" href="/"><span class="wordmark">Kicks on Deck</span></a>
       <p class="footer-blurb">Independent footwear for people who chase the silhouette, not the markup. Curated drops, 1:1 craftsmanship, free U.S. shipping.</p>
     </div>
-    <div class="footer-col"><h5>Shop</h5>${collections.map((c) => `<a href="/collection/${c.slug}/">${c.title}</a>`).join("")}<a href="/shop/">All Styles</a></div>
-    <div class="footer-col"><h5>Help</h5><a href="/faq/">FAQ</a><a href="/size-guide/">Size guide</a><a href="/shipping/">Shipping</a><a href="/returns/">Returns &amp; exchanges</a><a href="mailto:${CFG.brand.email}?subject=Order%20status">Track order</a></div>
-    <div class="footer-col"><h5>Connect</h5><a href="/about/">About us</a><a href="/contact/">Contact</a>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}${socialLink(SOCIAL.facebook, "Facebook")}<a href="/quiz/">Find your pair</a></div>
+    <div class="footer-col"><p class="footer-title">Shop</p>${collections.map((c) => `<a href="/collection/${c.slug}/">${c.title}</a>`).join("")}<a href="/shop/">All Styles</a></div>
+    <div class="footer-col"><p class="footer-title">Help</p><a href="/faq/">FAQ</a><a href="/size-guide/">Size guide</a><a href="/shipping/">Shipping</a><a href="/returns/">Returns &amp; exchanges</a><a href="mailto:${CFG.brand.email}?subject=Order%20status">Track order</a></div>
+    <div class="footer-col"><p class="footer-title">Connect</p><a href="/about/">About us</a><a href="/contact/">Contact</a>${socialLink(SOCIAL.instagram, "Instagram")}${socialLink(SOCIAL.tiktok, "TikTok")}${socialLink(SOCIAL.facebook, "Facebook")}<a href="/quiz/">Find your pair</a></div>
   </div>
   <div class="footer-trust">
     <span>${I.shield} ${esc(POLICY.returnDays)}-day returns</span>
@@ -492,9 +494,9 @@ function homePage() {
       <h2>Built for<br>the streets</h2>
       <p>Every pair is sourced from the highest tier of independent production — premium Primeknit-style uppers, boost-grade midsoles, and dialed-in proportions. Inspected by hand before it ships.</p>
       <div class="feature-list">
-        <div class="fl"><span class="fl-num">01</span><div><h4>1:1 construction</h4><p>Matched to the original last, stitch for stitch.</p></div></div>
-        <div class="fl"><span class="fl-num">02</span><div><h4>Inspected & shipped fast</h4><p>QC photos on request. Dispatched within 48 hours.</p></div></div>
-        <div class="fl"><span class="fl-num">03</span><div><h4>Buyer protection</h4><p>7-day window. Sizing help any time.</p></div></div>
+        <div class="fl"><span class="fl-num">01</span><div><h3>1:1 construction</h3><p>Matched to the original last, stitch for stitch.</p></div></div>
+        <div class="fl"><span class="fl-num">02</span><div><h3>Inspected & shipped fast</h3><p>QC photos on request. Dispatched within 48 hours.</p></div></div>
+        <div class="fl"><span class="fl-num">03</span><div><h3>Buyer protection</h3><p>7-day window. Sizing help any time.</p></div></div>
       </div>
     </div>
     <div class="story-visual reveal" data-d="2"><img src="${(products.find((p) => /cream|bone|sand/i.test(p.name)) || products[1]).image}" alt="Featured pair"></div>
