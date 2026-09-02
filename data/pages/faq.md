@@ -51,3 +51,19 @@ Checkout runs through Stripe, which covers cards, Apple Pay, Google Pay, Link an
 ## Why are you cheaper than resale?
 
 Because there's no resale market between you and us. Resale prices reflect scarcity and flipper margin, not what a shoe costs to make. We buy from the top production tier, inspect each pair, and price it once.
+
+## Is Kicks on Deck legit?
+
+Yes, and here is what that means in practice. We are an independent store based on South Florida's Treasure Coast with one catalogue, one price per pair, a real inbox at [{{EMAIL}}]({{EMAILLINK}}) and a phone line at {{PHONE}}. Checkout runs through Stripe, every order ships tracked within {{DISPATCH}} hours, and you get {{RETURNDAYS}} days from delivery to return an unworn pair. We also say the one thing most rep stores will not: every pair here is a replica, labelled as such, and we are not affiliated with adidas or Yeezy.
+
+## Where is Kicks on Deck located?
+
+South Florida, on the Treasure Coast. We are an online store and ship to {{COUNTRIES}}; there is no walk-in showroom. If you are searching "sneaker store near me" for this style of shoe, [here is what to actually look for](/blog/sneaker-store-near-me/).
+
+## Do you sell kids' sizes?
+
+Not yet. The catalogue runs men's US 4 to 13 on the 350 V2 (women's sizes labelled W from W5) and whole sizes on the Foam Runner and Slide. Smaller feet usually work on the 350 V2 in W5 to W7; the [Foam Runner sizing guide](/blog/yeezy-foam-runner-sizing/) covers the smallest options there. Vote for kids sizes on the [next drop poll](/#vote) and we will stock them when the demand is there.
+
+## Foam Runner or Slide, which is more comfortable?
+
+For all-day walking, the Foam Runner: it wraps the whole foot and the vents keep it cool. For pool, beach and quick errands, the Slide: one strap, on and off in a second, and it dries fast. Both run big and come in whole sizes, so size down one. The full comparison is in [Foam Runner vs Slides](/blog/foam-runner-vs-slides/).

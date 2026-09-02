@@ -1,0 +1,73 @@
+# On demand: vendor the web fonts (optional), build, screenshot every template
+# at desktop + mobile with real fonts and images, run Lighthouse, and push the
+# results to the claude/site-audit-results branch for review.
+name: Site audit
+
+on:
+  push:
+    paths:
+      - ".github/workflows/site-audit.yml"
+      - "scripts/audit/**"
+      - "scripts/fonts/**"
+  workflow_dispatch:
+    inputs:
+      vendor_fonts:
+        description: "Re-download and commit the self-hosted fonts to this branch first"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Vendor fonts
+        # On demand, or automatically the first time the self-hosted set is missing.
+        if: ${{ inputs.vendor_fonts || hashFiles('assets/fonts/fonts.css') == '' }}
+        run: |
+          node scripts/fonts/vendor.mjs
+          node scripts/build.mjs
+          git config user.name "kod-audit[bot]"
+          git config user.email "kod-audit[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || (git commit -m "Vendor self-hosted web fonts [skip ci]" && git push)
+
+      - name: Install audit tooling
+        working-directory: scripts/audit
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Build site
+        run: node scripts/build.mjs
+
+      - name: Run audit
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: node scripts/audit/run.mjs
+
+      - name: Publish results branch
+        run: |
+          git config user.name "kod-audit[bot]"
+          git config user.email "kod-audit[bot]@users.noreply.github.com"
+          rm -rf /tmp/results && mkdir -p /tmp/results
+          cp -r audit /tmp/results/audit
+          git checkout --orphan site-audit-results
+          git rm -rfq . >/dev/null 2>&1 || true
+          git clean -fdxq
+          cp -r /tmp/results/audit ./audit
+          echo "# Site audit results — ${GITHUB_SHA} ($(date -u +%Y-%m-%dT%H:%MZ))" > README.md
+          git add -A
+          git commit -qm "Site audit results for ${GITHUB_SHA}"
+          git push -f origin HEAD:claude/site-audit-results

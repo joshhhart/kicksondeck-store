@@ -2,4 +2,77 @@ User-agent: *
 Allow: /
 Disallow: /data/
 
+# AI assistants and answer engines: allowed. Machine-readable site summary at https://kicksondeck.store/llms.txt
+User-agent: GPTBot
+Allow: /
+Disallow: /data/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /data/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /data/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /data/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /data/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /data/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /data/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /data/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /data/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /data/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /data/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /data/
+
+User-agent: Applebot
+Allow: /
+Disallow: /data/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /data/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /data/
+
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /data/
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /data/
+
+User-agent: CCBot
+Allow: /
+Disallow: /data/
+
 Sitemap: https://kicksondeck.store/sitemap.xml

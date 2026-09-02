@@ -124,6 +124,7 @@
     const badge = $("#cart-count");
     const c = count();
     if (badge) { badge.textContent = c; badge.classList.toggle("show", c > 0); }
+    $("#cart-open")?.setAttribute("aria-label", `Open bag (${c})`);
     const body = $("#cart-body"), foot = $("#cart-foot"), head = $("#cart-head-count");
     if (!body) return;
     if (head) head.textContent = c ? `(${c})` : "";
@@ -513,7 +514,7 @@
     // Skip the particle field when the 3D hero will take over (it overlaps the
     // 3D scene with messy connecting lines). Mirrors the 3D-hero eligibility.
     const heroEl = document.getElementById("hero");
-    const willBe3d = heroEl && heroEl.dataset.hero3d && !(navigator.connection && navigator.connection.saveData);
+    const willBe3d = heroEl && heroEl.dataset.hero3d && !(navigator.connection && navigator.connection.saveData) && matchMedia("(min-width: 1024px)").matches;
     const cv = $("#hero-particles"); if (!cv || reduceMotion || willBe3d) return;
     const ctx = cv.getContext("2d"); if (!ctx) return;
     let w = 0, h = 0, dpr = 1, parts = [], raf = 0; const mouse = { x: -999, y: -999 };
@@ -548,7 +549,10 @@
   // Count Up — stats tick up when scrolled into view
   (() => {
     const els = $$("[data-countup]"); if (!els.length) return;
+    // The HTML carries the real numbers (crawlers and no-JS readers see "94",
+    // not "0"); zero them here so the tick-up still plays for humans.
     if (reduceMotion) { els.forEach((el) => (el.textContent = el.dataset.countup)); return; }
+    els.forEach((el) => (el.textContent = "0"));
     const run = (el) => {
       const target = parseFloat(el.dataset.countup) || 0, dur = 1100, t0 = performance.now();
       const tick = (t) => { const p = Math.min(1, (t - t0) / dur); el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };
@@ -637,8 +641,18 @@
     script.src = "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
     document.head.appendChild(script);
   };
-  if (window.requestIdleCallback) requestIdleCallback(boot, { timeout: 2500 });
-  else setTimeout(boot, 1200);
+  // Opt-in, desktop only: 250 KB of model-viewer plus a 1.7 MB mesh was the
+  // single biggest main-thread cost on the site (Lighthouse: ~158 s simulated
+  // TBT on desktop) and it hid the brand statement behind a spinning shoe.
+  // The static hero is the first impression; "Spin it in 3D" loads the
+  // showcase on request for people who want to play with it.
+  const bigScreen = matchMedia("(min-width: 1024px)").matches;
+  const capable = (navigator.deviceMemory || 8) >= 4 && (navigator.hardwareConcurrency || 8) >= 4;
+  const btn = document.getElementById("hero-3d-btn");
+  if (!bigScreen || !capable || !btn) return;
+  btn.hidden = false;
+  let booted = false;
+  btn.addEventListener("click", function () { if (booted) return; booted = true; btn.textContent = "Loading 3D…"; btn.disabled = true; boot(); }, { once: true });
 
   var shoe = hero.querySelector(".hero-shoe");
   var stage = hero.querySelector(".hero-stage");
@@ -661,8 +675,10 @@
   mv.setAttribute("environment-image", "neutral");
   mv.setAttribute("tone-mapping", "aces");
   mv.setAttribute("aria-hidden", "true");
-  shoe.appendChild(mv);
-  hero.classList.add("hero--3d");
+  // Attach + switch layouts only once the viewer script is requested.
+  const origBoot = boot;
+  boot = function () { origBoot(); shoe.appendChild(mv); hero.classList.add("hero--3d"); startShowcase(); };
+  function startShowcase() {
 
   // Reveal the CTAs after the showcase establishes (or on first scroll).
   var revealed = false;
@@ -700,4 +716,5 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   window.addEventListener("resize", onScroll, { passive: true });
+  }
 })();
