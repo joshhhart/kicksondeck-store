@@ -1,0 +1,1667 @@
+{
+  "generatedAt": "2026-09-02T20:51:05.272Z",
+  "screens": [
+    {
+      "key": "home",
+      "vp": "desktop",
+      "url": "/",
+      "file": "home-desktop.jpg",
+      "overflow": false,
+      "height": 7789,
+      "h1": [
+        "Kickson Deck"
+      ],
+      "title": "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "home",
+      "vp": "mobile",
+      "url": "/",
+      "file": "home-mobile.jpg",
+      "overflow": false,
+      "height": 11941,
+      "h1": [
+        "Kickson Deck"
+      ],
+      "title": "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "shop",
+      "vp": "desktop",
+      "url": "/shop/",
+      "file": "shop-desktop.jpg",
+      "overflow": false,
+      "height": 10609,
+      "h1": [
+        "ShopAll"
+      ],
+      "title": "Shop All Rep Sneakers — 94 Styles from $18 | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "shop",
+      "vp": "mobile",
+      "url": "/shop/",
+      "file": "shop-mobile.jpg",
+      "overflow": false,
+      "height": 42453,
+      "h1": [
+        "ShopAll"
+      ],
+      "title": "Shop All Rep Sneakers — 94 Styles from $18 | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "collection",
+      "vp": "desktop",
+      "url": "/collection/350-v2/",
+      "file": "collection-desktop.jpg",
+      "overflow": false,
+      "height": 8265,
+      "h1": [
+        "350V2"
+      ],
+      "title": "350 V2 Reps — 62 Colourways from $149 | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "collection",
+      "vp": "mobile",
+      "url": "/collection/350-v2/",
+      "file": "collection-mobile.jpg",
+      "overflow": false,
+      "height": 29893,
+      "h1": [
+        "350V2"
+      ],
+      "title": "350 V2 Reps — 62 Colourways from $149 | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "pdp",
+      "vp": "desktop",
+      "url": "/product/zebra-yz-boost-350-v2/",
+      "file": "pdp-desktop.jpg",
+      "overflow": false,
+      "height": 3939,
+      "h1": [
+        "Zebra YZ Boost 350 V2"
+      ],
+      "title": "Zebra 350 V2 Rep — $149 | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "pdp",
+      "vp": "mobile",
+      "url": "/product/zebra-yz-boost-350-v2/",
+      "file": "pdp-mobile.jpg",
+      "overflow": false,
+      "height": 6432,
+      "h1": [
+        "Zebra YZ Boost 350 V2"
+      ],
+      "title": "Zebra 350 V2 Rep — $149 | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "pdp_foam",
+      "vp": "desktop",
+      "url": "/product/onyx-yz-foam-rnnr/",
+      "file": "pdp_foam-desktop.jpg",
+      "overflow": false,
+      "height": 3816,
+      "h1": [
+        "Onyx YZ Foam RNNR"
+      ],
+      "title": "Onyx Foam Runner Rep — $79 | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "pdp_foam",
+      "vp": "mobile",
+      "url": "/product/onyx-yz-foam-rnnr/",
+      "file": "pdp_foam-mobile.jpg",
+      "overflow": false,
+      "height": 6268,
+      "h1": [
+        "Onyx YZ Foam RNNR"
+      ],
+      "title": "Onyx Foam Runner Rep — $79 | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "blog",
+      "vp": "desktop",
+      "url": "/blog/",
+      "file": "blog-desktop.jpg",
+      "overflow": false,
+      "height": 6172,
+      "h1": [
+        "Drops, guides& culture"
+      ],
+      "title": "Blog — Sneaker Guides, Yeezy News & Culture | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "blog",
+      "vp": "mobile",
+      "url": "/blog/",
+      "file": "blog-mobile.jpg",
+      "overflow": false,
+      "height": 14140,
+      "h1": [
+        "Drops, guides& culture"
+      ],
+      "title": "Blog — Sneaker Guides, Yeezy News & Culture | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "post",
+      "vp": "desktop",
+      "url": "/blog/yeezy-slides-sizing/",
+      "file": "post-desktop.jpg",
+      "overflow": false,
+      "height": 6931,
+      "h1": [
+        "Yeezy Slides Sizing — Do They Run Big or Small?"
+      ],
+      "title": "Yeezy Slides Sizing — Do They Run Big or Small?",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "post",
+      "vp": "mobile",
+      "url": "/blog/yeezy-slides-sizing/",
+      "file": "post-mobile.jpg",
+      "overflow": false,
+      "height": 7942,
+      "h1": [
+        "Yeezy Slides Sizing — Do They Run Big or Small?"
+      ],
+      "title": "Yeezy Slides Sizing — Do They Run Big or Small?",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "quiz",
+      "vp": "desktop",
+      "url": "/quiz/",
+      "file": "quiz-desktop.jpg",
+      "overflow": false,
+      "height": 2969,
+      "h1": [
+        "Which pairis you?"
+      ],
+      "title": "Find Your Pair — Sneaker Style Quiz | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "quiz",
+      "vp": "mobile",
+      "url": "/quiz/",
+      "file": "quiz-mobile.jpg",
+      "overflow": false,
+      "height": 3233,
+      "h1": [
+        "Which pairis you?"
+      ],
+      "title": "Find Your Pair — Sneaker Style Quiz | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "faq",
+      "vp": "desktop",
+      "url": "/faq/",
+      "file": "faq-desktop.jpg",
+      "overflow": false,
+      "height": 5845,
+      "h1": [
+        "Questions,answered straight"
+      ],
+      "title": "FAQ — Reps, Sizing, Shipping & Returns | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "faq",
+      "vp": "mobile",
+      "url": "/faq/",
+      "file": "faq-mobile.jpg",
+      "overflow": false,
+      "height": 7616,
+      "h1": [
+        "Questions,answered straight"
+      ],
+      "title": "FAQ — Reps, Sizing, Shipping & Returns | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "shipping",
+      "vp": "desktop",
+      "url": "/shipping/",
+      "file": "shipping-desktop.jpg",
+      "overflow": false,
+      "height": 4092,
+      "h1": [
+        "Shipping& delivery"
+      ],
+      "title": "Shipping & Delivery | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "shipping",
+      "vp": "mobile",
+      "url": "/shipping/",
+      "file": "shipping-mobile.jpg",
+      "overflow": false,
+      "height": 5048,
+      "h1": [
+        "Shipping& delivery"
+      ],
+      "title": "Shipping & Delivery | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "about",
+      "vp": "desktop",
+      "url": "/about/",
+      "file": "about-desktop.jpg",
+      "overflow": false,
+      "height": 4074,
+      "h1": [
+        "AboutKicks on Deck"
+      ],
+      "title": "About Kicks on Deck | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "about",
+      "vp": "mobile",
+      "url": "/about/",
+      "file": "about-mobile.jpg",
+      "overflow": false,
+      "height": 5276,
+      "h1": [
+        "AboutKicks on Deck"
+      ],
+      "title": "About Kicks on Deck | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "contact",
+      "vp": "desktop",
+      "url": "/contact/",
+      "file": "contact-desktop.jpg",
+      "overflow": false,
+      "height": 3487,
+      "h1": [
+        "Talkto us"
+      ],
+      "title": "Contact Kicks on Deck | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "contact",
+      "vp": "mobile",
+      "url": "/contact/",
+      "file": "contact-mobile.jpg",
+      "overflow": false,
+      "height": 4258,
+      "h1": [
+        "Talkto us"
+      ],
+      "title": "Contact Kicks on Deck | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "size_guide",
+      "vp": "desktop",
+      "url": "/size-guide/",
+      "file": "size_guide-desktop.jpg",
+      "overflow": false,
+      "height": 5035,
+      "h1": [
+        "Sizeguide"
+      ],
+      "title": "Size Guide — 350 V2, Foam Runners & Slides | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "size_guide",
+      "vp": "mobile",
+      "url": "/size-guide/",
+      "file": "size_guide-mobile.jpg",
+      "overflow": false,
+      "height": 6006,
+      "h1": [
+        "Sizeguide"
+      ],
+      "title": "Size Guide — 350 V2, Foam Runners & Slides | Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "notfound",
+      "vp": "desktop",
+      "url": "/404.html",
+      "file": "notfound-desktop.jpg",
+      "overflow": false,
+      "height": 1696,
+      "h1": [
+        "404"
+      ],
+      "title": "Page Not Found — Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    },
+    {
+      "key": "notfound",
+      "vp": "mobile",
+      "url": "/404.html",
+      "file": "notfound-mobile.jpg",
+      "overflow": false,
+      "height": 2125,
+      "h1": [
+        "404"
+      ],
+      "title": "Page Not Found — Kicks on Deck",
+      "brokenImgs": [],
+      "fontDisplay": "Archivo, \"Archivo Expanded\", \"Arial Narrow\", sans-serif"
+    }
+  ],
+  "lighthouse": {
+    "home-mobile": {
+      "scores": {
+        "performance": 64,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 3981,
+        "cls": 0.0001451011989742061,
+        "tbt": 827,
+        "fcp": 2706,
+        "si": 2706
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.6,
+          "displayValue": "2.7 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.5,
+          "displayValue": "4.0 s"
+        },
+        {
+          "id": "total-blocking-time",
+          "title": "Total Blocking Time",
+          "score": 0.35,
+          "displayValue": "830 ms"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0,
+          "displayValue": "1,160 ms"
+        },
+        {
+          "id": "errors-in-console",
+          "title": "Browser errors were logged to the console",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.61,
+          "displayValue": "6.3 s"
+        },
+        {
+          "id": "mainthread-work-breakdown",
+          "title": "Minimize main-thread work",
+          "score": 0,
+          "displayValue": "4.9 s"
+        },
+        {
+          "id": "bootup-time",
+          "title": "Reduce JavaScript execution time",
+          "score": 0,
+          "displayValue": "1.3 s"
+        },
+        {
+          "id": "third-party-summary",
+          "title": "Reduce the impact of third-party code",
+          "score": 0,
+          "displayValue": "Third-party code blocked the main thread for 660 ms"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "3,980 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "12 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0.5,
+          "displayValue": "Est savings of 0 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0.5,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 26 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0.5,
+          "displayValue": "Est savings of 73 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 94 KiB"
+        },
+        {
+          "id": "uses-responsive-images",
+          "title": "Properly size images",
+          "score": 0,
+          "displayValue": "Est savings of 67 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 453 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 27 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0,
+          "displayValue": "Est savings of 124 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 150 ms"
+        }
+      ]
+    },
+    "home-desktop": {
+      "scores": {
+        "performance": 61,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 5734,
+        "cls": 0.00266595605339429,
+        "tbt": 38,
+        "fcp": 2711,
+        "si": 2711
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.1,
+          "displayValue": "2.7 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.05,
+          "displayValue": "5.7 s"
+        },
+        {
+          "id": "speed-index",
+          "title": "Speed Index",
+          "score": 0.35,
+          "displayValue": "2.7 s"
+        },
+        {
+          "id": "errors-in-console",
+          "title": "Browser errors were logged to the console",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.27,
+          "displayValue": "6.0 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "5,730 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "12 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0.5,
+          "displayValue": "Est savings of 0 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0.5,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0.5,
+          "displayValue": "Est savings of 27 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 95 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 94 KiB"
+        },
+        {
+          "id": "uses-responsive-images",
+          "title": "Properly size images",
+          "score": 0.5,
+          "displayValue": "Est savings of 87 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 453 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 27 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "displayValue": "Est savings of 32 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 150 ms"
+        }
+      ]
+    },
+    "shop-mobile": {
+      "scores": {
+        "performance": 71,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 5938,
+        "cls": 0.0001443968242219041,
+        "tbt": 46,
+        "fcp": 3390,
+        "si": 3390
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.37,
+          "displayValue": "3.4 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.14,
+          "displayValue": "5.9 s"
+        },
+        {
+          "id": "speed-index",
+          "title": "Speed Index",
+          "score": 0.89,
+          "displayValue": "3.4 s"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.65,
+          "displayValue": "6.0 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "5,940 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "10 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0,
+          "displayValue": "Est savings of 150 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 35 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 94 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 190 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "dom-size",
+          "title": "Avoid an excessive DOM size",
+          "score": 0.5,
+          "displayValue": "1,068 elements"
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 349 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 93 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "displayValue": "Est savings of 4 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 150 ms"
+        }
+      ]
+    },
+    "shop-desktop": {
+      "scores": {
+        "performance": 58,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 5935,
+        "cls": 0.0006064197913467596,
+        "tbt": 25,
+        "fcp": 3305,
+        "si": 3305
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.04,
+          "displayValue": "3.3 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.04,
+          "displayValue": "5.9 s"
+        },
+        {
+          "id": "speed-index",
+          "title": "Speed Index",
+          "score": 0.2,
+          "displayValue": "3.3 s"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.27,
+          "displayValue": "6.0 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "5,940 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "10 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0,
+          "displayValue": "Est savings of 600 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 35 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 94 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 190 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "dom-size",
+          "title": "Avoid an excessive DOM size",
+          "score": 0.5,
+          "displayValue": "1,068 elements"
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 349 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 93 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "displayValue": "Est savings of 8 KiB"
+        },
+        {
+          "id": "lcp-discovery-insight",
+          "title": "LCP request discovery",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 600 ms"
+        }
+      ]
+    },
+    "pdp-mobile": {
+      "scores": {
+        "performance": 59,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 5493,
+        "cls": 0.0001451011989742061,
+        "tbt": 642,
+        "fcp": 2704,
+        "si": 2704
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.6,
+          "displayValue": "2.7 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.19,
+          "displayValue": "5.5 s"
+        },
+        {
+          "id": "total-blocking-time",
+          "title": "Total Blocking Time",
+          "score": 0.46,
+          "displayValue": "640 ms"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0.03,
+          "displayValue": "650 ms"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.7,
+          "displayValue": "5.5 s"
+        },
+        {
+          "id": "bootup-time",
+          "title": "Reduce JavaScript execution time",
+          "score": 0,
+          "displayValue": "1.5 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "5,490 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "11 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0.5,
+          "displayValue": "Est savings of 0 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0.5,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 31 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 93 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 92 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 383 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 26 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0,
+          "displayValue": "Est savings of 22 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 150 ms"
+        }
+      ]
+    },
+    "pdp-desktop": {
+      "scores": {
+        "performance": 61,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 5488,
+        "cls": 0.000606897674598719,
+        "tbt": 42,
+        "fcp": 2705,
+        "si": 2705
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.1,
+          "displayValue": "2.7 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.06,
+          "displayValue": "5.5 s"
+        },
+        {
+          "id": "speed-index",
+          "title": "Speed Index",
+          "score": 0.35,
+          "displayValue": "2.7 s"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.32,
+          "displayValue": "5.5 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "5,490 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "11 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0.5,
+          "displayValue": "Est savings of 0 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0.5,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 31 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 93 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 92 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 383 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 26 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "displayValue": "Est savings of 4 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 150 ms"
+        }
+      ]
+    },
+    "post-mobile": {
+      "scores": {
+        "performance": 77,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 4959,
+        "cls": 0.0001443968242219041,
+        "tbt": 16,
+        "fcp": 2854,
+        "si": 2854
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.54,
+          "displayValue": "2.9 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.27,
+          "displayValue": "5.0 s"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.76,
+          "displayValue": "5.0 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "4,960 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "13 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0.5,
+          "displayValue": "Est savings of 0 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 32 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 95 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 84 KiB"
+        },
+        {
+          "id": "uses-responsive-images",
+          "title": "Properly size images",
+          "score": 0,
+          "displayValue": "Est savings of 29 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 441 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 19 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0,
+          "displayValue": "Est savings of 38 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 150 ms"
+        }
+      ]
+    },
+    "post-desktop": {
+      "scores": {
+        "performance": 61,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 4989,
+        "cls": 0.0008299987923743418,
+        "tbt": 42,
+        "fcp": 2857,
+        "si": 2857
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.08,
+          "displayValue": "2.9 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.08,
+          "displayValue": "5.0 s"
+        },
+        {
+          "id": "speed-index",
+          "title": "Speed Index",
+          "score": 0.31,
+          "displayValue": "2.9 s"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.4,
+          "displayValue": "5.1 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "4,990 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "13 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0.5,
+          "displayValue": "Est savings of 0 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 32 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 94 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 84 KiB"
+        },
+        {
+          "id": "uses-responsive-images",
+          "title": "Properly size images",
+          "score": 0,
+          "displayValue": "Est savings of 29 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 441 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 19 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0,
+          "displayValue": "Est savings of 28 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 150 ms"
+        }
+      ]
+    },
+    "faq-mobile": {
+      "scores": {
+        "performance": 92,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 2859,
+        "cls": 0.0001447490115980551,
+        "tbt": 22,
+        "fcp": 2406,
+        "si": 2406
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.71,
+          "displayValue": "2.4 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.82,
+          "displayValue": "2.9 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "2,860 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "9 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0,
+          "displayValue": "Est savings of 600 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0.5,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 36 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0.5,
+          "displayValue": "Est savings of 95 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 85 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 315 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 20 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 600 ms"
+        }
+      ]
+    },
+    "faq-desktop": {
+      "scores": {
+        "performance": 64,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp": 3839,
+        "cls": 0.0006064197913467596,
+        "tbt": 56,
+        "fcp": 2759,
+        "si": 2759
+      },
+      "failing": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.09,
+          "displayValue": "2.8 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.19,
+          "displayValue": "3.8 s"
+        },
+        {
+          "id": "speed-index",
+          "title": "Speed Index",
+          "score": 0.33,
+          "displayValue": "2.8 s"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.61,
+          "displayValue": "3.9 s"
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "title": "Largest Contentful Paint element",
+          "score": 0,
+          "displayValue": "3,840 ms"
+        },
+        {
+          "id": "uses-long-cache-ttl",
+          "title": "Serve static assets with an efficient cache policy",
+          "score": 0.5,
+          "displayValue": "9 resources found"
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "score": 0,
+          "displayValue": "Est savings of 450 ms"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 13 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0,
+          "displayValue": "Est savings of 36 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "displayValue": "Est savings of 95 KiB"
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "score": 0,
+          "displayValue": "Est savings of 85 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "displayValue": ""
+        },
+        {
+          "id": "cache-insight",
+          "title": "Use efficient cache lifetimes",
+          "score": 0,
+          "displayValue": "Est savings of 315 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0.5,
+          "displayValue": "Est savings of 20 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render blocking requests",
+          "score": 0,
+          "displayValue": "Est savings of 450 ms"
+        }
+      ]
+    }
+  },
+  "console": {
+    "home-desktop": [
+      "Access to fetch at 'https://kod-data.hartjosh15.workers.dev/stats' from origin 'http://127.0.0.1:5050' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED"
+    ],
+    "home-mobile": [
+      "Access to fetch at 'https://kod-data.hartjosh15.workers.dev/stats' from origin 'http://127.0.0.1:5050' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED"
+    ],
+    "blog-desktop": [
+      "Access to fetch at 'https://kod-data.hartjosh15.workers.dev/stats' from origin 'http://127.0.0.1:5050' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED"
+    ],
+    "blog-mobile": [
+      "Access to fetch at 'https://kod-data.hartjosh15.workers.dev/stats' from origin 'http://127.0.0.1:5050' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED"
+    ]
+  }
+}
