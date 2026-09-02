@@ -286,7 +286,7 @@ const PAGE_NAV = [
 
 function head(opts) {
   const { title, desc, canonical, ogImg = OG_DEFAULT, extraCss = "", ld = null, ogType = "website", extraMeta = "", preloadImg = "" } = opts;
-  const FONT_HREF = "https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap";
+  const FONT_HREF = "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800;125,900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap";
   // Google Fonts is render-blocking on the critical path and was the single
   // biggest LCP cost on mobile. Load it async (print -> all on load) with a
   // <noscript> fallback; --font-* already list system fallbacks so first paint

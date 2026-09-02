@@ -39,7 +39,7 @@ const FORCE = args.includes("--force");
 const ONLY = args.includes("--only") ? args[args.indexOf("--only") + 1] : "";
 const W = 1200, H = 750;
 const VOLT = "#d8ff3e", BG = "#0a0a0b";
-const FONT_HREF = "https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=swap";
+const FONT_HREF = "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800;125,900&family=JetBrains+Mono:wght@500;700&display=swap";
 
 /* ---------- posts ---------- */
 function parseFront(raw) {
@@ -211,7 +211,7 @@ function html(post, shots, fonts) {
 ${fonts}
 <style>
   html,body{margin:0;background:${BG}}
-  .c{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:${BG};font-family:"Archivo Expanded","Archivo",system-ui,sans-serif;color:#f4f4f1}
+  .c{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:${BG};font-family:"Archivo","Archivo Expanded",system-ui,sans-serif;font-stretch:125%;color:#f4f4f1}
   .wash{position:absolute;inset:0;background:radial-gradient(60% 55% at 78% 22%, rgba(216,255,62,.13), transparent 70%)}
   .floor{position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(to top, rgba(255,255,255,.045), transparent)}
   .glow{position:absolute;left:640px;top:520px;width:520px;height:120px;border-radius:50%;background:radial-gradient(closest-side, rgba(216,255,62,.32), rgba(216,255,62,0));filter:blur(18px)}
@@ -284,15 +284,15 @@ async function main() {
       const fontsOk = await page.evaluate(async () => {
         try {
           await Promise.all([
-            document.fonts.load('800 62px "Archivo Expanded"'),
+            document.fonts.load('800 expanded 62px "Archivo"'),
             document.fonts.load('700 14px "JetBrains Mono"'),
           ]);
           await document.fonts.ready;
         } catch {}
         window.__fit();
-        return document.fonts.check('800 62px "Archivo Expanded"');
+        return document.fonts.check('800 expanded 62px "Archivo"');
       });
-      if (!fontsOk) console.warn(`  (Archivo Expanded not available for ${post.slug}; rendered with fallback font)`);
+      if (!fontsOk) console.warn(`  (Archivo not available for ${post.slug}; rendered with fallback font)`);
       await page.waitForTimeout(150);
       const png = await page.screenshot({ type: "png", clip: { x: 0, y: 0, width: W, height: H } });
       // Chromium encodes WebP natively — no sharp/imagemagick dependency.
