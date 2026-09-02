@@ -15,4 +15,4 @@ scripts/covers/node_modules/
 scripts/covers/package-lock.json
 scripts/audit/node_modules/
 scripts/audit/package-lock.json
-audit/
+/audit/

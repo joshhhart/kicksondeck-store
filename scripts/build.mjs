@@ -42,6 +42,25 @@ const OG_DEFAULT = (products.find((p) => /zebra/i.test(p.name)) || products[0]).
 const isReflective = (s = "") => /reflective/i.test(s) && !/non[\s-]?reflective/i.test(s);
 const money = (n) => "$" + Number(n || 0).toLocaleString("en-US");
 const SELF_FONTS = fs.existsSync(path.join(ROOT, "assets", "fonts", "fonts.css"));
+// Google's Organization logo rich result needs a raster (PNG/JPG), not the SVG favicon.
+const LOGO_URL = fs.existsSync(path.join(ROOT, "assets", "logo.png")) ? `${ORIGIN}/assets/logo.png` : `${ORIGIN}/assets/favicon.svg`;
+// One source of truth for the sizing rule per silhouette — the PDP FAQ, the
+// collection FAQ, the "quick facts" block and llms.txt all read from here so an
+// AI answer engine never sees two different rules for the same shoe.
+const SIZING_RULE = {
+  "350-v2": "The 350 V2 fits close to true to size — take your normal US size, and go up a half if you have wide feet. Women's sizes are labelled W.",
+  "foam-rnnr": "Foam Runners run big and only come in whole sizes — size down one from your normal US size. If you're between sizes, take the smaller one.",
+  slides: "Slides run big and only come in whole sizes — size down one from your normal US size, or two if you like them snug.",
+};
+const SIZING_SHORT = {
+  "350-v2": "Close to true to size; half up for wide feet",
+  "foam-rnnr": "Runs big, whole sizes only; size down one",
+  slides: "Runs big, whole sizes only; size down one",
+};
+const AUTHENTICITY = (what, price) => `No. This is an independently produced 1:1 replica and we say so on every page — Kicks on Deck is not affiliated with, authorized by or endorsed by adidas, Yeezy or any trademark holder. You are buying the silhouette and the build quality${price ? `, at ${price} instead of resale` : ""}.`;
+const SHIP_ANSWER = () => `Dispatched within ${POLICY.dispatchHours} hours with tracking emailed at dispatch, then ${POLICY.transitMinDays}–${POLICY.transitMaxDays} business days in transit. Shipping is free to ${POLICY.shipCountries} on every order.`;
+const RETURN_ANSWER = () => `You have ${POLICY.returnDays} days from delivery to return an unworn pair or swap it for another size. Email ${CFG.brand.email} with your order number and we send the return address the same day.`;
+const faqLd = (items) => ({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const priceLabel = (p) => (p.minPrice === p.maxPrice ? money(p.minPrice) : `From ${money(p.minPrice)}`);
 // Google truncates the SERP title around 60–65 characters. Half the blog
@@ -312,6 +331,12 @@ function head(opts) {
 <meta property="og:image" content="${/^\//.test(ogImg) ? ORIGIN + ogImg : ogImg}">
 <meta property="og:url" content="${canonical}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:image" content="${/^\//.test(ogImg) ? ORIGIN + ogImg : ogImg}">
+<meta property="og:locale" content="en_US">
+<meta name="robots" content="${opts.robots || "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"}">
+<link rel="alternate" type="application/rss+xml" title="Kicks on Deck — Journal" href="${ORIGIN}/blog/feed.xml">
 <meta name="theme-color" content="#0a0a0b">
 ${extraMeta}<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 ${SELF_FONTS ? "" : `<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n`}<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
@@ -510,9 +535,9 @@ ${captureBand()}`;
 
   const socials = [SOCIAL.instagram, SOCIAL.tiktok, SOCIAL.facebook].filter(Boolean).map((u) => (/^https?:\/\//.test(u) ? u : `https://${u}`));
   const homeLd = [
-    { "@context": "https://schema.org", "@type": "Organization", "@id": `${ORIGIN}/#org`, name: "Kicks on Deck", url: `${ORIGIN}/`, logo: `${ORIGIN}/assets/favicon.svg`, email: CFG.brand.email, description: "Independent footwear — 1:1 rep Yeezy 350 V2, Foam Runners and Slides. Honest pricing, free U.S. shipping.", ...(socials.length ? { sameAs: socials } : {}) },
-    { "@context": "https://schema.org", "@type": "WebSite", "@id": `${ORIGIN}/#website`, name: "Kicks on Deck", url: `${ORIGIN}/`, publisher: { "@id": `${ORIGIN}/#org` } },
-    { "@context": "https://schema.org", "@type": "Store", "@id": `${ORIGIN}/#store`, name: "Kicks on Deck", url: `${ORIGIN}/`, image: hero.image, email: CFG.brand.email, telephone: CFG.brand.phone, priceRange: "$$", parentOrganization: { "@id": `${ORIGIN}/#org` }, address: { "@type": "PostalAddress", addressRegion: "FL", addressCountry: "US" }, areaServed: [{ "@type": "AdministrativeArea", name: "South Florida" }, { "@type": "AdministrativeArea", name: "Treasure Coast" }, { "@type": "Country", name: "United States" }] },
+    { "@context": "https://schema.org", "@type": "Organization", "@id": `${ORIGIN}/#org`, name: "Kicks on Deck", alternateName: "kicksondeck.store", url: `${ORIGIN}/`, logo: { "@type": "ImageObject", url: LOGO_URL }, email: CFG.brand.email, telephone: CFG.brand.phone, slogan: "1:1 craftsmanship, honest pricing, no resale markup", contactPoint: { "@type": "ContactPoint", contactType: "customer service", email: CFG.brand.email, telephone: CFG.brand.phone, areaServed: ["US", "CA"], availableLanguage: "English" }, knowsAbout: ["Yeezy 350 V2 replica sneakers", "Yeezy Foam Runner replicas", "Yeezy Slide replicas", "sneaker sizing", "sneaker cleaning and care"], description: "Independent footwear — 1:1 rep Yeezy 350 V2, Foam Runners and Slides. Honest pricing, free U.S. shipping.", ...(socials.length ? { sameAs: socials } : {}) },
+    { "@context": "https://schema.org", "@type": "WebSite", "@id": `${ORIGIN}/#website`, name: "Kicks on Deck", url: `${ORIGIN}/`, inLanguage: "en-US", publisher: { "@id": `${ORIGIN}/#org` } },
+    { "@context": "https://schema.org", "@type": ["Store", "OnlineStore"], "@id": `${ORIGIN}/#store`, name: "Kicks on Deck", url: `${ORIGIN}/`, image: hero.image, email: CFG.brand.email, telephone: CFG.brand.phone, priceRange: "$$", parentOrganization: { "@id": `${ORIGIN}/#org` }, address: { "@type": "PostalAddress", addressRegion: "FL", addressCountry: "US" }, areaServed: [{ "@type": "AdministrativeArea", name: "South Florida" }, { "@type": "AdministrativeArea", name: "Treasure Coast" }, { "@type": "Country", name: "United States" }] },
   ];
   return layout({
     headOpts: { title: "Kicks on Deck — Rep 1:1 Sneakers, Foam Runners & Slides", desc: `Shop ${products.length} grail silhouettes — 350 V2, Foam Runners and Slides. 1:1 craftsmanship, honest prices, free U.S. shipping.`, canonical: `${ORIGIN}/`, ogImg: hero.image, ld: homeLd },
@@ -521,7 +546,27 @@ ${captureBand()}`;
   });
 }
 
-function gridPage({ title, h1, eyebrow, list, canonical, active, intro, showFilters }) {
+// Collection FAQs: the three or four questions a first-time buyer asks before
+// they pick a size. Rendered on the page (answer-engine friendly) and mirrored
+// into FAQPage markup; every number comes from site.config.json.
+function collectionFaq(slug, list) {
+  const sil = SILHOUETTE[slug]; if (!sil || slug === "accessories") return [];
+  const lo = list.length ? money(Math.min(...list.map((p) => p.minPrice))) : "";
+  const count = list.length;
+  return [
+    { q: `Do Yeezy ${sil} reps fit true to size?`, a: SIZING_RULE[slug] + ` The ${sil} sizing guide on the blog covers women's and half-size conversions.` },
+    { q: `How much do ${sil} reps cost at Kicks on Deck?`, a: `Every ${sil} colourway we stock (${count} styles) starts at ${lo}, with free shipping to ${POLICY.shipCountries} and no resale markup.` },
+    { q: `Are these authentic ${sil}s?`, a: AUTHENTICITY(sil, lo) },
+    { q: `How fast do ${sil} orders ship?`, a: SHIP_ANSWER() + ` ${RETURN_ANSWER()}` },
+  ];
+}
+function gridPage({ title, h1, eyebrow, list, canonical, active, intro, showFilters, slug = "" }) {
+  const faq = collectionFaq(slug, list);
+  const faqBlock = faq.length ? `
+<section class="container faq-block" aria-labelledby="col-faq-h">
+  <h2 id="col-faq-h">Before you pick a size</h2>
+  <div class="faq-grid">${faq.map((f) => `<div class="faq-item"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join("")}</div>
+</section>` : "";
   const chips = showFilters ? `<div class="chips">
     <button class="chip" data-filter="all">All</button>
     ${collections.map((c) => `<button class="chip" data-filter="${c.slug}">${c.title}</button>`).join("")}
@@ -541,12 +586,13 @@ function gridPage({ title, h1, eyebrow, list, canonical, active, intro, showFilt
   </div>
   <div class="product-grid" id="product-grid">${list.map((p, i) => card(p, i)).join("")}</div>
   <div class="empty-state" id="empty-state" style="display:none">No styles in this collection yet.</div>
-</section>`;
+</section>${faqBlock}`;
   const crumb = title.split(/[—|]/)[0].trim();
   // ItemList lets Google read the full grid as a product listing rather than
   // as an anonymous page of links, and CollectionPage names the page type.
   const gridLd = [
     crumbLd([{ name: "Home", url: `${ORIGIN}/` }, { name: crumb, url: canonical }]),
+    ...(faq.length ? [faqLd(faq)] : []),
     {
       "@context": "https://schema.org", "@type": "CollectionPage",
       name: crumb, url: canonical, description: intro || h1.replace(/<br>/g, " "),
@@ -571,7 +617,9 @@ function productPage(p) {
   // meta description again — only its factual bullets survive, de-shouted.
   const leadText = productCopy[p.slug] || generatedLead(p);
   const bullets = specBullets(p);
-  const descPlain = trimDesc(cleanSentence(`${leadText} ${bullets.join(". ")}`), 600).replace(/…$/, "");
+  // Reflective / non-reflective twins used to share one meta description; say which one this is.
+  const variantTag = refl ? "Reflective version. " : /non[\s-]?reflective/i.test(p.name) ? "Non-reflective version. " : "";
+  const descPlain = variantTag + trimDesc(cleanSentence(`${leadText} ${bullets.join(". ")}`), 600 - variantTag.length).replace(/…$/, "");
   const desc = leadText.split(/\n\n+/).map((t) => `<p>${esc(t.trim())}</p>`).join("")
     + (bullets.length ? `<h3>Spec</h3><ul>${bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : "");
   const sectionLabel = acc ? "Select option" : "Select size";
@@ -643,7 +691,7 @@ function productPage(p) {
   // four questions that stop a first-time replica buyer at the size grid.
   const pdpFaq = acc ? [] : [
     { q: `Are these authentic ${colTitle(p.collection)}s?`, a: `No. This is an independently produced 1:1 replica and we say so on every page — Kicks on Deck is not affiliated with, authorized by or endorsed by adidas, Yeezy or any trademark holder. You are buying the silhouette and the build quality, at ${money(p.minPrice)} instead of resale.` },
-    { q: `What size should I order in the ${SILHOUETTE[p.collection] || "this style"}?`, a: p.collection === "350-v2" ? "The 350 V2 fits close to true to size — take your normal US size, and go up a half if you have wide feet. Women's sizes are labelled W." : "This style runs big and only comes in whole sizes — size down one from your normal US size. If you're between sizes, take the smaller one." },
+    { q: `What size should I order in the ${SILHOUETTE[p.collection] || "this style"}?`, a: SIZING_RULE[p.collection] || "Take your normal US size." },
     { q: "How long will delivery take?", a: `Dispatched within ${POLICY.dispatchHours} hours with tracking emailed at dispatch, then ${POLICY.transitMinDays}–${POLICY.transitMaxDays} business days in transit. Shipping is free to ${POLICY.shipCountries}.` },
     { q: "What if they don't fit?", a: `You have ${POLICY.returnDays} days from delivery to return an unworn pair or swap it for another size. Email ${CFG.brand.email} with your order number and we send the return address the same day.` },
   ];
@@ -658,6 +706,14 @@ function productPage(p) {
       <h1>${esc(p.name)}</h1>
       <div class="pdp-price">${money(p.minPrice)}${p.variants[0]?.compareAt ? `<span class="was">${money(p.variants[0].compareAt)}</span>` : ""}</div>
       <p class="pdp-value">1:1 craftsmanship · honest pricing, no resale markup · inspected before it ships</p>
+      <dl class="glance" aria-label="Quick facts">
+        <div><dt>Silhouette</dt><dd>${esc(SILHOUETTE[p.collection] || colTitle(p.collection))}${refl ? " · reflective" : ""}</dd></div>
+        <div><dt>Colorway</dt><dd>${esc(colorway(p))}</dd></div>
+        ${acc ? "" : `<div><dt>Fit</dt><dd>${esc(SIZING_SHORT[p.collection] || "True to size")}</dd></div>`}
+        <div><dt>${acc ? "Options" : "Sizes"}</dt><dd>${vs.length > 1 ? `${vs.length} in stock · ${esc(vs[0].size)} to ${esc(vs[vs.length - 1].size)}` : "One size"}</dd></div>
+        <div><dt>Ships</dt><dd>Free to US &amp; Canada · out in ${POLICY.dispatchHours}h · ${POLICY.transitMinDays}–${POLICY.transitMaxDays} business days</dd></div>
+        <div><dt>Returns</dt><dd>${POLICY.returnDays} days from delivery, unworn</dd></div>
+      </dl>
       <div class="pdp-section">
         <div class="lbl"><span>${sectionLabel}</span><span>${acc ? "" : "Unisex · US / EU"}</span></div>
         ${single ? `<p style="color:var(--muted);font-family:var(--font-mono);font-size:.8rem">One size · ${esc(vs[0]?.size || "Standard")}</p>` :
@@ -709,7 +765,7 @@ function productPage(p) {
   { name: colTitle(p.collection), url: `${ORIGIN}/collection/${p.collection}/` },
   { name: p.name, url: `${ORIGIN}/product/${p.slug}/` },
 ]))}</script>
-${pdpFaq.length ? `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: pdpFaq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>\n` : ""}`;
+${pdpFaq.length ? `<script type="application/ld+json">${JSON.stringify(faqLd(pdpFaq))}</script>\n` : ""}<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "WebPage", "@id": `${ORIGIN}/product/${p.slug}/`, url: `${ORIGIN}/product/${p.slug}/`, name: p.name, isPartOf: { "@id": `${ORIGIN}/#website` }, mainEntity: { "@id": `${ORIGIN}/product/${p.slug}/#product` }, speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", ".glance", ".pdp-desc p:first-of-type"] } })}</script>\n`;
 
   // Title carries the searched terms (colourway + silhouette + "rep") and the
   // price, so the SERP entry answers "how much" before the click. Meta
@@ -724,7 +780,7 @@ ${pdpFaq.length ? `<script type="application/ld+json">${JSON.stringify({ "@conte
     : `${colorway(p)} ${SILHOUETTE[p.collection] || ""} Rep — ${money(p.minPrice)}${reflSuffix}`.replace(/\s+/g, " "));
   const metaDesc = acc
     ? trimDesc(`${p.name} — ${money(p.minPrice)}. ${POLICY.freeShippingLine}, dispatched in ${POLICY.dispatchHours}h.`)
-    : trimDesc(`1:1 rep ${colorway(p)} ${SILHOUETTE[p.collection] || ""} at ${money(p.minPrice)} — no resale markup. ${vs.length > 1 ? `Sizes ${vs[0].main}–${vs[vs.length - 1].main}. ` : ""}Free shipping, ${POLICY.returnDays}-day returns. Shop now.`.replace(/\s+/g, " "));
+    : trimDesc(`1:1 rep ${colorway(p)} ${SILHOUETTE[p.collection] || ""}${refl ? " (reflective)" : /non[\s-]?reflective/i.test(p.name) ? " (non-reflective)" : ""} at ${money(p.minPrice)} — no resale markup. ${vs.length > 1 ? `Sizes ${vs[0].main}–${vs[vs.length - 1].main}. ` : ""}Free shipping, ${POLICY.returnDays}-day returns. Shop now.`.replace(/\s+/g, " "));
 
   return layout({
     headOpts: {
@@ -1046,16 +1102,31 @@ function blogIndexPage() {
     publisher: { "@type": "Organization", name: "Kicks on Deck", url: `${ORIGIN}/` },
     blogPost: posts.map((p) => ({ "@type": "BlogPosting", headline: p.meta.title, url: `${ORIGIN}/blog/${p.slug}/`, datePublished: p.meta.date })),
   };
-  return layout({ headOpts: { title: "Blog — Sneaker Guides, Yeezy News & Culture | Kicks on Deck", desc: "Sizing guides, rep-vs-real breakdowns, styling tips and Yeezy/hypebeast culture from Kicks on Deck.", canonical: `${ORIGIN}/blog/`, ogImg: feat ? postImg(feat) : OG_DEFAULT, ld: blogLd }, active: "/blog/", body });
+  return layout({ headOpts: { title: "Blog — Sneaker Guides, Yeezy News & Culture | Kicks on Deck", desc: "Sizing guides, rep-vs-real breakdowns, styling tips and Yeezy/hypebeast culture from Kicks on Deck.", canonical: `${ORIGIN}/blog/`, ogImg: feat ? postImg(feat) : OG_DEFAULT, ld: [crumbLd([{ name: "Home", url: `${ORIGIN}/` }, { name: "Blog", url: `${ORIGIN}/blog/` }]), blogLd] }, active: "/blog/", body });
 }
 
 function blogPostPage(p) {
   const related = (Array.isArray(p.meta.products) ? p.meta.products : (p.meta.products ? [p.meta.products] : []))
     .map((slug) => products.find((x) => x.slug === slug)).filter(Boolean).slice(0, 4);
+  const updated = p.meta.updated || p.meta.date;
+  // Answer-first: the literal answer, not a description of the post. Priority:
+  // hand-written `answer:` frontmatter -> the first question-H2's answer ->
+  // the opening paragraph. Clipped at a sentence boundary.
+  const firstPara = (p.html.match(/<p>([\s\S]*?)<\/p>/) || [])[1] || "";
+  const clipAnswer = (t = "") => { t = cleanSentence(t); if (t.length <= 320) return t; const cut = t.slice(0, 320); const i = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("! "), cut.lastIndexOf("? ")); return i > 120 ? cut.slice(0, i + 1) : cut.replace(/\s+\S*$/, "") + "…"; };
+  const answer = clipAnswer(p.meta.answer || (p.faq && p.faq[0] && p.faq[0].a) || firstPara || p.meta.description || p.excerpt);
+  const words = p.html.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  const coverAbs = /^\//.test(postImg(p)) ? ORIGIN + postImg(p) : postImg(p);
   const ld = {
-    "@context": "https://schema.org", "@type": "BlogPosting", headline: p.meta.title, image: [/^\//.test(postImg(p)) ? ORIGIN + postImg(p) : postImg(p)],
-    datePublished: p.meta.date, dateModified: p.meta.date, author: { "@type": "Organization", name: "Kicks on Deck" },
-    publisher: { "@type": "Organization", name: "Kicks on Deck" }, mainEntityOfPage: `${ORIGIN}/blog/${p.slug}/`, description: p.excerpt,
+    "@context": "https://schema.org", "@type": "BlogPosting", "@id": `${ORIGIN}/blog/${p.slug}/#post`,
+    headline: p.meta.title, image: [coverAbs],
+    datePublished: p.meta.date, dateModified: updated,
+    author: { "@type": "Organization", name: "Kicks on Deck", url: `${ORIGIN}/about/` },
+    publisher: { "@type": "Organization", name: "Kicks on Deck", url: `${ORIGIN}/`, logo: { "@type": "ImageObject", url: LOGO_URL } },
+    mainEntityOfPage: `${ORIGIN}/blog/${p.slug}/`, description: p.meta.description || p.excerpt,
+    articleSection: p.meta.tag || "Journal", wordCount: words, inLanguage: "en-US", isAccessibleForFree: true,
+    keywords: [p.meta.tag, ...(Array.isArray(p.meta.products) ? p.meta.products.map((sl) => (products.find((x) => x.slug === sl) || {}).name).filter(Boolean) : [])].filter(Boolean).join(", "),
+    speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", ".quick-answer p"] },
   };
   const faqLd = (p.faq && p.faq.length) ? {
     "@context": "https://schema.org", "@type": "FAQPage",
@@ -1067,9 +1138,10 @@ function blogPostPage(p) {
   <header class="post-header reveal">
     ${p.meta.tag ? `<span class="post-tag">${esc(p.meta.tag)}</span>` : ""}
     <h1>${esc(p.meta.title || p.slug)}</h1>
-    <p class="post-byline">Kicks on Deck · ${fmtDate(p.meta.date)}${p.meta.read ? ` · ${esc(p.meta.read)}` : ""}</p>
+    <p class="post-byline">Kicks on Deck · ${fmtDate(p.meta.date)}${updated !== p.meta.date ? ` · Updated ${fmtDate(updated)}` : ""}${p.meta.read ? ` · ${esc(p.meta.read)}` : ""}</p>
   </header>
-  <div class="post-hero reveal"><img src="${postImg(p)}" alt="${esc(p.meta.title || "")}"></div>
+  ${answer ? `<div class="quick-answer reveal"><span class="qa-label">Quick answer</span><p>${esc(answer)}</p></div>` : ""}
+  <div class="post-hero reveal"><img src="${postImg(p)}" alt="${esc(p.meta.title || "")}" width="1200" height="750" fetchpriority="high" decoding="async"></div>
   <div class="post-body reveal">${p.html}</div>
   ${related.length ? `<div class="section" style="padding-top:30px"><div class="section-head"><h2 style="font-size:clamp(1.4rem,3.5vw,2.2rem)">Shop the pairs</h2><a class="link-arrow" href="/shop/">All styles <span>${I.arrow}</span></a></div><div class="product-grid">${related.map((r, i) => card(r, i)).join("")}</div></div>` : ""}
 </article>
@@ -1082,7 +1154,8 @@ ${captureBand()}
   { name: p.meta.title || p.slug, url: `${ORIGIN}/blog/${p.slug}/` },
 ]))}</script>
 ${faqLd ? `<script type="application/ld+json">${JSON.stringify(faqLd)}</script>\n` : ""}`;
-  return layout({ headOpts: { title: brandedTitle(p.meta.seoTitle || p.meta.title), desc: trimDesc(p.meta.description || p.excerpt), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p) }, active: "/blog/", body });
+  const extraMeta = `<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="750">\n<meta property="article:published_time" content="${p.meta.date}">\n<meta property="article:modified_time" content="${updated}">\n<meta property="article:section" content="${esc(p.meta.tag || "Journal")}">\n`;
+  return layout({ headOpts: { title: brandedTitle(p.meta.seoTitle || p.meta.title), desc: trimDesc(p.meta.description || p.excerpt), canonical: `${ORIGIN}/blog/${p.slug}/`, ogImg: postImg(p), ogType: "article", extraMeta }, active: "/blog/", body });
 }
 
 /* ---------------- static trust / policy pages ----------------
@@ -1168,7 +1241,7 @@ function quizPage() {
 </section>
 ${captureBand()}
 <script type="application/json" id="quiz-data">${JSON.stringify(quiz)}</script>`;
-  return layout({ headOpts: { title: "Find Your Pair — Sneaker Style Quiz | Kicks on Deck", desc: "Take the 60-second quiz and get matched to the Yeezy silhouette built for your style.", canonical: `${ORIGIN}/quiz/` }, active: "", body });
+  return layout({ headOpts: { title: "Find Your Pair — Sneaker Style Quiz | Kicks on Deck", desc: "Take the 60-second quiz and get matched to the Yeezy silhouette built for your style — 350 V2, Foam Runner or Slide — plus the size and colourway to start with.", canonical: `${ORIGIN}/quiz/` }, active: "", body });
 }
 
 /* ---------------- write ---------------- */
@@ -1199,7 +1272,7 @@ for (const c of collections) {
     h1: c.title.replace(/ /g, "<br>"), eyebrow: c.tagline, list,
     canonical: `${ORIGIN}/collection/${c.slug}/`, active: `/collection/${c.slug}/`,
     intro: COLLECTION_INTRO[c.slug] || `${c.count} ${c.title} styles in rotation. ${c.tagline}.`,
-    showFilters: false,
+    showFilters: false, slug: c.slug,
   }));
   n++;
 }
@@ -1225,7 +1298,7 @@ for (const p of pages) { write(`${p.slug}/index.html`, staticPage(p)); n++; }
 // 404
 // A 404 is a live shopper who followed a stale link — give them the routes
 // back into the catalogue rather than one button and a dead end.
-write("404.html", layout({ headOpts: { title: "Page Not Found — Kicks on Deck", desc: `That page has moved or never existed. Jump back into the rotation — ${products.length} styles in stock, free shipping and ${POLICY.returnDays}-day returns.`, canonical: `${ORIGIN}/404` }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center;padding-top:120px"><div><div class="footer-giant" style="-webkit-text-stroke:1px var(--volt)">404</div><p class="eyebrow" style="margin:20px 0">This pair walked off</p><p style="color:var(--ink-dim);max-width:46ch;margin:0 auto 26px">The link is stale, but the rotation isn't — ${products.length} styles are in stock right now.</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a><div class="doc-nav" style="justify-content:center;border:0;margin-top:34px">${[...navLinks.slice(0, 4), ...PAGE_NAV.slice(0, 4)].map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}</div></div></section>` }));
+write("404.html", layout({ headOpts: { title: "Page Not Found — Kicks on Deck", desc: `That page has moved or never existed. Jump back into the rotation — ${products.length} styles in stock, free shipping and ${POLICY.returnDays}-day returns.`, canonical: `${ORIGIN}/404`, robots: "noindex,follow" }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center;padding-top:120px"><div><div class="footer-giant" style="-webkit-text-stroke:1px var(--volt)">404</div><p class="eyebrow" style="margin:20px 0">This pair walked off</p><p style="color:var(--ink-dim);max-width:46ch;margin:0 auto 26px">The link is stale, but the rotation isn't — ${products.length} styles are in stock right now.</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a><div class="doc-nav" style="justify-content:center;border:0;margin-top:34px">${[...navLinks.slice(0, 4), ...PAGE_NAV.slice(0, 4)].map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}</div></div></section>` }));
 
 // legacy URL redirects (pre-restructure paths still receiving search traffic)
 // data-driven so new legacy-URL leaks found in GA4 landing-page reports can be added
@@ -1294,7 +1367,7 @@ const sitemapEntries = [
   ...collections.map((c) => smUrl(`${ORIGIN}/collection/${c.slug}/`, { priority: "0.9", changefreq: "daily", image: firstImg(c.slug), imageTitle: c.title })),
   ...products.map((p) => smUrl(`${ORIGIN}/product/${p.slug}/`, { priority: "0.8", changefreq: "weekly", image: p.image, imageTitle: p.name })),
   smUrl(`${ORIGIN}/blog/`, { priority: "0.7", changefreq: "weekly" }),
-  ...posts.map((p) => smUrl(`${ORIGIN}/blog/${p.slug}/`, { lastmod: p.meta.date || TODAY, priority: "0.7", changefreq: "monthly" })),
+  ...posts.map((p) => smUrl(`${ORIGIN}/blog/${p.slug}/`, { lastmod: p.meta.updated || p.meta.date || TODAY, priority: "0.7", changefreq: "monthly", image: /^\//.test(postImg(p)) ? ORIGIN + postImg(p) : postImg(p), imageTitle: p.meta.title })),
   ...pages.map((p) => smUrl(`${ORIGIN}/${p.slug}/`, { lastmod: p.meta.updated, priority: p.slug === "faq" || p.slug === "size-guide" ? "0.7" : "0.5", changefreq: "monthly" })),
   smUrl(`${ORIGIN}/quiz/`, { priority: "0.6", changefreq: "monthly" }),
 ];
@@ -1303,7 +1376,72 @@ write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="htt
 // they are noindex,follow redirects, and Google has to fetch them to move the
 // old Shopify URLs' equity onto the new ones. Only the raw catalog JSON is
 // blocked, since it has no business ranking for anything.
-write("robots.txt", `User-agent: *\nAllow: /\nDisallow: /data/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
+// AI answer engines and search assistants are welcome — they are how a
+// growing share of shoppers first hear a store's name. Listed explicitly so
+// a future "block all bots" edit has to be deliberate about each one.
+const AI_BOTS = ["GPTBot", "ChatGPT-User", "OAI-SearchBot", "ClaudeBot", "Claude-User", "Claude-SearchBot", "anthropic-ai", "PerplexityBot", "Perplexity-User", "Google-Extended", "Googlebot", "Bingbot", "Applebot", "Applebot-Extended", "Amazonbot", "DuckAssistBot", "meta-externalagent", "CCBot"];
+write("robots.txt", `User-agent: *\nAllow: /\nDisallow: /data/\n\n# AI assistants and answer engines: allowed. Machine-readable site summary at ${ORIGIN}/llms.txt\n${AI_BOTS.map((b) => `User-agent: ${b}\nAllow: /\nDisallow: /data/\n`).join("\n")}\nSitemap: ${ORIGIN}/sitemap.xml\n`);
+
+// ---- llms.txt / llms-full.txt + RSS -----------------------------------------
+// llms.txt is the emerging convention for handing an LLM a curated map of a
+// site (llmstxt.org). Everything here is generated from the same data the
+// pages use, so the "facts" an assistant repeats are the facts on the site.
+{
+  const plain = (h = "") => cleanSentence(String(h)).replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+  const colLine = (c) => { const list = products.filter((p) => p.collection === c.slug); const lo = list.length ? money(Math.min(...list.map((p) => p.minPrice))) : ""; return `- [${c.title}](${ORIGIN}/collection/${c.slug}/): ${list.length} styles${lo ? `, from ${lo}` : ""}. ${plain(COLLECTION_INTRO[c.slug] || c.tagline || "")}`; };
+  const pageLine = (slug, label, blurb) => `- [${label}](${ORIGIN}/${slug}/): ${blurb}`;
+  const pageBy = (slug) => pages.find((p) => p.slug === slug);
+  const keyFacts = [
+    `- What we sell: transparently labelled 1:1 replica Yeezy silhouettes — 350 V2 knit runners, Foam Runner clogs and Slides — plus cleaning gear. ${products.length} styles in stock. Not affiliated with adidas or Yeezy.`,
+    `- Where: online store based in ${CFG.brand.city}, shipping to ${POLICY.shipCountries}.`,
+    `- Prices: from ${money(Math.min(...products.map((p) => p.minPrice)))}; no resale markup.`,
+    `- Shipping: free on every order to ${POLICY.shipCountries}. Dispatched within ${POLICY.dispatchHours} hours, ${POLICY.transitMinDays}–${POLICY.transitMaxDays} business days in transit, tracking emailed at dispatch.`,
+    `- Returns: ${POLICY.returnDays} days from delivery for unworn pairs, including size swaps.`,
+    `- Sizing 350 V2: ${SIZING_RULE["350-v2"]}`,
+    `- Sizing Foam Runner: ${SIZING_RULE["foam-rnnr"]}`,
+    `- Sizing Slides: ${SIZING_RULE.slides}`,
+    `- Checkout: Stripe (cards, Apple Pay, Google Pay, Link). Promo code FIRSTPAIR = 10% off a first pair for email subscribers.`,
+    `- Contact: ${CFG.brand.email} · ${CFG.brand.phone} · Instagram ${SOCIAL.instagram}`,
+  ];
+  const llms = `# Kicks on Deck
+
+> Independent online sneaker store selling transparently labelled 1:1 replica Yeezy silhouettes (350 V2, Foam Runner, Slides) with free US & Canada shipping, ${POLICY.returnDays}-day returns and honest, resale-free pricing. Every page says "rep" out loud; nothing here is sold as authentic.
+
+## Key facts
+${keyFacts.join("\n")}
+
+## Shop
+- [All styles](${ORIGIN}/shop/): the full catalogue, filter by silhouette, sort by price.
+${collections.map(colLine).join("\n")}
+
+## Help & policies
+${pageLine("size-guide", "Size guide", "size charts and the sizing rule for every silhouette")}
+${pageLine("faq", "FAQ", "authenticity, 1:1 meaning, delivery, sizing, returns, payment")}
+${pageLine("shipping", "Shipping", "dispatch time, transit window, tracking, countries")}
+${pageLine("returns", "Returns & exchanges", `${POLICY.returnDays}-day window, how to start a return or size swap`)}
+${pageLine("about", "About", "who we are and why the store is replica-transparent")}
+${pageLine("contact", "Contact", "email, phone, response times")}
+- [Find your pair quiz](${ORIGIN}/quiz/): 60-second quiz that recommends a silhouette and starting size.
+
+## Blog (guides)
+${posts.map((p) => `- [${plain(p.meta.title)}](${ORIGIN}/blog/${p.slug}/): ${plain(p.meta.description || p.excerpt)}`).join("\n")}
+
+## Optional
+- [Full text version](${ORIGIN}/llms-full.txt): every FAQ answer, policy and the complete product list.
+- [Sitemap](${ORIGIN}/sitemap.xml) · [RSS](${ORIGIN}/blog/feed.xml)
+`;
+  write("llms.txt", llms);
+
+  const faqPage = pageBy("faq");
+  const faqText = (faqPage && faqPage.faq ? faqPage.faq : []).map((f) => `### ${plain(f.q)}\n${plain(f.a)}`).join("\n\n");
+  const colFaqText = collections.map((c) => { const items = collectionFaq(c.slug, products.filter((p) => p.collection === c.slug)); return items.length ? `### ${c.title}\n` + items.map((f) => `**${plain(f.q)}** ${plain(f.a)}`).join("\n") : ""; }).filter(Boolean).join("\n\n");
+  const policyText = ["shipping", "returns", "size-guide", "about"].map((slug) => { const pg = pageBy(slug); return pg ? `## ${plain(pg.meta.title || slug)}\n${plain(pg.html)}` : ""; }).filter(Boolean).join("\n\n");
+  const productText = collections.map((c) => `### ${c.title}\n` + products.filter((p) => p.collection === c.slug).map((p) => { const vs = variantList(p); return `- ${plain(p.name)} — ${plain(colorway(p))} — ${priceLabel(p)} — ${vs.length > 1 ? `${vs.length} sizes (${plain(vs[0].size)} to ${plain(vs[vs.length - 1].size)})` : "one size"} — ${p.inStock ? "in stock" : "out of stock"} — ${ORIGIN}/product/${p.slug}/`; }).join("\n")).join("\n\n");
+  write("llms-full.txt", `${llms}\n\n---\n\n## FAQ\n${faqText}\n\n## Collection FAQs\n${colFaqText}\n\n${policyText}\n\n## Complete product list (${products.length})\n${productText}\n`);
+
+  const rss = posts.slice(0, 30).map((p) => `  <item>\n    <title>${esc(plain(p.meta.title))}</title>\n    <link>${ORIGIN}/blog/${p.slug}/</link>\n    <guid isPermaLink="true">${ORIGIN}/blog/${p.slug}/</guid>\n    <pubDate>${new Date((p.meta.date || TODAY) + "T12:00:00Z").toUTCString()}</pubDate>\n    ${p.meta.tag ? `<category>${esc(p.meta.tag)}</category>\n    ` : ""}<description>${esc(plain(p.meta.description || p.excerpt))}</description>\n    <enclosure url="${/^\//.test(postImg(p)) ? ORIGIN + postImg(p) : postImg(p)}" type="image/webp" length="0"/>\n  </item>`).join("\n");
+  write("blog/feed.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n  <title>Kicks on Deck — Journal</title>\n  <link>${ORIGIN}/blog/</link>\n  <atom:link href="${ORIGIN}/blog/feed.xml" rel="self" type="application/rss+xml"/>\n  <description>Sizing guides, rep-vs-real breakdowns, styling and care for Yeezy-silhouette sneakers.</description>\n  <language>en-us</language>\n  <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>\n${rss}\n</channel>\n</rss>\n`);
+}
 write("CNAME", DOMAIN + "\n");
 
 console.log(`Built ${n} HTML pages + ${products.length} catalog entries.`);
