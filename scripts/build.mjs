@@ -1022,7 +1022,7 @@ function postCard(p) {
   return `<a class="post-card reveal" href="/blog/${p.slug}/">
     <div class="post-thumb"><img src="${postImg(p)}" alt="${esc(p.meta.title || p.slug)}" loading="lazy"></div>
     <div class="post-meta">${p.meta.tag ? `<span class="post-tag">${esc(p.meta.tag)}</span>` : ""}<span class="post-date">${fmtDate(p.meta.date)}</span></div>
-    <h3>${esc(p.meta.title || p.slug)}</h3>
+    <h2 class="post-card-title">${esc(p.meta.title || p.slug)}</h2>
     <p>${esc(p.excerpt)}</p>
     <span class="post-readmore">Read ${I.arrow}</span>
   </a>`;
