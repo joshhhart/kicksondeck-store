@@ -42,7 +42,18 @@ const OG_DEFAULT = (products.find((p) => /zebra/i.test(p.name)) || products[0]).
 const isReflective = (s = "") => /reflective/i.test(s) && !/non[\s-]?reflective/i.test(s);
 const money = (n) => "$" + Number(n || 0).toLocaleString("en-US");
 const SELF_FONTS = fs.existsSync(path.join(ROOT, "assets", "fonts", "fonts.css"));
+const FONT_CSS = SELF_FONTS ? fs.readFileSync(path.join(ROOT, "assets", "fonts", "fonts.css"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s+/g, " ").trim() : "";
+// styles.css stays the hand-edited source; the pages load a minified copy.
+const CSS_MIN = fs.readFileSync(path.join(ROOT, "assets", "styles.css"), "utf8")
+  .replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s*([{}:;,>])\s*/g, "$1").replace(/;}/g, "}").replace(/\s+/g, " ").trim();
+fs.mkdirSync(path.join(ROOT, "assets"), { recursive: true });
+fs.writeFileSync(path.join(ROOT, "assets", "styles.min.css"), CSS_MIN);
 // Google's Organization logo rich result needs a raster (PNG/JPG), not the SVG favicon.
+// Shopify's CDN resizes on demand via ?width= — a 300px card no longer downloads a
+// 1151px original. srcset covers 1x/2x at the three grid breakpoints.
+const imgW = (url = "", w) => /cdn\.shopify\.com/.test(url) ? `${url}${url.includes("?") ? "&" : "?"}width=${w}` : url;
+const srcset = (url = "", widths = [400, 600, 900]) => /cdn\.shopify\.com/.test(url) ? widths.map((w) => `${imgW(url, w)} ${w}w`).join(", ") : "";
+const CARD_SIZES = "(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 300px";
 const LOGO_URL = fs.existsSync(path.join(ROOT, "assets", "logo.png")) ? `${ORIGIN}/assets/logo.png` : `${ORIGIN}/assets/favicon.svg`;
 // One source of truth for the sizing rule per silhouette — the PDP FAQ, the
 // collection FAQ, the "quick facts" block and llms.txt all read from here so an
@@ -310,7 +321,7 @@ function head(opts) {
   // Self-hosted fonts (scripts/fonts/vendor.mjs) win when present: no third-party
   // hop, the display face is preloaded, and CI/local renders get the real type.
   const fontTags = () => SELF_FONTS
-    ? `<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-800-w125.woff2" crossorigin>\n<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/hanken-grotesk-400.woff2" crossorigin>\n<link rel="stylesheet" href="/assets/fonts/fonts.css">`
+    ? `<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-800-w125.woff2" crossorigin>\n<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/hanken-grotesk-400.woff2" crossorigin>\n<style>${FONT_CSS}</style>`
     : `<link rel="preload" as="style" href="${FONT_HREF}">\n<link rel="stylesheet" href="${FONT_HREF}" media="print" onload="this.media='all'">\n<noscript><link rel="stylesheet" href="${FONT_HREF}"></noscript>`;
   // Google Fonts is render-blocking on the critical path and was the single
   // biggest LCP cost on mobile. Load it async (print -> all on load) with a
@@ -341,7 +352,7 @@ function head(opts) {
 ${extraMeta}<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 ${SELF_FONTS ? "" : `<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n`}<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 ${preloadImg ? `<link rel="preload" as="image" href="${preloadImg}" fetchpriority="high">\n` : ""}${fontTags()}
-<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/styles.min.css">
 ${extraCss}${analyticsTags()}
 <script>window.KOD_CONFIG=${JSON.stringify({ checkout: CFG.checkout, brand: CFG.brand, analytics: { ga4Id: AN.ga4Id || "", dataEndpoint: AN.dataEndpoint || "" } })};document.documentElement.classList.remove('no-js');</script>
 ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>\n` : ""}</head>`;
@@ -359,11 +370,11 @@ function analyticsTags() {
 
 function header(active = "") {
   return `<header class="header" id="header"><div class="container"><div class="header-inner">
-  <a class="brand" href="/" aria-label="Kicks on Deck home"><span class="wordmark">Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
+  <a class="brand" href="/"><span class="wordmark">Kicks on Deck<small>EST. MIAMI · REP 1:1</small></span></a>
   <nav class="nav pill-nav" id="pill-nav" aria-label="Primary"><span class="pill-ind" aria-hidden="true"></span>${navLinks.map((l) => `<a href="${l.href}"${active === l.href ? ' class="active"' : ""}>${l.label}</a>`).join("")}</nav>
   <div class="header-actions">
     <button class="icon-btn" id="search-open" aria-label="Search">${I.search}</button>
-    <button class="icon-btn" id="cart-open" aria-label="Open bag">${I.bag}<span class="cart-count" id="cart-count">0</span></button>
+    <button class="icon-btn" id="cart-open" aria-label="Open bag">${I.bag}<span class="cart-count" id="cart-count" aria-hidden="true">0</span></button>
     <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Menu">${I.menu}</button>
   </div>
 </div></div></header>
@@ -451,7 +462,7 @@ function card(p, i = 0) {
   const badge = !p.inStock ? `<span class="badge soft">Sold out</span>` : refl ? `<span class="badge volt">Reflective ✦</span>` : acc ? `<span class="badge soft">Care</span>` : "";
   return `<a class="card reveal" data-spotlight data-d="${(i % 4) + 1}" href="/product/${p.slug}/" data-collection="${p.collection}" data-price="${p.minPrice}" data-name="${esc(p.name)}" data-order="${i}">
     <span class="card-glow" aria-hidden="true"></span>
-    <div class="card-media">${badge ? `<div class="badge-wrap">${badge}</div>` : ""}<img src="${p.image}" alt="${esc(p.name)}" loading="lazy" width="600" height="600"></div>
+    <div class="card-media">${badge ? `<div class="badge-wrap">${badge}</div>` : ""}<img src="${imgW(p.image, 600)}"${srcset(p.image) ? ` srcset="${srcset(p.image)}" sizes="${CARD_SIZES}"` : ""} alt="${esc(p.name)}" ${i < 4 ? `loading="eager"${i === 0 ? ' fetchpriority="high"' : ""}` : 'loading="lazy"'} decoding="async" width="600" height="600"></div>
     <div class="card-info"><div class="c-line"><span class="name">${esc(p.name)}</span><span class="price">${priceLabel(p)}</span></div><span class="sub">${colTitle(p.collection)}${refl ? " · Reflective" : ""}</span></div>
   </a>`;
 }
@@ -499,7 +510,7 @@ function homePage() {
   <div class="collections-grid">
     ${collections.filter((c) => c.slug !== "accessories").map((c, i) => `
     <a class="col-card span-${i === 0 ? 8 : i === 1 ? 4 : 6}" href="/collection/${c.slug}/">
-      <img class="col-img" src="${firstImg(c.slug)}" alt="" loading="lazy">
+      <img class="col-img" src="${imgW(firstImg(c.slug), 900)}" alt="" loading="lazy">
       <div class="c-go">${I.arrowUR}</div>
       <h3>${c.title}</h3>
       <div class="c-meta"><span class="c-tag">${c.tagline}</span><span class="c-count">${String(c.count).padStart(2, "0")} styles</span></div>
@@ -524,7 +535,7 @@ function homePage() {
         <div class="fl"><span class="fl-num">03</span><div><h3>Buyer protection</h3><p>7-day window. Sizing help any time.</p></div></div>
       </div>
     </div>
-    <div class="story-visual reveal" data-d="2"><img src="${(products.find((p) => /cream|bone|sand/i.test(p.name)) || products[1]).image}" alt="Featured pair"></div>
+    <div class="story-visual reveal" data-d="2"><img src="${(products.find((p) => /cream|bone|sand/i.test(p.name)) || products[1]).image}" alt="Featured pair" loading="lazy" decoding="async" width="900" height="1125"></div>
   </div>
 </section>
 
@@ -700,7 +711,7 @@ function productPage(p) {
 <section class="container pdp">
   <div class="breadcrumb"><a href="/">Home</a> / <a href="/collection/${p.collection}/">${colTitle(p.collection)}</a> / <span>${esc(p.name)}</span></div>
   <div class="pdp-grid">
-    <div class="pdp-media reveal">${refl ? `<span class="badge volt floatbadge">Reflective ✦</span>` : ""}<img src="${p.image}" alt="${esc(p.name)} — ${esc(colTitle(p.collection))} in ${esc(colorway(p))}, side profile" width="900" height="900" fetchpriority="high" decoding="async"></div>
+    <div class="pdp-media reveal">${refl ? `<span class="badge volt floatbadge">Reflective ✦</span>` : ""}<img src="${imgW(p.image, 1000)}"${srcset(p.image, [600, 900, 1200]) ? ` srcset="${srcset(p.image, [600, 900, 1200])}" sizes="(max-width: 900px) 100vw, 50vw"` : ""} alt="${esc(p.name)} — ${esc(colTitle(p.collection))} in ${esc(colorway(p))}, side profile" width="900" height="900" fetchpriority="high" decoding="async"></div>
     <div class="pdp-info reveal" data-d="1">
       <span class="eyebrow">${colTitle(p.collection)}${refl ? " · Reflective" : ""}</span>
       <h1>${esc(p.name)}</h1>
@@ -786,7 +797,7 @@ ${pdpFaq.length ? `<script type="application/ld+json">${JSON.stringify(faqLd(pdp
     headOpts: {
       title, desc: metaDesc,
       canonical: `${ORIGIN}/product/${p.slug}/`,
-      ogImg: p.image, ogType: "product", preloadImg: p.image,
+      ogImg: p.image, ogType: "product", preloadImg: imgW(p.image, 1000),
       extraMeta: `<meta property="product:price:amount" content="${p.minPrice}">\n<meta property="product:price:currency" content="${ccy}">\n<meta property="product:availability" content="${p.inStock ? "in stock" : "out of stock"}">\n<meta property="og:image:alt" content="${esc(p.name)}">\n`,
     },
     active: "",
@@ -1298,7 +1309,7 @@ for (const p of pages) { write(`${p.slug}/index.html`, staticPage(p)); n++; }
 // 404
 // A 404 is a live shopper who followed a stale link — give them the routes
 // back into the catalogue rather than one button and a dead end.
-write("404.html", layout({ headOpts: { title: "Page Not Found — Kicks on Deck", desc: `That page has moved or never existed. Jump back into the rotation — ${products.length} styles in stock, free shipping and ${POLICY.returnDays}-day returns.`, canonical: `${ORIGIN}/404`, robots: "noindex,follow" }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center;padding-top:120px"><div><div class="footer-giant" style="-webkit-text-stroke:1px var(--volt)">404</div><p class="eyebrow" style="margin:20px 0">This pair walked off</p><p style="color:var(--ink-dim);max-width:46ch;margin:0 auto 26px">The link is stale, but the rotation isn't — ${products.length} styles are in stock right now.</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a><div class="doc-nav" style="justify-content:center;border:0;margin-top:34px">${[...navLinks.slice(0, 4), ...PAGE_NAV.slice(0, 4)].map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}</div></div></section>` }));
+write("404.html", layout({ headOpts: { title: "Page Not Found — Kicks on Deck", desc: `That page has moved or never existed. Jump back into the rotation — ${products.length} styles in stock, free shipping and ${POLICY.returnDays}-day returns.`, canonical: `${ORIGIN}/404`, robots: "noindex,follow" }, active: "", body: `<section class="container" style="min-height:70vh;display:grid;place-items:center;text-align:center;padding-top:120px"><div><h1 class="footer-giant" style="-webkit-text-stroke:1px var(--volt);margin:0">404</h1><p class="eyebrow" style="margin:20px 0">This pair walked off</p><p style="color:var(--ink-dim);max-width:46ch;margin:0 auto 26px">The link is stale, but the rotation isn't — ${products.length} styles are in stock right now.</p><a class="btn btn-volt btn-lg" href="/shop/">Back to the shop ${I.arrow}</a><div class="doc-nav" style="justify-content:center;border:0;margin-top:34px">${[...navLinks.slice(0, 4), ...PAGE_NAV.slice(0, 4)].map((l) => `<a href="${l.href}">${l.label}</a>`).join("")}</div></div></section>` }));
 
 // legacy URL redirects (pre-restructure paths still receiving search traffic)
 // data-driven so new legacy-URL leaks found in GA4 landing-page reports can be added

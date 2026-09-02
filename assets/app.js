@@ -513,7 +513,7 @@
     // Skip the particle field when the 3D hero will take over (it overlaps the
     // 3D scene with messy connecting lines). Mirrors the 3D-hero eligibility.
     const heroEl = document.getElementById("hero");
-    const willBe3d = heroEl && heroEl.dataset.hero3d && !(navigator.connection && navigator.connection.saveData);
+    const willBe3d = heroEl && heroEl.dataset.hero3d && !(navigator.connection && navigator.connection.saveData) && matchMedia("(min-width: 1024px)").matches;
     const cv = $("#hero-particles"); if (!cv || reduceMotion || willBe3d) return;
     const ctx = cv.getContext("2d"); if (!ctx) return;
     let w = 0, h = 0, dpr = 1, parts = [], raf = 0; const mouse = { x: -999, y: -999 };
@@ -640,8 +640,13 @@
     script.src = "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
     document.head.appendChild(script);
   };
-  if (window.requestIdleCallback) requestIdleCallback(boot, { timeout: 2500 });
-  else setTimeout(boot, 1200);
+  // Desktop-class devices only: 250 KB of model-viewer plus a 1.7 MB mesh is
+  // the wrong trade on a phone, where the static hero is the LCP anyway.
+  const bigScreen = matchMedia("(min-width: 1024px)").matches;
+  const capable = (navigator.deviceMemory || 8) >= 4 && (navigator.hardwareConcurrency || 8) >= 4;
+  if (!bigScreen || !capable) return;
+  const later = () => (window.requestIdleCallback ? requestIdleCallback(boot, { timeout: 4000 }) : setTimeout(boot, 1500));
+  if (document.readyState === "complete") later(); else window.addEventListener("load", later, { once: true });
 
   var shoe = hero.querySelector(".hero-shoe");
   var stage = hero.querySelector(".hero-stage");

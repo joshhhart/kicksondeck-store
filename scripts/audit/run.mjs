@@ -60,6 +60,11 @@ try {
       page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
       await page.goto(BASE + url, { waitUntil: "networkidle", timeout: 60000 }).catch(() => {});
       await page.evaluate(() => document.fonts.ready);
+      // Full-page capture: reveal-on-scroll sections never intersect during an
+      // instant scroll, and fixed chrome (header, off-canvas nav) would be
+      // painted at the capture viewport. Force the end state so the shot shows
+      // the page a human sees after scrolling, not the animation's first frame.
+      await page.addStyleTag({ content: ".reveal{opacity:1!important;transform:none!important} .mobile-nav{display:none!important} .header{position:absolute!important}" });
       // Settle lazy images / animations, then trigger every lazy image before the full-page shot.
       await page.evaluate(async () => { window.scrollTo(0, document.body.scrollHeight); await new Promise((r) => setTimeout(r, 400)); window.scrollTo(0, 0); });
       await page.waitForTimeout(400);
