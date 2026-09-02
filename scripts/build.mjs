@@ -303,7 +303,7 @@ function head(opts) {
 <meta property="og:site_name" content="Kicks on Deck">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
-<meta property="og:image" content="${ogImg}">
+<meta property="og:image" content="${/^\//.test(ogImg) ? ORIGIN + ogImg : ogImg}">
 <meta property="og:url" content="${canonical}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0a0a0b">
@@ -1051,7 +1051,7 @@ function blogPostPage(p) {
   const related = (Array.isArray(p.meta.products) ? p.meta.products : (p.meta.products ? [p.meta.products] : []))
     .map((slug) => products.find((x) => x.slug === slug)).filter(Boolean).slice(0, 4);
   const ld = {
-    "@context": "https://schema.org", "@type": "BlogPosting", headline: p.meta.title, image: [postImg(p)],
+    "@context": "https://schema.org", "@type": "BlogPosting", headline: p.meta.title, image: [/^\//.test(postImg(p)) ? ORIGIN + postImg(p) : postImg(p)],
     datePublished: p.meta.date, dateModified: p.meta.date, author: { "@type": "Organization", name: "Kicks on Deck" },
     publisher: { "@type": "Organization", name: "Kicks on Deck" }, mainEntityOfPage: `${ORIGIN}/blog/${p.slug}/`, description: p.excerpt,
   };
@@ -1205,7 +1205,12 @@ for (const p of products) { write(`product/${p.slug}/index.html`, productPage(p)
 
 // blog + quiz
 for (const p of posts) {
-  if (p.meta.image) p.cover = p.meta.image;
+  // Cover priority: explicit frontmatter -> photographic render from
+  // scripts/covers/render.mjs (assets/blog/<slug>.webp, produced by the
+  // blog-covers GitHub Action) -> deterministic SVG fallback so a brand-new
+  // post is never coverless while the render is in flight.
+  if (p.meta.cover || p.meta.image) p.cover = p.meta.cover || p.meta.image;
+  else if (fs.existsSync(path.join(ROOT, "assets", "blog", `${p.slug}.webp`))) p.cover = `/assets/blog/${p.slug}.webp`;
   else { p.cover = `/assets/blog/${p.slug}.svg`; write(`assets/blog/${p.slug}.svg`, blogCover(p)); }
 }
 write("blog/index.html", blogIndexPage()); n++;

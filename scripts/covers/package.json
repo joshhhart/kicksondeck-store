@@ -1,0 +1,9 @@
+{
+  "name": "kod-blog-covers",
+  "private": true,
+  "type": "module",
+  "description": "Renders photographic blog covers (assets/blog/<slug>.webp) from the catalog photos. Run: node scripts/covers/render.mjs [--force] [--only slug]",
+  "dependencies": {
+    "playwright": "^1.56.1"
+  }
+}
