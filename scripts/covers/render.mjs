@@ -147,6 +147,34 @@ async function cutoutInBrowser(srcUri) {
   return { uri: o.toDataURL("image/png"), w: cw, h: ch };
 }
 
+/* ---------- fonts ----------
+   Google Fonts served as a <link> raced Chromium's screenshot (the first CI
+   render shipped in the fallback face). Fetch the CSS here with a Chrome UA so
+   it returns woff2, inline every font file as a data URI, and embed the whole
+   @font-face block in the page. Falls back to the <link> if the network is off. */
+let fontCss = null;
+async function loadFontCss() {
+  if (fontCss !== null) return fontCss;
+  try {
+    const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36";
+    const res = await fetch(FONT_HREF, { headers: { "User-Agent": UA } });
+    if (!res.ok) throw new Error("fonts css " + res.status);
+    let css = await res.text();
+    const urls = [...new Set([...css.matchAll(/url\((https:[^)]+)\)/g)].map((m) => m[1]))];
+    for (const u of urls) {
+      const r = await fetch(u, { headers: { "User-Agent": UA } });
+      if (!r.ok) throw new Error("font file " + r.status);
+      const b = Buffer.from(await r.arrayBuffer());
+      css = css.split(u).join(`data:font/woff2;base64,${b.toString("base64")}`);
+    }
+    fontCss = `<style>${css}</style>`;
+  } catch (e) {
+    console.warn(`  (web fonts unavailable: ${e.message}; using <link> + fallback)`);
+    fontCss = `<link rel="stylesheet" href="${FONT_HREF}">`;
+  }
+  return fontCss;
+}
+
 /* ---------- layout ---------- */
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const silhouetteOf = (p) => /foam|rnnr/i.test(p.collection + " " + p.slug) ? "Foam Runner" : /slide/i.test(p.collection + " " + p.slug) ? "Slide" : /350/.test(p.slug) ? "350 V2" : "Care";
@@ -159,7 +187,7 @@ function coverProductsFor(post) {
   return list.slice(0, 3);
 }
 
-function html(post, shots) {
+function html(post, shots, fonts) {
   const title = post.meta.coverTitle || post.meta.title || post.slug;
   const tag = String(post.meta.tag || "Journal").toUpperCase();
   const year = String(post.meta.date || "").slice(0, 4) || new Date().getFullYear();
@@ -180,8 +208,7 @@ function html(post, shots) {
     </div>`;
   }).join("");
   return `<!doctype html><html><head><meta charset="utf-8">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="${FONT_HREF}">
+${fonts}
 <style>
   html,body{margin:0;background:${BG}}
   .c{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:${BG};font-family:"Archivo Expanded","Archivo",system-ui,sans-serif;color:#f4f4f1}
@@ -252,7 +279,7 @@ async function main() {
           shots.push({ ...(await page.evaluate(cutoutInBrowser, src)), product });
         } catch (e) { console.warn(`  photo skipped for ${product.slug}: ${e.message}`); }
       }
-      await page.setContent(html(post, shots), { waitUntil: "networkidle" });
+      await page.setContent(html(post, shots, await loadFontCss()), { waitUntil: "networkidle" });
       // Pull the web fonts explicitly; `load` fires before @font-face files arrive.
       const fontsOk = await page.evaluate(async () => {
         try {
